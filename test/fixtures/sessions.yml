@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_time: 2020-01-02 16:21:30
+  end_time: 2020-01-02 16:21:30
+  note: MyText
+  user: one
+  task: one
+
+two:
+  start_time: 2020-01-02 16:21:30
+  end_time: 2020-01-02 16:21:30
+  note: MyText
+  user: two
+  task: two
