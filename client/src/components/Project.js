@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Session = () => (
+const Project = () => (
   <div>
-    Session
+    Project
   </div>
 )
 
-export default Session;
+export default Project;

@@ -4,6 +4,16 @@ import { Menu, } from 'semantic-ui-react';
 
 const SideBar = () => (
   <Menu pointing secondary vertical>
+    <Link to='/login'>
+      <Menu.Item>
+        Login
+      </Menu.Item>
+    </Link>
+    <Link to='/register'>
+      <Menu.Item>
+        Register
+      </Menu.Item>
+    </Link>
     <Link to='/'>
       <Menu.Item>
         Home

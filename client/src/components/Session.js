@@ -2,7 +2,7 @@ import React from 'react';
 
 const Session = () => (
   <div>
-    Session
+    Sessions
   </div>
 )
 
