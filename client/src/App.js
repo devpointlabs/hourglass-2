@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, } from 'react';
+import { Route, Switch, } from 'react-router-dom';
+import { Container, } from 'semantic-ui-react';
+import SideBar from './components/SideBar';
+import Home from './components/Home';
+import Tasks from './components/Tasks';
+import Session from './components/Session';
+import Project from './components/Project';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <Fragment>
+    <SideBar />
+    <Container>
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/tasks' component={Tasks} />
+        <Route exact path='/project' component={Project} />
+        <Route exact path='/session' component={Session} />
+      </Switch>
+    </Container>
+  </Fragment>
+);
 
 export default App;
