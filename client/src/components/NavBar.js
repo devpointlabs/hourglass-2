@@ -1,63 +1,117 @@
-import React from 'react';
-import { Link, } from 'react-router-dom';
-import { Menu } from 'semantic-ui-react';
-// import { Menu, } from 'semantic-ui-react';
+import React from 'react'
+import { AuthConsumer, } from "../providers/AuthProvider";
+import { Menu, } from 'semantic-ui-react'
+import { Link, withRouter, } from 'react-router-dom'
 
-const NavBar = () => (
-    <Menu color='purple inverted' borderless>
+class Navbar extends React.Component {
 
-    <Link to='/'>
-      <a class="active item">
-        Home
-      </a>
-    </Link>
-    <Link to='/session'>
-      <a class="item">
-        Sessions
-      </a>
-    </Link>
-    <Link to='/task'>
-      <a class="item">
-        Task
-      </a>
-    </Link>
-    <Link to='/'>
-      <a class="item">
-        Expenses
-      </a>
-    </Link>
-    <Link to='/'>
-      <a class="item">
-        Reports
-      </a>
-    </Link>
-    <Link to='/'>
-      <a class="item">
-        Invoices
-      </a>
-    </Link>
-    <Link to='/'>
-      <a class="item">
-        Estimates
-      </a>
-    </Link><Link to='/'>
-      <a class="item">
-        Manage
-      </a>
-    </Link>
-    <Menu.Menu position='right'>
-      <Link to='/login'>
-        <a class="item">
-          Login
-        </a>
-      </Link>
-      <Link to='/register'>
-        <a class="item">
-          Register
-        </a>
-      </Link>
-    </Menu.Menu>
-    </Menu>
-);
+  rightNavItems = () => {
+    const { auth: { user, handleLogout, }, location, } = this.props;
 
-export default NavBar;
+    if (user) {
+      return (
+        <Menu color='purple' inverted>
+          <Menu.Item>
+          <Link to='/'>
+              Home
+          </Link>
+          </Menu.Item>
+          <Menu.Item>
+          <Link to='/session'>
+              Sessions
+          </Link>
+          </Menu.Item>
+          <Menu.Item>
+          <Link to='/task'>
+            Task
+          </Link>
+          </Menu.Item>
+          <Menu.Item>
+          <Link to='/'>
+              Expenses
+          </Link>
+          </Menu.Item>
+          <Menu.Item>
+          <Link to='/'>
+              Reports
+          </Link>
+          </Menu.Item>
+          <Menu.Item>
+          <Link to='/'>
+              Invoices
+          </Link>
+          </Menu.Item>
+          <Menu.Item>
+          <Link to='/'>
+              Estimates
+          </Link>
+          </Menu.Item>
+          <Menu.Item>
+          <Link to='/'>
+              Manage
+          </Link>
+          </Menu.Item>
+        <Menu.Menu position='right'>
+          <Menu.Item>
+            <Link to='/'>
+            Help
+            </Link>
+          </Menu.Item>
+          <Menu.Item>
+          <Link to='/'>
+            Settings
+            </Link>
+          </Menu.Item>
+          <Menu.Item
+            name='logout'
+            onClick={() => handleLogout(this.props.history)}>Logout
+            </Menu.Item>
+        </Menu.Menu>
+        </Menu>
+      )
+    } else {
+      return (
+        <Menu.Menu position='right'>
+          <Link to='/login'>
+            <Menu.Item
+              id='login'
+              name='login'
+              active={location.pathname === '/login'}
+            />
+          </Link>
+          <Link to='/register'>
+            <Menu.Item
+              id='register'
+              name='register'
+              active={location.pathname === '/register'}
+            />
+          </Link>
+        </Menu.Menu>
+      )
+    }
+  }
+
+  render() {
+    return (
+      <>
+        <Menu color='purple' inverted borderless>
+          { this.rightNavItems() }
+        </Menu>
+        </>
+    );
+  };
+};
+
+export class ConnectedNavbar extends React.Component {
+  render() {
+    return (
+      <AuthConsumer>
+        { auth =>
+          <Navbar {...this.props} auth={auth} />
+        }
+      </AuthConsumer>
+    );
+  };
+};
+
+export default withRouter(ConnectedNavbar);
