@@ -1,7 +1,7 @@
 import React, { Fragment, } from 'react';
 import { Route, Switch, } from 'react-router-dom';
 import { Container, } from 'semantic-ui-react';
-import SideBar from './components/SideBar';
+import NavBar from './components/NavBar';
 import NoMatch from './components/NoMatch';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -12,7 +12,7 @@ import Project from './components/Project';
 
 const App = () => (
   <Fragment>
-    <SideBar />
+    <NavBar />
     <Container>
       <Switch>
         <Route exact path="/login" component={Login} />
