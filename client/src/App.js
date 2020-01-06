@@ -13,7 +13,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => (
   <Fragment>
-    <SideBar />
+    <NavBar />
     <Container>
       <Switch>
         <Route exact path="/login" component={Login} />
