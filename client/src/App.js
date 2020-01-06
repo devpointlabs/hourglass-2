@@ -10,6 +10,7 @@ import Tasks from './components/Tasks';
 import Session from './components/Session';
 import Project from './components/Project';
 import ProtectedRoute from './components/ProtectedRoute';
+import Timesheet from './components/Timesheet';
 
 const App = () => (
   <Fragment>
@@ -22,6 +23,7 @@ const App = () => (
         <ProtectedRoute exact path='/tasks' component={Tasks} />
         <ProtectedRoute exact path='/project' component={Project} />
         <ProtectedRoute exact path='/session' component={Session} />
+        <ProtectedRoute exact path='/reports' component={Timesheet} />
         <Route component={NoMatch} />
       </Switch>
     </Container>

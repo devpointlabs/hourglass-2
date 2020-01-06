@@ -26,7 +26,7 @@ const NavBar = () => (
         Expenses
       </a>
     </Link>
-    <Link to='/'>
+    <Link to='/reports'>
       <a class="item">
         Reports
       </a>
