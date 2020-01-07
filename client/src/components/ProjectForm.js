@@ -11,7 +11,7 @@ const ProjectForm = (props) => {
   const [budget, setBudget ] = useState("")
   const [spent, setSpent ] = useState("")
   const [cost, setCost ] = useState("")
-  const [project_admin, setProject_Admin ] = useState("")
+  const [project_admins, setProject_Admins ] = useState("")
   const [complete, setComplete] = useState("")
 
 
@@ -50,120 +50,127 @@ const handleClient_NameChange = (e) => {
       setComplete(e.target.value);
   }
 
-  const handleProject_AdminChange = (e) => {
-      setProject_Admin(e.target.value);
+  const handleProject_AdminsChange = (e) => {
+      setProject_Admins(e.target.value);
   }
 
   const handleSubmit = (e) => {
-		e.preventDefault();
-    axios.post("/api/projects", {title, description, client_name, planned_start, planned_end, budget, complete, } )
-    .then( res => {
-        props.history.push('/');
-      })
-      .catch(err => {
-        console.log(err);
-      })
+        e.preventDefault();
+        if(props.isEditing) {
+            axios.post("/api/projects", {title, description, client_name, planned_start, planned_end, budget, cost, spent, project_admins, complete, } )
+            .then( res => {
+                props.history.push('/');
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+        else {
+            axios.put(`/api/projects/${props.project.id}`, {title, description, client_name, planned_start, planned_end, budget, cost, spent, project_admins, complete, })
+        }
   }
 
 
-return (
-    <>
-        <Form onSubmit={handleSubmit}>
-            <Form.Group widths="equal">
-                <Form.Input
-                label="Title"
-                placeholder="Title"
-                name="title"
-                required
-                onChange={handleTitleChange}
-                value={title}
-                />
-                <Form.Input
-                    label="Client Name"
-                    placeholder="Client Name"
-                    name="client name"
+
+    return (
+        <>
+        <br />
+            <Form onSubmit={handleSubmit}>
+                <Form.Group widths="equal">
+                    <Form.Input
+                    label="Title"
+                    placeholder="Title"
+                    name="title"
                     required
-                    onChange={handleClient_NameChange}
-                    value={client_name}
-                />
-            </Form.Group>
-            <Form.Group widths="equal">
-                <Form.Input
-                    type='date'
-                    label="Planned Start"
-                    placeholder="Planned Start"
-                    name="planned start"
+                    onChange={handleTitleChange}
+                    value={title}
+                    />
+                    <Form.Input
+                        label="Client Name"
+                        placeholder="Client Name"
+                        name="client name"
+                        required
+                        onChange={handleClient_NameChange}
+                        value={client_name}
+                    />
+                </Form.Group>
+                <Form.Group widths="equal">
+                    <Form.Input
+                        type='date'
+                        label="Planned Start"
+                        placeholder="Planned Start"
+                        name="planned start"
+                        required
+                        onChange={handlePlanned_StartChange}
+                        value={planned_start}
+                    />
+                    <Form.Input
+                        type='date'
+                        label="Planned End"
+                        placeholder="Planned End"
+                        name="planned end"
+                        required
+                        onChange={handlePlanned_EndChange}
+                        value={planned_end}
+                    />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Input
+                        label="Budget"
+                        type='number'
+                        placeholder="Budget"
+                        name="budget"
+                        required
+                        onChange={handleBudgetChange}
+                        value={budget}
+                    />
+                    <Form.Input
+                        type='number'
+                        label="Spent"
+                        placeholder="Spent"
+                        name="spent"
+                        required
+                        onChange={handleSpentChange}
+                        value={spent}
+                    />
+                    <Form.Input
+                        type='number'
+                        label="Cost"
+                        placeholder="Cost"
+                        name="cost"
+                        required
+                        onChange={handleCostChange}
+                        value={cost}
+                    />
+                    <Form.Input 
+                        label='Project Admins'
+                        placeholder={project_admins}
+                        name='project_admins'
+                        required
+                        onChange={handleProject_AdminsChange}
+                        value={project_admins}
+                    />
+                </Form.Group>
+                    <Form.Input
+                    label='Description'
+                    placeholder='Description'
+                    name='description'
                     required
-                    onChange={handlePlanned_StartChange}
-                    value={planned_start}
-                />
-                <Form.Input
-                    type='date'
-                    label="Planned End"
-                    placeholder="Planned End"
-                    name="planned end"
-                    required
-                    onChange={handlePlanned_EndChange}
-                    value={planned_end}
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Input
-                    label="Budget"
-                    type='number'
-                    placeholder="Budget"
-                    name="budget"
-                    required
-                    onChange={handleBudgetChange}
-                    value={budget}
-                />
-                <Form.Input
-                    type='number'
-                    label="Spent"
-                    placeholder="Spent"
-                    name="spent"
-                    required
-                    onChange={handleSpentChange}
-                    value={spent}
-                />
-                <Form.Input
-                    type='number'
-                    label="Cost"
-                    placeholder="Cost"
-                    name="cost"
-                    required
-                    onChange={handleCostChange}
-                    value={cost}
-                />
-            </Form.Group>
-            <Form.Input
-              label='Description'
-              placeholder='Description'
-              name='description'
-              required
-              onChange={handleDescriptionChange}
-              value={description}
-            />
-            <Form.Input 
-                label='Project Admin'
-                placeholder={project_admin}
-                name='project_admin'
-                required
-                onChange={handleProject_AdminChange}
-                value={project_admin}
-            />
-            <Form.Group>
-                <Form.Radio
-                    label='Completed?'
-                    value='no'
-                    checked={complete === 'yes'}
-                    onChange={handleCompleteChange}
-                />
-                <Icon name='checkmark' />
-            </Form.Group>
-        <Form.Button>Update Project</Form.Button>
-        </Form>
-    </>
+                    onChange={handleDescriptionChange}
+                    value={description}
+                    />
+                <Form.Group>
+                    <Form.Radio
+                        label='Completed?'
+                        value='no'
+                        checked={complete === 'yes'}
+                        onChange={handleCompleteChange}
+                    />
+                    <Icon name='checkmark' />
+                </Form.Group>
+            <Form.Button type='submit'>Update Project</Form.Button>
+            </Form>
+        </>
   )
 }
 
