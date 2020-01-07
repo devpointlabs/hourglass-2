@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { UserConsumer, } from "../providers/UserProvider";
+import { AuthConsumer, } from "../providers/AuthProvider";
 
 class FetchUser extends React.Component {
 
@@ -8,13 +8,13 @@ state = { loaded: false, };
 
 componentDidMount() {
   if (this.props.auth.authenticated) {
-    this.loaded() 
+    this.loaded();
   }
   else {
     if (this.checkLocalToken()) {
       axios.get("/api/auth/validate_token")
         .then(res => {
-          this.props.auth.setUser(res.data)
+          this.props.auth.setUser(res.data);
           this.loaded();
         })
         .catch(err => {
@@ -42,11 +42,11 @@ loaded = () => {
 };
 
 const ConnectedFetchUser = (props) => (
-  <UserConsumer> 
+  <AuthConsumer> 
     {auth => (
       <FetchUser {...props} auth={auth} />
     )}
-  </UserConsumer>
+  </AuthConsumer>
 )
 
 export default ConnectedFetchUser; 
