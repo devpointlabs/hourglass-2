@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 			end
 		end
 		resources :sessions, except: [:new]
+		resources :timesheets, except: [:new]
 	end
 end
