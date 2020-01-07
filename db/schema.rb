@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_03_205931) do
+ActiveRecord::Schema.define(version: 2020_01_06_225609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 2020_01_03_205931) do
     t.string "project_admin"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "spent"
+    t.float "cost"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -36,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_205931) do
     t.bigint "task_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "total_minutes", default: 0
     t.index ["task_id"], name: "index_sessions_on_task_id"
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
@@ -50,6 +53,14 @@ ActiveRecord::Schema.define(version: 2020_01_03_205931) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["project_id"], name: "index_tasks_on_project_id"
+  end
+
+  create_table "timesheets", force: :cascade do |t|
+    t.datetime "start_date"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_timesheets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -86,4 +97,5 @@ ActiveRecord::Schema.define(version: 2020_01_03_205931) do
   add_foreign_key "sessions", "tasks"
   add_foreign_key "sessions", "users"
   add_foreign_key "tasks", "projects"
+  add_foreign_key "timesheets", "users"
 end
