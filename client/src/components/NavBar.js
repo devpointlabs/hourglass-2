@@ -22,6 +22,11 @@ class Navbar extends React.Component {
           </Link>
           </Menu.Item>
           <Menu.Item>
+          <Link to='/projects'>
+              Projects
+          </Link>
+          </Menu.Item>
+          <Menu.Item>
           <Link to='/task'>
             Task
           </Link>
