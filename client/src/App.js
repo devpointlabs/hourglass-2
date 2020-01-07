@@ -10,21 +10,24 @@ import Tasks from './components/Tasks';
 import Session from './components/Session';
 import Project from './components/Project';
 import ProtectedRoute from './components/ProtectedRoute';
+import FetchUser from './components/FetchUser';
 
 const App = () => (
   <Fragment>
     <NavBar />
-    <Container>
-      <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <ProtectedRoute exact path='/' component={Home} />
-        <ProtectedRoute exact path='/tasks' component={Tasks} />
-        <ProtectedRoute exact path='/project' component={Project} />
-        <ProtectedRoute exact path='/session' component={Session} />
-        <Route component={NoMatch} />
-      </Switch>
-    </Container>
+		<FetchUser>
+			<Container>
+				<Switch>
+					<Route exact path="/login" component={Login} />
+					<Route exact path="/register" component={Register} />
+					<ProtectedRoute exact path='/' component={Home} />
+					<ProtectedRoute exact path='/tasks' component={Tasks} />
+					<ProtectedRoute exact path='/project' component={Project} />
+					<ProtectedRoute exact path='/session' component={Session} />
+					<Route component={NoMatch} />
+				</Switch>
+			</Container>
+		</FetchUser>
   </Fragment>
 );
 
