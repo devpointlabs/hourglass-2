@@ -32,7 +32,7 @@ class Navbar extends React.Component {
           </Link>
           </Menu.Item>
           <Menu.Item>
-          <Link to='/'>
+          <Link to='/reports/timesheet'>
               Reports
           </Link>
           </Menu.Item>
