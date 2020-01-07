@@ -7,7 +7,7 @@ const NoMatch = () => (
     <Header as="h1" style={styles.header}>404 Bukaroo</Header>
     <Header as="h1" style={styles.header}>You Best Get On Outta Here</Header>
     <Header as="h3">Before We Have Ourselves An Accident</Header>
-    <Header as="h3">*shoots figure guns*</Header>
+    <Header as="h3">*shoots finger guns*</Header>
     <Link to="/">
       <Button color="red">Home</Button>
     </Link>
