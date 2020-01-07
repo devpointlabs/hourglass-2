@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Header, Container, Dropdown, Menu, Segment, Table, Progress} from "semantic-ui-react"
-import {AuthConsumer} from '../providers/AuthProvider';
 import axios from 'axios';
+import Tasks from './Tasks';
 
 const Projects = (props) => {
 	const [projects, setProjects] = useState([]);
@@ -16,11 +16,11 @@ const Projects = (props) => {
 	},[])
 	
 
-	const ActiveProjects = [
-		{ key: 1, text: 'Choice 1', value: 1 },
-		{ key: 2, text: 'Choice 2', value: 2 },
-		{ key: 3, text: 'Choice 3', value: 3 },
-	]
+	const ActiveProjects = projects.map ( project => {
+			return { key: project.id, text: project.title, value: project.id };
+		}
+	);
+
 
 	const Clients = [
 		{ key: 1, text: 'Choice 1', value: 1 },
@@ -41,7 +41,7 @@ const Projects = (props) => {
 				<Segment>
 					{
 						projects.map(project => {  
-						return <Table striped>
+							return <Table striped>
 								<Table.Header>
 									<Table.Row>
 										<Table.HeaderCell width={3}>{project.client_name}</Table.HeaderCell>
@@ -55,7 +55,7 @@ const Projects = (props) => {
 								</Table.Header>
 							<Table.Body>
 							<Table.Row>
-								<Table.Cell>John</Table.Cell>
+								<Table.Cell>{project.title}</Table.Cell>
 								<Table.Cell>$20,000</Table.Cell>
 								<Table.Cell>$18,000</Table.Cell>
 								<Table.Cell>
@@ -69,37 +69,7 @@ const Projects = (props) => {
 									<Dropdown text='Dropdown' options={Clients} simple item />
 								</Menu>
 							</Table.Row>
-							<Table.Row>
-								<Table.Cell>Ron</Table.Cell>
-								<Table.Cell>$200</Table.Cell>
-								<Table.Cell>$1800</Table.Cell>
-								<Table.Cell>
-									<br />
-										<Progress percent={69} color='blue' size="small" />
-								</Table.Cell>
-								<Table.Cell>$100</Table.Cell>
-								<Table.Cell>$1,000</Table.Cell>
-								<br />
-								<Menu compact>
-									<Dropdown text='Dropdown' options={Clients} simple item />
-								</Menu>
-							</Table.Row>	
-							<Table.Row>
-								<Table.Cell>Don</Table.Cell>
-								<Table.Cell>$200</Table.Cell>
-								<Table.Cell>$180</Table.Cell>
-								
-								<Table.Cell>
-									<br />
-										<Progress percent={2} color='green' size="small" />
-								</Table.Cell>
-								<Table.Cell>$2,000</Table.Cell>
-								<Table.Cell>$15,000</Table.Cell>
-								<br />
-								<Menu compact>
-									<Dropdown text='Dropdown' options={Clients} simple item />
-								</Menu>
-							</Table.Row>
+						
 							</Table.Body>
 							</Table>
 						})
