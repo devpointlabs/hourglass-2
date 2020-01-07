@@ -1,9 +1,8 @@
 class Api::ProjectsController < ApplicationController
-	before_action :authenticate_user!
 	before_action :set_project, only: [:show, :update, :destroy]
 
 	def index
-		render json: current_user.projects.all
+		render json: Projects.all
   end
 
 	def show
