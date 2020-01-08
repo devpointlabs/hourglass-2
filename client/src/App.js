@@ -9,6 +9,7 @@ import Home from './components/Home';
 import Tasks from './components/Tasks';
 import Session from './components/Session';
 import Project from './components/Project';
+import TimesheetForm from './components/TimesheetForm';
 import Projects from './components/Projects';
 import ProtectedRoute from './components/ProtectedRoute';
 import FetchUser from './components/FetchUser';
@@ -27,6 +28,7 @@ const App = () => (
           <ProtectedRoute exact path='/projects' component={Projects} />
           <ProtectedRoute exact path='/projects/:id' component={Project} />
           <ProtectedRoute exact path='/session' component={Session} />
+          <ProtectedRoute exact path='/timesheetform' component={TimesheetForm} />
           <ProtectedRoute exact path='/reports/timesheet' component={Timesheet} />
           <Route component={NoMatch} />
         </Switch>
