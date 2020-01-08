@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Container, Header, Table, Button } from 'semantic-ui-react';
+import {Link} from 'react-router-dom';
 import {AuthConsumer} from '../providers/AuthProvider';
 import ProjectForm from './ProjectForm';
 
@@ -25,7 +26,7 @@ const Project = (props) => {
 
   return (
     <Container>
-      <Header>
+      <Header as='h1'>
         Project
       </Header>
       <br />
@@ -72,7 +73,11 @@ const Project = (props) => {
     <br />
     <br />
     <br />
-      <Button>Back to Projects</Button>
+      <Button>
+        <Link to={`/projects`}>
+					Back to Projects
+        </Link>
+    </Button>
   </Container>
   )
 };
