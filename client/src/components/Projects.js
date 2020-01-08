@@ -61,8 +61,8 @@ const Projects = (props) => {
 									{project.title} 
 									</Link>
 									</Table.Cell>
-								<Table.Cell>$20,000</Table.Cell>
-								<Table.Cell>$18,000</Table.Cell>
+								<Table.Cell>${project.budget}</Table.Cell>
+								<Table.Cell>${project.spent}</Table.Cell>
 								<Table.Cell>
 									<br />
 										<Progress percent={32} color='red' size="small" />
