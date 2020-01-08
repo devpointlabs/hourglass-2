@@ -3,14 +3,14 @@ import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Container, Header, Table, Button } from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
-import {AuthConsumer} from '../providers/AuthProvider';
+import {AuthContext} from '../providers/AuthProvider';
 import ProjectForm from './ProjectForm';
 
 
 const Project = (props) => {
   const [project, setProject] = useState([]);
   const [projectForm, setProjectForm] = useState(false);
-  const user = useContext(AuthConsumer);
+  const user = useContext(AuthContext);
   
   useEffect( () => {
 		const { id } = props.match.params;
@@ -34,8 +34,8 @@ const Project = (props) => {
           { ProjectForm ? "Edit Project" : "Close Form" }
         </Button>
         <br />
-      {projectForm ? <ProjectForm project={project} isEditing={true}  /> 
-      :
+      {projectForm ? <ProjectForm {...props} project={project} isEditing={true} toggleProjectForm={toggleProjectForm} /> 
+      : 
       <>
       <Table celled striped >
       <Table.Header>

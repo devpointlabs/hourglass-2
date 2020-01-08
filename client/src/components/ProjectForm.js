@@ -1,17 +1,18 @@
 import React, { useState, } from "react";
 import axios from "axios";
 import { Form, Icon } from "semantic-ui-react";
+import { Redirect, Router } from "react-router-dom";
 
 const ProjectForm = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [client_name, setClient_Name] = useState("")
-  const [planned_start, setPlanned_Start ] = useState("")
-  const [planned_end, setPlanned_End ] = useState("")
-  const [budget, setBudget ] = useState("")
-  const [spent, setSpent ] = useState("")
-  const [cost, setCost ] = useState("")
-  const [project_admins, setProject_Admins ] = useState("")
+  const [planned_start, setPlanned_Start] = useState("")
+  const [planned_end, setPlanned_End] = useState("")
+  const [budget, setBudget] = useState("")
+  const [spent, setSpent] = useState("")
+  const [cost, setCost] = useState("")
+  const [project_admins, setProject_Admins] = useState("")
   const [complete, setComplete] = useState("")
 
 
@@ -59,7 +60,7 @@ const handleClient_NameChange = (e) => {
         if(!props.isEditing) {
             axios.post("/api/projects", {title, description, client_name, planned_start, planned_end, budget, cost, spent, project_admins, complete, } )
             .then( res => {
-                props.history.push('/');
+                return <Redirect to='/projects' />
             })
             .catch(err => {
                 console.log(err);
@@ -67,8 +68,11 @@ const handleClient_NameChange = (e) => {
         }
         else {
             axios.put(`/api/projects/${props.project.id}`, {title, description, client_name, planned_start, planned_end, budget, cost, spent, project_admins, complete, })
+            .then( res => {
+                props.toggleProjectForm()
+            })
+            };
         }
-  }
 
 
 
@@ -79,7 +83,7 @@ const handleClient_NameChange = (e) => {
                 <Form.Group widths="equal">
                     <Form.Input
                     label="Title"
-                    placeholder="Title"
+                    placeholder=''
                     name="title"
                     required
                     onChange={handleTitleChange}
@@ -87,7 +91,7 @@ const handleClient_NameChange = (e) => {
                     />
                     <Form.Input
                         label="Client Name"
-                        placeholder="Client Name"
+                        placeholder=''
                         name="client name"
                         required
                         onChange={handleClient_NameChange}
@@ -98,18 +102,16 @@ const handleClient_NameChange = (e) => {
                     <Form.Input
                         type='date'
                         label="Planned Start"
-                        placeholder="Planned Start"
+                        placeholder=''
                         name="planned start"
-                        required
                         onChange={handlePlanned_StartChange}
                         value={planned_start}
                     />
                     <Form.Input
                         type='date'
                         label="Planned End"
-                        placeholder="Planned End"
+                        placeholder=''
                         name="planned end"
-                        required
                         onChange={handlePlanned_EndChange}
                         value={planned_end}
                     />
@@ -118,42 +120,38 @@ const handleClient_NameChange = (e) => {
                     <Form.Input
                         label="Budget"
                         type='number'
-                        placeholder="Budget"
+                        placeholder=''
                         name="budget"
-                        required
                         onChange={handleBudgetChange}
                         value={budget}
                     />
                     <Form.Input
                         type='number'
                         label="Spent"
-                        placeholder="Spent"
+                        placeholder=''
                         name="spent"
-                        required
                         onChange={handleSpentChange}
                         value={spent}
                     />
                     <Form.Input
                         type='number'
                         label="Cost"
-                        placeholder="Cost"
+                        placeholder=''
                         name="cost"
-                        required
                         onChange={handleCostChange}
                         value={cost}
                     />
-                    <Form.Input 
+                    <Form.Dropdown 
                         label='Project Admins'
-                        placeholder={project_admins}
+                        placeholder=''
                         name='project_admins'
-                        required
                         onChange={handleProject_AdminsChange}
                         value={project_admins}
                     />
                 </Form.Group>
                     <Form.Input
                     label='Description'
-                    placeholder='Description'
+                    placeholder=''
                     name='description'
                     required
                     onChange={handleDescriptionChange}
@@ -162,8 +160,8 @@ const handleClient_NameChange = (e) => {
                 <Form.Group>
                     <Form.Radio
                         label='Completed?'
-                        value='no'
-                        checked={complete === 'yes'}
+                        value='false'
+                        checked={complete === 'true'}
                         onChange={handleCompleteChange}
                     />
                     <Icon name='checkmark' />
