@@ -24,8 +24,8 @@ const App = () => (
           <Route exact path="/register" component={Register} />
           <ProtectedRoute exact path='/' component={Home} />
           <ProtectedRoute exact path='/tasks' component={Tasks} />
-          <ProtectedRoute exact path='/project' component={Project} />
           <ProtectedRoute exact path='/projects' component={Projects} />
+          <ProtectedRoute exact path='/projects/:id' component={Project} />
           <ProtectedRoute exact path='/session' component={Session} />
           <ProtectedRoute exact path='/reports/timesheet' component={Timesheet} />
           <Route component={NoMatch} />

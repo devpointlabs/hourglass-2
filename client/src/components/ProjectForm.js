@@ -56,7 +56,7 @@ const handleClient_NameChange = (e) => {
 
   const handleSubmit = (e) => {
         e.preventDefault();
-        if(props.isEditing) {
+        if(!props.isEditing) {
             axios.post("/api/projects", {title, description, client_name, planned_start, planned_end, budget, cost, spent, project_admins, complete, } )
             .then( res => {
                 props.history.push('/');

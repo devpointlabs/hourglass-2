@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { Header, Container, Dropdown, Menu, Segment, Table, Progress} from "semantic-ui-react"
 import axios from 'axios';
 import Tasks from './Tasks';
@@ -55,7 +56,11 @@ const Projects = (props) => {
 								</Table.Header>
 							<Table.Body>
 							<Table.Row>
-								<Table.Cell>{project.title}</Table.Cell>
+								<Table.Cell>
+									<Link to={`projects/${project.id}`}>
+									{project.title} 
+									</Link>
+									</Table.Cell>
 								<Table.Cell>$20,000</Table.Cell>
 								<Table.Cell>$18,000</Table.Cell>
 								<Table.Cell>
@@ -69,7 +74,6 @@ const Projects = (props) => {
 									<Dropdown text='Dropdown' options={Clients} simple item />
 								</Menu>
 							</Table.Row>
-						
 							</Table.Body>
 							</Table>
 						})
