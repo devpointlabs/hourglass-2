@@ -10,8 +10,10 @@ import Tasks from './components/Tasks';
 import Session from './components/Session';
 import Project from './components/Project';
 import TimesheetForm from './components/TimesheetForm';
+import Projects from './components/Projects';
 import ProtectedRoute from './components/ProtectedRoute';
 import FetchUser from './components/FetchUser';
+import Timesheet from './components/Timesheet';
 
 const App = () => (
   <Fragment>
@@ -23,9 +25,11 @@ const App = () => (
           <Route exact path="/register" component={Register} />
           <ProtectedRoute exact path='/' component={Home} />
           <ProtectedRoute exact path='/tasks' component={Tasks} />
-          <ProtectedRoute exact path='/project' component={Project} />
+          <ProtectedRoute exact path='/projects' component={Projects} />
+          <ProtectedRoute exact path='/projects/:id' component={Project} />
           <ProtectedRoute exact path='/session' component={Session} />
-          <Route exact path='/timesheetform' component={TimesheetForm} />
+          <ProtectedRoute exact path='/timesheetform' component={TimesheetForm} />
+          <ProtectedRoute exact path='/reports/timesheet' component={Timesheet} />
           <Route component={NoMatch} />
         </Switch>
       </Container>
