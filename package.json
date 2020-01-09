@@ -1,5 +1,3 @@
 {
-  "dependencies": {
-    "devise-axios": "^1.0.24"
-  }
+  "dependencies": {}
 }
