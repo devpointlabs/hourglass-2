@@ -15,14 +15,18 @@ User.create(
 )
 random_users = []
 
-rand(1..7).times do
+7.times do
 	random_users.push(User.all.sample.id)
+	p random_users
 end
 
 random_users = random_users.clean
 
 i = 0
 5.times do 
+	random_admin = admins.sample.id
+	users = random_users - [random_users.sample] + [random_admin];
+	users = users.clean
 	project = Project.create(
 		title: "Project#{i}",
 		description: "This is a project test",
@@ -33,11 +37,11 @@ i = 0
 		complete: false,
 		spent: 500.25 * rand(25),
 		cost: 30.18 * rand(100),
-		project_admins: [admins.sample.id],
-		all_users: random_users
+		project_admins: [random_admin],
+		all_users: users
 	)
 	User.all.each do |u|
-		if project.all_users.include?(u)
+		if project.all_users.include?(u.id)
 			u.update(projects: u.projects.push(project.id))
 		end
 	end
