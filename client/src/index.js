@@ -9,7 +9,6 @@ import { initMiddleware, } from 'devise-axios';
 
 initMiddleware();
 
-
 ReactDOM.render(
   <AuthProvider>
     <BrowserRouter>
@@ -18,4 +17,3 @@ ReactDOM.render(
   </AuthProvider>,
  document.getElementById('root')
 );
-

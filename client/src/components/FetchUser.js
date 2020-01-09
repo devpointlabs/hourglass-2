@@ -18,7 +18,8 @@ componentDidMount() {
           setUser(res.data.data);
           this.loaded();
         })
-        .catch(res => {
+        .catch(err => {
+					console.log(err);
           this.loaded(); 
         })
     }
