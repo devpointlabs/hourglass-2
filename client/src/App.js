@@ -14,6 +14,10 @@ import Projects from './components/Projects';
 import ProtectedRoute from './components/ProtectedRoute';
 import FetchUser from './components/FetchUser';
 import Timesheet from './components/Timesheet';
+import Timesheets from './components/Timesheets';
+import PendingApproval from './components/PendingApproval';
+import Unsubmitted from './components/Unsubmitted';
+import Archive from './components/Archive';
 
 const App = () => (
   <Fragment>
@@ -27,9 +31,13 @@ const App = () => (
           <ProtectedRoute exact path='/tasks' component={Tasks} />
           <ProtectedRoute exact path='/projects' component={Projects} />
           <ProtectedRoute exact path='/projects/:id' component={Project} />
+          <ProtectedRoute exact path='/timesheets' component={Timesheets} />
+          <ProtectedRoute exact path='/pendingapproval' component={PendingApproval} />
           <ProtectedRoute exact path='/session' component={Session} />
           <ProtectedRoute exact path='/timesheetform' component={TimesheetForm} />
-          <ProtectedRoute exact path='/reports/timesheet' component={Timesheet} />
+          <ProtectedRoute exact path='/timesheet' component={Timesheet} />
+          <ProtectedRoute exact path='/unsubmitted' component={Unsubmitted} />
+          <ProtectedRoute exact path='/archive' component={Archive} />
           <Route component={NoMatch} />
         </Switch>
       </Container>
