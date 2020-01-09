@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Dropdown, Icon, Label, Table, TableBody, Divider } from 'semantic-ui-react';
-    
+import { Link } from 'react-router-dom'    
+
 const Teams = [
   { key: 'Team 1', text: 'Team 1', value: 'Team 1' },
   { key: 'Team 2', text: 'Team 2', value: 'Team 2' },
@@ -104,6 +105,20 @@ const footer = (
 
 const Timesheet = () => (
   <>
+   <div class="ui tabular menu">
+    <a class="active item" href="/timesheet">
+      Timesheet
+    </a>
+    <a class="item" href="/pendingapproval">
+      Pending Approval
+    </a>
+    <a class="item">
+      Unubmitted
+    </a>
+    <a class="item">
+      Archive
+    </a>
+  </div>
     <Table basic>
       {header}
     </Table>

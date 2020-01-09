@@ -7,7 +7,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Header, Container, Dropdown, Menu, Segment, Table, Progress} from "semantic-ui-react"
 import axios from 'axios';
-import Tasks from './Tasks';
+
 
 const Projects = (props) => {
 	const [projects, setProjects] = useState([]);
@@ -36,6 +36,21 @@ const Projects = (props) => {
 
 	return (
 		<>
+			<div class="ui menu">
+				<div class="item">
+					<div class="ui primary button" color="purple">+ New Project</div>
+				</div>
+				<div class="item">
+					<div class="ui button">Import</div>
+				</div>
+				<div class="item">
+					<div class="ui button">Export</div>
+				</div>
+				<div class="right menu">
+				<div class="ui input"><input type="text" placeholder="Search..."/></div>
+				</div>
+			</div>
+			
 			<Header as="h1">Projects</Header>
 
 			<Menu compact>
