@@ -1,3 +1,8 @@
+//NEED
+//complete boolean not populating
+//project admins not populating(as we haven't assigned any?)
+//function to pull all users
+
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
@@ -49,6 +54,7 @@ const Project = (props) => {
           <Table.HeaderCell>Spent</Table.HeaderCell>
           <Table.HeaderCell>Cost</Table.HeaderCell>
           <Table.HeaderCell>Project Admins</Table.HeaderCell>
+          <Table.HeaderCell>All Users</Table.HeaderCell>
           <Table.HeaderCell>Complete</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -63,7 +69,8 @@ const Project = (props) => {
           <Table.Cell>{project.budget}</Table.Cell>
           <Table.Cell>{project.spent}</Table.Cell>
           <Table.Cell>{project.cost}</Table.Cell>
-          <Table.HeaderCell>{project.project_admins}</Table.HeaderCell>
+          <Table.Cell>{project.project_admins}</Table.Cell>
+          <Table.Cell>function to pull all project users</Table.Cell>
           <Table.Cell>{project.complete}</Table.Cell>
         </Table.Row>
       </Table.Body>

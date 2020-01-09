@@ -1,19 +1,25 @@
+//NEED:
+//project admin dropdown field populated with users associated with the project
+//'edit form' button to disappear upon form render
+//complete boolean button functionality not working
+//function to add a user??? or would we like that to live somewhere else?
+
 import React, { useState, } from "react";
 import axios from "axios";
 import { Form, Icon } from "semantic-ui-react";
 import { Redirect, Router } from "react-router-dom";
 
 const ProjectForm = (props) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [client_name, setClient_Name] = useState("")
-  const [planned_start, setPlanned_Start] = useState("")
-  const [planned_end, setPlanned_End] = useState("")
-  const [budget, setBudget] = useState("")
-  const [spent, setSpent] = useState("")
-  const [cost, setCost] = useState("")
-  const [project_admins, setProject_Admins] = useState("")
-  const [complete, setComplete] = useState("")
+  const [title, setTitle] = useState(props.project.title);
+  const [description, setDescription] = useState(props.project.description);
+  const [client_name, setClient_Name] = useState(props.project.client_name)
+  const [planned_start, setPlanned_Start] = useState(props.project.planned_start)
+  const [planned_end, setPlanned_End] = useState(props.project.planned_end)
+  const [budget, setBudget] = useState(props.project.budget)
+  const [spent, setSpent] = useState(props.project.spent)
+  const [cost, setCost] = useState(props.project.cost)
+  const [project_admins, setProject_Admins] = useState(props.project.project_admins)
+  const [complete, setComplete] = useState(props.project.complete)
 
 
   const handleTitleChange = (e) => {
@@ -83,7 +89,7 @@ const handleClient_NameChange = (e) => {
                 <Form.Group widths="equal">
                     <Form.Input
                     label="Title"
-                    placeholder=''
+                    placeholder='Title'
                     name="title"
                     required
                     onChange={handleTitleChange}
@@ -91,7 +97,7 @@ const handleClient_NameChange = (e) => {
                     />
                     <Form.Input
                         label="Client Name"
-                        placeholder=''
+                        placeholder='Client Name'
                         name="client name"
                         required
                         onChange={handleClient_NameChange}
@@ -102,56 +108,65 @@ const handleClient_NameChange = (e) => {
                     <Form.Input
                         type='date'
                         label="Planned Start"
-                        placeholder=''
+                        placeholder='Planned Start Date'
                         name="planned start"
+                        required
                         onChange={handlePlanned_StartChange}
                         value={planned_start}
                     />
                     <Form.Input
                         type='date'
                         label="Planned End"
-                        placeholder=''
+                        placeholder='Planned End Date'
                         name="planned end"
+                        required
                         onChange={handlePlanned_EndChange}
                         value={planned_end}
                     />
                 </Form.Group>
                 <Form.Group>
                     <Form.Input
-                        label="Budget"
                         type='number'
-                        placeholder=''
+                        min='0'
+                        label="Budget"
+                        placeholder='Budget'
                         name="budget"
+                        required
                         onChange={handleBudgetChange}
                         value={budget}
                     />
                     <Form.Input
                         type='number'
+                        min='0'
                         label="Spent"
-                        placeholder=''
+                        placeholder='Spent'
                         name="spent"
+                        required
                         onChange={handleSpentChange}
                         value={spent}
                     />
                     <Form.Input
                         type='number'
+                        min='0'
                         label="Cost"
-                        placeholder=''
+                        placeholder='Cost'
                         name="cost"
+                        required
                         onChange={handleCostChange}
                         value={cost}
                     />
                     <Form.Dropdown 
                         label='Project Admins'
-                        placeholder=''
+                        placeholder='Project Admins'
                         name='project_admins'
+                        required
                         onChange={handleProject_AdminsChange}
                         value={project_admins}
                     />
                 </Form.Group>
                     <Form.Input
                     label='Description'
-                    placeholder=''
+                    placeholder='Description'
                     name='description'
                     required
                     onChange={handleDescriptionChange}
