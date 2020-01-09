@@ -1,3 +1,8 @@
+//NEED: 
+//function for the budget progress bar, 
+//function for budget percentage
+//decimal limit on budget, spent, cost.
+
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Header, Container, Dropdown, Menu, Segment, Table, Progress} from "semantic-ui-react"
@@ -67,8 +72,8 @@ const Projects = (props) => {
 									<br />
 										<Progress percent={32} color='red' size="small" />
 								</Table.Cell>
-								<Table.Cell>$2,000</Table.Cell>
-								<Table.Cell>$15,000</Table.Cell>
+								<Table.Cell>${project.budget - project.spent}</Table.Cell>
+								<Table.Cell>{project.cost}</Table.Cell>
 								<br />
 								<Menu compact>
 									<Dropdown text='Dropdown' options={Clients} simple item />
