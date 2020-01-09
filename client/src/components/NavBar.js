@@ -37,7 +37,7 @@ class Navbar extends React.Component {
           </Link>
           </Menu.Item>
           <Menu.Item>
-          <Link to='/'>
+          <Link to='/expenses'>
               Expenses
           </Link>
           </Menu.Item>
@@ -47,28 +47,28 @@ class Navbar extends React.Component {
           </Link>
           </Menu.Item>
           <Menu.Item>
-          <Link to='/'>
+          <Link to='/invoices'>
               Invoices
           </Link>
           </Menu.Item>
           <Menu.Item>
-          <Link to='/'>
+          <Link to='/estimates'>
               Estimates
           </Link>
           </Menu.Item>
           <Menu.Item>
-          <Link to='/'>
+          <Link to='/manage'>
               Manage
           </Link>
           </Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item>
-            <Link to='/'>
+            <Link to='/help'>
             Help
             </Link>
           </Menu.Item>
           <Menu.Item>
-          <Link to='/'>
+          <Link to='/settings'>
             Settings
             </Link>
           </Menu.Item>
@@ -125,3 +125,4 @@ export class ConnectedNavbar extends React.Component {
 };
 
 export default withRouter(ConnectedNavbar);
+
