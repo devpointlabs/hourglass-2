@@ -39,7 +39,8 @@ const Project = (props) => {
           { ProjectForm ? "Edit Project" : "Close Form" }
         </Button>
         <br />
-      {projectForm ? <ProjectForm {...props} project={project} isEditing={true} toggleProjectForm={toggleProjectForm} /> 
+      {projectForm ? <ProjectForm {...props} project={project} isEditing={true} toggleProjectForm={toggleProjectForm} 
+      /> 
       : 
       <>
       <Table celled striped >
@@ -70,7 +71,7 @@ const Project = (props) => {
           <Table.Cell>{project.spent}</Table.Cell>
           <Table.Cell>{project.cost}</Table.Cell>
           <Table.Cell>{project.project_admins}</Table.Cell>
-          <Table.Cell>function to pull all project users</Table.Cell>
+          <Table.Cell>{project.all_users}</Table.Cell>
           <Table.Cell>{project.complete}</Table.Cell>
         </Table.Row>
       </Table.Body>

@@ -53,19 +53,20 @@ const handleClient_NameChange = (e) => {
     setCost(e.target.value);
   }
 
-  const handleCompleteChange = (e) => {
-      setComplete(e.target.value);
-  }
-
   const handleProject_AdminsChange = (e) => {
       setProject_Admins(e.target.value);
+  }
+
+  const handleCompleteChange = (e) => {
+      setComplete(e.target.value);
   }
 
   const handleSubmit = (e) => {
         e.preventDefault();
         if(!props.isEditing) {
-            axios.post("/api/projects", {title, description, client_name, planned_start, planned_end, budget, cost, spent, project_admins, complete, } )
+            axios.post(`/api/projects`, {title, description, client_name, planned_start, planned_end, budget, cost, spent, project_admins, complete, } )
             .then( res => {
+                props.toggleProjectForm()
                 return <Redirect to='/projects' />
             })
             .catch(err => {
@@ -173,15 +174,15 @@ const handleClient_NameChange = (e) => {
                     value={description}
                     />
                 <Form.Group>
-                    <Form.Radio
+                    <Form.Checkbox
+                        type='checkbox'
                         label='Completed?'
-                        value='false'
                         checked={complete === 'true'}
                         onChange={handleCompleteChange}
+                        value={complete}
                     />
-                    <Icon name='checkmark' />
                 </Form.Group>
-            <Form.Button type='submit'>Update Project</Form.Button>
+            <Form.Button inverted color="purple" type='submit'>Submit</Form.Button>
             </Form>
         </>
   )
