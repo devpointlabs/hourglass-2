@@ -6,5 +6,13 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :trackable
   include DeviseTokenAuth::Concerns::User
   has_many :sessions
-  has_many :tasks, through: :sessions
+	has_many :tasks, through: :sessions
+	
+	def self.get_projects
+		arr = []
+		self.projects.each do |p|
+			arr.push(Project.find(p))
+		end
+		arr
+	end
 end

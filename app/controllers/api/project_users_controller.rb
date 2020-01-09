@@ -1,14 +1,14 @@
-class Api::ProjectAdminsController < ApplicationController
+class Api::ProjectUsersController < ApplicationController
 	before_action :authenticate_user!
 	before_action :set_project
 
 	def index
-		render json: @project.get_admins
+		render json: @project.get_users
   end
 
 	def update
-		if @project.update(admin_params)
-			render json: @project.project_admins
+		if @project.update(users_params)
+			render json: @project.all_users
 		else
 			render json: @project.errors, status: 422
 		end
@@ -19,8 +19,8 @@ class Api::ProjectAdminsController < ApplicationController
 			@project = Project.find(params[:id])
 		end
 
-		def admin_params
-			params.require(:project).permit(:project_admins)
+		def users_params
+			params.require(:project).permit(:all_users)
 		end
 
 end
