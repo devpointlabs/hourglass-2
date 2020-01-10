@@ -20,4 +20,21 @@ class User < ApplicationRecord
 		self.update(projects: self.projects.push(id))
 	end
 
+	def self.search str
+		unless str.empty?
+			return User.find_by_sql(%(
+				SELECT * 
+				FROM users AS u
+				WHERE u.first_name LIKE '%#{str}%' OR u.last_name LIKE '%#{str}%' OR u.nickname LIKE '%#{str}%'
+				)
+			)
+		else
+			return User.find_by_sql(%(
+				SELECT * 
+				FROM users
+				)
+			)
+		end
+	end
+
 end
