@@ -4,6 +4,7 @@ class Api::ProjectsController < ApplicationController
 
 	def index
 		render json: current_user.get_projects
+		# render json: Project.all
   end
 
 	def show

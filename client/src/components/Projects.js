@@ -105,7 +105,7 @@ const Projects = (props) => {
                       </Table.Cell>
                       <Table.Cell>
                         <br />	
-                        <Progress percent={32} color='red' size="small" />
+                        <Progress percent={(project.spent/project.budget)*100} color='red' size="small" />
                       </Table.Cell>
                       <Table.Cell>
                         ${project.budget - project.spent}

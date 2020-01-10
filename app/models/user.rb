@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :sessions
 	has_many :tasks, through: :sessions
 	
-	def self.get_projects
+	def get_projects
 		arr = []
 		self.projects.each do |p|
 			arr.push(Project.find(p))
