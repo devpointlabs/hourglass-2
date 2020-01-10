@@ -15,4 +15,9 @@ class User < ApplicationRecord
 		end
 		arr
 	end
+
+	def add_project id
+		self.update(projects: self.projects.push(id))
+	end
+
 end

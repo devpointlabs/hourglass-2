@@ -14,6 +14,7 @@ class Api::ProjectsController < ApplicationController
 	def create
 		project = Project.new(project_params)
 		if project.save
+			current_user.add_project project.id
 			render json: project
 		else
 			render json: project.errors, status: 422
