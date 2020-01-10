@@ -1,30 +1,36 @@
+//NEED
+//logo from DPL to replace 'home'
+//fix alignment, 
+
 import React from 'react'
 import { AuthConsumer, } from "../providers/AuthProvider";
-import { Menu, } from 'semantic-ui-react'
+import { Menu, Dropdown, Container } from 'semantic-ui-react'
 import { Link, withRouter, } from 'react-router-dom'
 
 class Navbar extends React.Component {
+
+  
 
   rightNavItems = () => {
     const { auth: { user, handleLogout, }, location, } = this.props;
 
     if (user) {
       return (
-        <Menu color='purple' inverted>
+          <Menu color='purple' inverted>
           <Menu.Item>
-          <Link to='/'>
-              Home
-          </Link>
+            <Link to='/'>
+                Home
+            </Link>
           </Menu.Item>
           <Menu.Item>
-          <Link to='/session'>
-              Sessions
-          </Link>
+            <Link to='/session'>
+                Sessions
+            </Link>
           </Menu.Item>
           <Menu.Item>
-          <Link to='/projects'>
-              Projects
-          </Link>
+            <Link to='/projects'>
+                Projects
+            </Link>
           </Menu.Item>
           <Menu.Item>
             <Link to='/timesheets'>
@@ -32,51 +38,58 @@ class Navbar extends React.Component {
             </Link>
           </Menu.Item>
           <Menu.Item>
-          <Link to='/task'>
-            Task
-          </Link>
-          </Menu.Item>
-          <Menu.Item>
-          <Link to='/expenses'>
-              Expenses
-          </Link>
-          </Menu.Item>
-          <Menu.Item>
-          <Link to='/reports/timesheet'>
-              Reports
-          </Link>
-          </Menu.Item>
-          <Menu.Item>
-          <Link to='/invoices'>
-              Invoices
-          </Link>
-          </Menu.Item>
-          <Menu.Item>
-          <Link to='/estimates'>
-              Estimates
-          </Link>
-          </Menu.Item>
-          <Menu.Item>
-          <Link to='/manage'>
-              Manage
-          </Link>
-          </Menu.Item>
-        <Menu.Menu position='right'>
-          <Menu.Item>
-            <Link to='/help'>
-            Help
+            <Link to='/task'>
+              Task
             </Link>
           </Menu.Item>
           <Menu.Item>
-          <Link to='/settings'>
-            Settings
+            <Link to='/expenses'>
+                Expenses
             </Link>
           </Menu.Item>
-          <Menu.Item
-            name='logout'
-            onClick={() => handleLogout(this.props.history)}>Logout
+          <Menu.Item>
+            <Link to='/reports/timesheet'>
+                Reports
+            </Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to='/invoices'>
+                Invoices
+            </Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to='/estimates'>
+                Estimates
+            </Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to='/manage'>
+                Manage
+            </Link>
+          </Menu.Item>
+          <Menu.Menu position='right'>
+            <Menu.Item>
+              <Link to='/help'>
+              Help
+              </Link>
             </Menu.Item>
-        </Menu.Menu>
+            <Menu.Item>
+              <Link to='/settings'>
+                  Settings
+                </Link>
+            </Menu.Item>
+            <Dropdown item text={user.email}>
+              <Dropdown.Menu color='purple' inverted>
+                <Dropdown.Item text='Your Profile' a href='/profile' />
+                <Dropdown.Item text='Settings' a href='/settings' />
+                <Dropdown.Item
+                  name='logout'
+                  onClick={() => handleLogout(this.props.history)}>
+                    Logout
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu.Menu>
         </Menu>
       )
     } else {
@@ -103,11 +116,11 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <>
+      <div>
         <Menu color='purple' inverted borderless>
           { this.rightNavItems() }
         </Menu>
-        </>
+      </div>
     );
   };
 };
@@ -126,3 +139,45 @@ export class ConnectedNavbar extends React.Component {
 
 export default withRouter(ConnectedNavbar);
 
+
+
+//<div class="ui right dropdown item">
+// More
+{/* <i class="dropdown icon"></i>
+<div class="menu">
+  <div class="item">Applications</div>
+  <div class="item">International Students</div>
+  <div class="item">Scholarships</div>
+</div>
+</div>
+</div>
+<div class="ui flowing basic admission popup">
+<div class="ui three column relaxed divided grid">
+<div class="column">
+  <h4 class="ui header">Business</h4>
+  <div class="ui link list">
+    <a class="item">Design &amp; Urban Ecologies</a>
+    <a class="item">Fashion Design</a>
+    <a class="item">Fine Art</a>
+    <a class="item">Strategic Design</a>
+  </div>
+</div>
+<div class="column">
+  <h4 class="ui header">Liberal Arts</h4>
+  <div class="ui link list">
+    <a class="item">Anthropology</a>
+    <a class="item">Economics</a>
+    <a class="item">Media Studies</a>
+    <a class="item">Philosophy</a>
+  </div>
+</div>
+<div class="column">
+  <h4 class="ui header">Social Sciences</h4>
+  <div class="ui link list">
+    <a class="item">Food Studies</a>
+    <a class="item">Journalism</a>
+    <a class="item">Non Profit Management</a>
+  </div>
+</div>
+</div>
+</div> */}
