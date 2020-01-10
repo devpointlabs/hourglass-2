@@ -1,17 +1,26 @@
 
 a = User.create(
   email:'admin@hourglass.com',
-  password: 'password'
+	password: 'password',
+	first_name: Faker::Name.first_name,
+	last_name: Faker::Name.last_name,
+	nickname: Faker::Creature::Animal.name
 )
 a1 = User.create(
   email:'admin1@hourglass.com',
-  password: 'password'
+	password: 'password',
+	first_name: Faker::Name.first_name,
+	last_name: Faker::Name.last_name,
+	nickname: Faker::Creature::Animal.name
 )
 
 admins = [a, a1]
 User.create(
   email:'standard@hourglass.com',
-  password: 'password'
+	password: 'password',
+	first_name: Faker::Name.first_name,
+	last_name: Faker::Name.last_name,
+	nickname: Faker::Creature::Animal.name
 )
 random_users = []
 

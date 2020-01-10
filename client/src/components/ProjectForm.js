@@ -8,18 +8,20 @@ import React, { useState, } from "react";
 import axios from "axios";
 import { Form, Icon } from "semantic-ui-react";
 import { Redirect, Router } from "react-router-dom";
+import Search from "./Search";
 
 const ProjectForm = (props) => {
   const [title, setTitle] = useState(props.project.title);
   const [description, setDescription] = useState(props.project.description);
-  const [client_name, setClient_Name] = useState(props.project.client_name)
-  const [planned_start, setPlanned_Start] = useState(props.project.planned_start)
-  const [planned_end, setPlanned_End] = useState(props.project.planned_end)
-  const [budget, setBudget] = useState(props.project.budget)
-  const [spent, setSpent] = useState(props.project.spent)
-  const [cost, setCost] = useState(props.project.cost)
-  const [project_admins, setProject_Admins] = useState(props.project.project_admins)
-  const [complete, setComplete] = useState(props.project.complete)
+  const [client_name, setClient_Name] = useState(props.project.client_name);
+  const [planned_start, setPlanned_Start] = useState(props.project.planned_start);
+  const [planned_end, setPlanned_End] = useState(props.project.planned_end);
+  const [budget, setBudget] = useState(props.project.budget);
+  const [spent, setSpent] = useState(props.project.spent);
+  const [cost, setCost] = useState(props.project.cost);
+  const [project_admins, setProject_Admins] = useState(props.project.project_admins);
+  const [project_users, setProject_Users] = useState(props.project.all_users);
+  const [complete, setComplete] = useState(props.project.complete);
 
 
   const handleTitleChange = (e) => {
@@ -55,6 +57,10 @@ const handleClient_NameChange = (e) => {
 
   const handleProject_AdminsChange = (e) => {
       setProject_Admins(e.target.value);
+	}
+	
+  const handleProject_UsersChange = (e) => {
+      setProject_Users(e.target.value);
   }
 
   const handleCompleteChange = (e) => {
@@ -164,6 +170,15 @@ const handleClient_NameChange = (e) => {
                         onChange={handleProject_AdminsChange}
                         value={project_admins}
                     />
+                    <Form.Dropdown 
+                        label='Project Users'
+                        placeholder='Project Users'
+                        name='all_users'
+                        required
+                        onChange={handleProject_UsersChange}
+                        value={project_users}
+                    />
+										<Search/>
                 </Form.Group>
                     <Form.Input
                     label='Description'
