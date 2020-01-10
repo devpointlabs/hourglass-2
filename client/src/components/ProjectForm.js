@@ -66,7 +66,7 @@ const handleClient_NameChange = (e) => {
         if(!props.isEditing) {
             axios.post(`/api/projects`, {title, description, client_name, planned_start, planned_end, budget, cost, spent, project_admins, complete, } )
             .then( res => {
-                props.toggleProjectForm()
+								props.toggleProjectForm();
                 return <Redirect to='/projects' />
             })
             .catch(err => {
@@ -76,7 +76,7 @@ const handleClient_NameChange = (e) => {
         else {
             axios.put(`/api/projects/${props.project.id}`, {title, description, client_name, planned_start, planned_end, budget, cost, spent, project_admins, complete, })
             .then( res => {
-                props.toggleProjectForm()
+                props.toggleProjectForm();
             })
             };
         }
