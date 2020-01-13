@@ -4,8 +4,9 @@
 
 import React from 'react'
 import { AuthConsumer, } from "../providers/AuthProvider";
-import { Menu, Dropdown, Container } from 'semantic-ui-react'
+import { Menu, Dropdown, Image } from 'semantic-ui-react'
 import { Link, withRouter, } from 'react-router-dom'
+import hourglass from './Images/hourglass_icon.png'
 
 class Navbar extends React.Component {
 
@@ -16,15 +17,13 @@ class Navbar extends React.Component {
 
     if (user) {
       return (
-          <Menu color='purple' inverted>
+        <Menu color='violet' inverted>
           <Menu.Item>
-            <Link to='/'>
-                Home
-            </Link>
+              <Image src={hourglass} href="/" />
           </Menu.Item>
           <Menu.Item>
-            <Link to='/session'>
-                Sessions
+            <Link to='/timesheets'>
+              Time
             </Link>
           </Menu.Item>
           <Menu.Item>
@@ -33,55 +32,48 @@ class Navbar extends React.Component {
             </Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to='/timesheets'>
-            Time
+          <Link to='/'>
+                Team
             </Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to='/task'>
-              Task
-            </Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Link to='/expenses'>
-                Expenses
-            </Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Link to='/reports/timesheet'>
+            {/* <Link to='/reports/timesheet'>
                 Reports
-            </Link>
+            </Link> */}
           </Menu.Item>
-          <Menu.Item>
-            <Link to='/invoices'>
-                Invoices
-            </Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Link to='/estimates'>
-                Estimates
-            </Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Link to='/manage'>
-                Manage
-            </Link>
+          <Menu.Item>  
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>      
+          </Menu.Item><Menu.Item>
+          </Menu.Item><Menu.Item>
           </Menu.Item>
           <Menu.Menu position='right'>
-            <Menu.Item>
-              <Link to='/help'>
-              Help
-              </Link>
-            </Menu.Item>
-            <Menu.Item>
-              <Link to='/settings'>
-                  Settings
-                </Link>
-            </Menu.Item>
             <Dropdown item text={user.email}>
-              <Dropdown.Menu color='purple' inverted>
+              <Dropdown.Menu color='violet ' inverted>
                 <Dropdown.Item text='Your Profile' a href='/profile' />
                 <Dropdown.Item text='Settings' a href='/settings' />
+                <Dropdown.Item text='Help' a href='/help' />
                 <Dropdown.Item
                   name='logout'
                   onClick={() => handleLogout(this.props.history)}>
@@ -117,7 +109,7 @@ class Navbar extends React.Component {
   render() {
     return (
       <div>
-        <Menu color='purple' inverted borderless>
+        <Menu color='violet' inverted borderless>
           { this.rightNavItems() }
         </Menu>
       </div>

@@ -111,10 +111,10 @@ const Timesheet = () => (
     <a className="item" href="/pendingapproval">
       Pending Approval
     </a>
-    <a className="item">
+    <a className="item" href="/unsubmitted" >
       Unubmitted
     </a>
-    <a className="item">
+    <a className="item" href="/archive">
       Archive
     </a>
   </div>
