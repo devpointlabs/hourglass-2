@@ -20,6 +20,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Register from './components/Register';
 import Session from './components/Session';
 import Settings from './components/Settings';
+import TabMenu from './components/TabMenu';
 import Task from './components/Task';
 import Timesheet from './components/Timesheet';
 import TimesheetForm from './components/TimesheetForm';
@@ -52,6 +53,7 @@ const App = () => (
           <ProtectedRoute exact path='/timesheet' component={Timesheet} />
           <ProtectedRoute exact path='/unsubmitted' component={Unsubmitted} />
           <ProtectedRoute exact path='/archive' component={Archive} />
+          <ProtectedRoute exact path='/tabmenu' component={TabMenu} />
           <Route component={NoMatch} />
         </Switch>
       </Container>
