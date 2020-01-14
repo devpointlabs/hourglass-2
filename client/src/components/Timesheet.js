@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect, } from 'react';
 import { Button, Dropdown, Icon, Label, Table, } from 'semantic-ui-react';
+import axios from 'axios';
+
 
 const Teams = [
   { key: 'Team 1', text: 'Team 1', value: 'Team 1' },
@@ -8,6 +10,9 @@ const Teams = [
   { key: 'Team 4', text: 'Team 4', value: 'Team 4' },
   { key: 'Team 5', text: 'Team 5', value: 'Team 5' },
 ]
+
+
+
 
 
 const header = (
@@ -52,41 +57,68 @@ const header = (
   
 )
 
-const body = (
-  <Table.Body>
-    <Table.Row>
-      <Table.Cell collapsing>
-        <Button color='purple' icon='plus square' />
-      </Table.Cell>
-      <Table.Cell >
-        Monday
-      </Table.Cell>
-      <Table.Cell>
-        Tuesday
-      </Table.Cell>
-      <Table.Cell>
-        Wednesday
-      </Table.Cell>
-      <Table.Cell>
-        Thursday
-      </Table.Cell>
-      <Table.Cell>
-        Friday
-      </Table.Cell>
-      <Table.Cell>
-        Saturday
-      </Table.Cell>
-      <Table.Cell>
-        Sunday
-      </Table.Cell>
-      <Table.Cell>
-        Weekly
-      </Table.Cell>
-    </Table.Row>
-  </Table.Body>
-)
-
-const footer = (
+const Body = () => {
+  const [time, setTime] = useState([]);
+  
+    useEffect( () => {
+      axios.get(`/api/timesheets`)
+        .then( res => {
+          setTime(res.data);
+        })
+    }, [])
+  
+    return (
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>
+            <Button color='purple' icon='plus square' />
+          </Table.Cell>
+          <Table.Cell >
+            Monday
+            <br />
+            5.00
+          </Table.Cell>
+          <Table.Cell>
+            Tuesday
+            <br />
+            5.00
+          </Table.Cell>
+          <Table.Cell>
+            Wednesday
+            <br />
+            5.00
+          </Table.Cell>
+          <Table.Cell>
+            Thursday
+            <br />
+            5.00
+          </Table.Cell>
+          <Table.Cell>
+            Friday
+            <br />
+            5.00
+          </Table.Cell>
+          <Table.Cell>
+            Saturday
+            <br />
+            5.00
+          </Table.Cell>
+          <Table.Cell>
+            Sunday
+            <br />
+            5.00
+          </Table.Cell>
+          <Table.Cell>
+            Weekly
+            <br />
+            45.00
+          </Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    )
+  }
+  
+  const footer = (
   <Table.Footer>
     <Table.HeaderCell colSpan='7'>
       <Table.Row>
@@ -122,7 +154,7 @@ const Timesheet = () => (
       {header}
     </Table>
     <Table celled striped selectable>
-      {body}
+      <Body/>
     </Table>
     <Table basic>
       {footer}
