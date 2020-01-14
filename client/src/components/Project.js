@@ -31,6 +31,7 @@ const Project = (props) => {
 
   return (
     <Container>
+      <br />
       <Header as='h1'>
         Project
       </Header>
@@ -46,11 +47,13 @@ const Project = (props) => {
       <Table celled striped >
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>Title</Table.HeaderCell>
+          <Table.HeaderCell>Project Name</Table.HeaderCell>
+          <Table.HeaderCell>Project Code</Table.HeaderCell>
           <Table.HeaderCell>Description</Table.HeaderCell>
           <Table.HeaderCell>Client Name</Table.HeaderCell>
           <Table.HeaderCell>Planned Start</Table.HeaderCell>
           <Table.HeaderCell>Planned End</Table.HeaderCell>
+          <Table.HeaderCell>Project Type</Table.HeaderCell>
           <Table.HeaderCell>Budget</Table.HeaderCell>
           <Table.HeaderCell>Spent</Table.HeaderCell>
           <Table.HeaderCell>Cost</Table.HeaderCell>
@@ -63,10 +66,12 @@ const Project = (props) => {
       <Table.Body>
         <Table.Row>
           <Table.Cell>{project.title}</Table.Cell>
+          <Table.Cell>'project.code'</Table.Cell>
           <Table.Cell>{project.description}</Table.Cell>
           <Table.Cell>{project.client_name}</Table.Cell>
           <Table.Cell>{project.planned_start}</Table.Cell>
           <Table.Cell>{project.planned_end}</Table.Cell>
+          <Table.Cell>'project.type'</Table.Cell>
           <Table.Cell>{project.budget}</Table.Cell>
           <Table.Cell>{project.spent}</Table.Cell>
           <Table.Cell>{project.cost}</Table.Cell>
@@ -78,8 +83,6 @@ const Project = (props) => {
       </Table>
     </>
     }
-    <br />
-    <br />
     <br />
       <Button>
         <Link to={`/projects`}>
