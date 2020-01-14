@@ -55,3 +55,5 @@ export class AuthProvider extends React.Component {
     )
   }
 };
+
+export default AuthProvider;
