@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tab, Form } from 'semantic-ui-react'
+import { Tab, Form, Checkbox } from 'semantic-ui-react'
 
 const Panes = (props)=> ( [
   {
@@ -48,36 +48,35 @@ const Panes = (props)=> ( [
     menuItem: 'Fixed Fee',
     render: () => 
     <Tab.Pane attached={false}>
-          <h4>Placeholder</h4>
-          <p>Set a budget to track total project expenses.</p>
+          <h4>Project Fees</h4>
+          <p>Enter the amount you plan to invoice.</p>
           <Form.Group>
-            <Form.Input
+            $<Form.Input
               type='number'
               min='0'
-              placeholder='placeholder'
+              placeholder=''
               name=""
-              required
               onChange=''
               value=''
-            />$
-            <Form.Input 
-              width={4}
-              placeholder='calculation goes here'
-              readOnly
             />
           </Form.Group>
-          <h4>Placeholder</h4>
-          <p>Set a budget to track total project expenses.</p>
+          <h4>Budget</h4>
           <Form.Group>
-            <Form.Input
-              type='number'
-              min='0'
-              placeholder='placeholder'
-              name="budget"
-              required
-              onChange='{}'
-              value='{}'
+            <Form.Dropdown placeholder='Total Project Fees'/>
+            $
+            <Form.Input 
+              width={4}
+              placeholder=''
+              readOnly
             />
+            </Form.Group>
+            <Form.Group>
+            <Checkbox label='Budget includes billable and non-billable project expenses.' />
+          </Form.Group>
+            <h4>Project Fees</h4>
+            <p>Enter the amount you plan to invoice.</p>
+          <Form.Group>
+          <Form.Dropdown placeholder='project hourly rate'/>
             $
             <Form.Input 
               width={4}
@@ -91,36 +90,10 @@ const Panes = (props)=> ( [
     menuItem: 'Non-Billable',
     render: () => 
     <Tab.Pane attached={false}>
-    <h4>Placeholder</h4>
-    <p>Set a budget to track total project expenses.</p>
+    <h4>Budget</h4>
+      <p>Set a budget to track project progress.</p>
       <Form.Group>
-        <Form.Input
-          type='number'
-          min='0'
-          placeholder='Placeholder'
-          name=""
-          required
-          onChange=''
-          value=''
-        />$
-        <Form.Input 
-          width={4}
-          placeholder='calculation goes here'
-          readOnly
-        />
-      </Form.Group>
-      <h4>Placeholder</h4>
-      <p>Set a budget to track total project expenses.</p>
-      <Form.Group>
-        <Form.Input
-          type='number'
-          min='0'
-          placeholder='placeholder'
-          name="budget"
-          required
-          onChange='{handleBudgetChange}'
-          value='{budget}'
-        />
+        <Form.Dropdown placeholder='No budget.'/>
         $
         <Form.Input 
           width={4}

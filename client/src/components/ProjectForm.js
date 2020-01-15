@@ -1,4 +1,5 @@
 //NEED:
+//client dropdown menu to populate with available clients
 //project admin dropdown field populated with users associated with the project
 //'edit form' button to disappear upon form render
 //complete?
@@ -68,14 +69,18 @@ const ProjectForm = (props) => {
         setComplete(e.target.value);
     }
 
-
+    const clientOptions = [
+        { key: 'Client 1', text: 'Client 1', value: 'Client 1' },
+        { key: 'Client 2', text: 'Client 2', value: 'Client 2' },
+        { key: 'Client 3', text: 'Client 3', value: 'Client 3' },
+    ]
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if(!props.isEditing) {
             axios.post(`/api/projects`, {title, description, client_name, planned_start, planned_end, budget, cost, spent, project_admins, complete, } )
             .then( res => {
-                                props.toggleProjectForm();
+                props.toggleProjectForm();
                 return <Redirect to='/projects' />
             })
             .catch(err => {
@@ -99,20 +104,22 @@ const ProjectForm = (props) => {
                 <Form.Group>
                     <Form.Dropdown
                         width={9}
+                        fluid
+                        selection
                         label="Client"
                         placeholder='Choose a client...'
-                        name="client name"
-                        required
+                        options={clientOptions}
                         onChange={handleClient_NameChange}
                         value={client_name}
                     />
-                    <Form.Button 
-                        inverted 
-                        color="purple"
+                    <Form.Input
                         width={3}
-                        onClick={handleClient_NameChange}
-                        >+ New Client
-                    </Form.Button>
+                        label=' '
+                        placeholder='+ New Client'
+                        name="client name"
+                        onChange={handleClient_NameChange}
+                        value={client_name}
+                    />
                 </Form.Group>
                 <Form.Group> 
                     <Form.Input
@@ -197,52 +204,3 @@ const ProjectForm = (props) => {
 }
 
 export default ProjectForm;
-
-
-
-
-{/* <Form.Input
-type='number'
-min='0'
-label="Budget"
-placeholder='Budget'
-name="budget"
-required
-onChange={handleBudgetChange}
-value={budget}
-/>
-<Form.Input
-type='number'
-min='0'
-label="Spent"
-placeholder='Spent'
-name="spent"
-required
-onChange={handleSpentChange}
-value={spent}
-/>
-<Form.Input
-type='number'
-min='0'
-label="Cost"
-placeholder='Cost'
-name="cost"
-required
-onChange={handleCostChange}
-value={cost}
-/> 
-<Form.Checkbox
-type='checkbox'
-label='Completed?'
-checked={complete === 'true'}
-onChange={handleCompleteChange}
-value={complete}
-/>
-<Form.Dropdown 
-label='Project Admins'
-placeholder='Project Admins'
-name='project_admins'
-required
-onChange={handleProject_AdminsChange}
-value={project_admins}
-/> */}
