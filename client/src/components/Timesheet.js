@@ -1,6 +1,7 @@
 import React, { useState, useEffect, } from 'react';
-import { Button, Dropdown, Icon, Label, Table, } from 'semantic-ui-react';
+import { Button, Dropdown, Icon, Label, Table, Popup, } from 'semantic-ui-react';
 import axios from 'axios';
+import Cal from './Calendar';
 
 
 const Teams = [
@@ -33,9 +34,12 @@ const header = (
           </Button.Group>
         </Table.HeaderCell>
         <Table.HeaderCell>
-          <Button icon>
-            <Icon name='calendar alternate outline' />
-          </Button>
+        <Popup
+          content={<Cal />}
+          on='click'
+          pinned
+          trigger={<Button icon='calendar alternate outline' />}
+        />
         </Table.HeaderCell>
         <Table.HeaderCell>
           <Button.Group buttons={['Day', 'Week']} />
@@ -60,12 +64,12 @@ const header = (
 const Body = () => {
   const [time, setTime] = useState([]);
   
-    useEffect( () => {
-      axios.get(`/api/timesheets`)
-        .then( res => {
-          setTime(res.data);
-        })
-    }, [])
+  useEffect( () => {
+    axios.get(`/api/timesheets`)
+      .then( res => {
+        setTime(res.data);
+      })
+   }, [])
   
     return (
       <Table.Body>
@@ -111,7 +115,7 @@ const Body = () => {
           <Table.Cell>
             Weekly
             <br />
-            45.00
+            35.00
           </Table.Cell>
         </Table.Row>
       </Table.Body>
