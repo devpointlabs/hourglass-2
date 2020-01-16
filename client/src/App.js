@@ -56,6 +56,7 @@ const App = () => (
           <ProtectedRoute exact path='/unsubmitted' component={Unsubmitted} />
           <ProtectedRoute exact path='/archive' component={Archive} />
           <ProtectedRoute exact path='/tabmenu' component={TabMenu} />
+          <ProtectedRoute exact path='/tabmenu' component={TabMenu} />
           <Route component={NoMatch} />
         </Switch>
       </Container>
