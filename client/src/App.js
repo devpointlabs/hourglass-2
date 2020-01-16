@@ -7,8 +7,8 @@ import Expenses from './components/Expenses';
 import FetchUser from './components/FetchUser';
 import Help from './components/Help';
 import Home from './components/Home';
-import Login from './components/Login';
 import Invoices from './components/Invoices';
+import Login from './components/Login';
 import Manage from './components/Manage';
 import NavBar from './components/NavBar';
 import NoMatch from './components/NoMatch';
@@ -21,7 +21,9 @@ import Register from './components/Register';
 import Session from './components/Session';
 import Settings from './components/Settings';
 import TabMenu from './components/TabMenu';
+import StopWatch from './components/StopWatch';
 import Task from './components/Task';
+// import Test from './components/Test';
 import Timesheet from './components/Timesheet';
 import TimesheetForm from './components/TimesheetForm';
 import Timesheets from './components/Timesheets';
@@ -36,21 +38,24 @@ const App = () => (
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <ProtectedRoute exact path='/' component={Home} />
-          <ProtectedRoute exact path='/session' component={Session} />
-          <ProtectedRoute exact path='/projects' component={Projects} />
-          <ProtectedRoute exact path='/timesheets' component={Timesheets} />
-          <ProtectedRoute exact path='/task' component={Task} />
-          <ProtectedRoute exact path='/expenses' component={Expenses} />
-          <ProtectedRoute exact path='/invoices' component={Invoices} />
+          <ProtectedRoute exact path='/archive' component={Archive} />
           <ProtectedRoute exact path='/estimates' component={Estimates} />
-          <ProtectedRoute exact path='/manage' component={Manage} />
+          <ProtectedRoute exact path='/expenses' component={Expenses} />
           <ProtectedRoute exact path='/help' component={Help} />
-          <ProtectedRoute exact path='/settings' component={Settings} />
+          <ProtectedRoute exact path='/invoices' component={Invoices} />
+          <ProtectedRoute exact path='/manage' component={Manage} />
+          <ProtectedRoute exact path='/projects' component={Projects} />
           <ProtectedRoute exact path='/profile' component={Profile} />
           <ProtectedRoute exact path='/projects/:id' component={Project} />
           <ProtectedRoute exact path='/pendingapproval' component={PendingApproval} />
-          <ProtectedRoute exact path='/timesheetform' component={TimesheetForm} />
+          <ProtectedRoute exact path='/session' component={Session} />
+          <ProtectedRoute exact path='/settings' component={Settings} />
+          <ProtectedRoute exact path='/stopwatch' component={StopWatch} />
+          <ProtectedRoute exact path='/task' component={Task} />
+          {/* <ProtectedRoute exact path='/test' component={Test} /> */}
           <ProtectedRoute exact path='/timesheet' component={Timesheet} />
+          <ProtectedRoute exact path='/timesheets' component={Timesheets} />
+          <ProtectedRoute exact path='/timesheetform' component={TimesheetForm} />
           <ProtectedRoute exact path='/unsubmitted' component={Unsubmitted} />
           <ProtectedRoute exact path='/archive' component={Archive} />
           <ProtectedRoute exact path='/tabmenu' component={TabMenu} />
