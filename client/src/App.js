@@ -20,6 +20,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Register from './components/Register';
 import Session from './components/Session';
 import Settings from './components/Settings';
+import StopWatch from './components/StopWatch';
 import TabMenu from './components/TabMenu';
 import Task from './components/Task';
 import Timesheet from './components/Timesheet';
@@ -51,6 +52,7 @@ const App = () => (
           <ProtectedRoute exact path='/pendingapproval' component={PendingApproval} />
           <ProtectedRoute exact path='/timesheetform' component={TimesheetForm} />
           <ProtectedRoute exact path='/timesheet' component={Timesheet} />
+          <ProtectedRoute exact path='/StopWatch' component={StopWatch} />
           <ProtectedRoute exact path='/unsubmitted' component={Unsubmitted} />
           <ProtectedRoute exact path='/archive' component={Archive} />
           <ProtectedRoute exact path='/tabmenu' component={TabMenu} />
