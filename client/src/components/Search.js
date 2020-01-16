@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { List, Item, ItemHeader, ItemDescription, Divider, Input } from 'semantic-ui-react';
+import { List, Item, ItemHeader, ItemDescription, Divider, Input, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 
 const Search = (props) => {
-	const [searchObj, setSearchObj] = useState({isLoading: false, results: [], value: ""});
-
+	const defaultState = {isLoading: false, results: [], value: ""};
+	const [searchObj, setSearchObj] = useState(defaultState);
 	useEffect(() => {
-		console.log("value: ", searchObj.value);
 		const search = searchObj.value;
-		axios.get('/api/users', {params: {search}})
+		const current = props.current ? props.current.map(u => u.id) : null;
+		// console.log("value: ", search, current);
+		axios.get(`/api/${props.type}`, {params: {search, current}})
 			.then(res => {
-				setSearchObj({...searchObj, results: res.data});
+				var results = res.data ? res.data : [];
+				setSearchObj({...searchObj, results: results});
 			})
 			.catch(err => {
 				console.log(err);
@@ -20,24 +22,52 @@ const Search = (props) => {
 	const handleValueChange = (e) => {
 		setSearchObj({...searchObj, isLoading: !searchObj.isLoading, value: e.target.value})
 	}
+	const handleChange = (e) => {
+		console.log("Toggled!");
+		var choice = {};
+		const options = getOptions();
+		for(var i =0; i < options.length; i++) {
+			if(options[i].id  === parseInt(e.currentTarget.id)) {
+				choice = options[i].object;
+			}
+		}
+		console.log("adding...", choice);
+		props.add(choice);
+		setSearchObj(defaultState);
+	}
+
+	const getOptions = () => {
+		let i =0;
+		const o = searchObj.results.map(res => {
+			i++;
+			return {id: res.id, key: res.id, value: i, text: res.first_name + " " + res.last_name, object: res};
+		});
+		return o;
+		// const options = [
+		// 	{key: 1, value: 1, text: "Griffite"},
+		// 	{key: 2, value: 2, text: "Griffite Begoban"},
+		// 	{key: 3, value: 3, text: "Griffite Begoban Chidori"},
+		// ];
+		// return options;
+	}
 
 	return(
 		<>
-			<Input
-				placeholder="search"
-				name="search"
-				value={searchObj.value}
-				onChange={handleValueChange}
-			></Input>
-			<Divider hidden />
-			<List>
-				{searchObj.results.map(res => {
-					return <Item key={res.id}>
-						<ItemHeader>{res.first_name + " " + res.last_name}</ItemHeader>
-						<ItemDescription>{res.nickname}</ItemDescription>
-					</Item>
-				})}
-			</List>
+			{
+				searchObj.results !== null ?
+					<Dropdown
+						placeholder='Assign User'
+						fluid
+						search
+						searchQuery={searchObj.value}
+						onSearchChange={handleValueChange}
+						onChange={handleChange}
+						selection
+						options={getOptions()}
+					/>
+				:
+					null
+			}
 		</>
 	)
 }

@@ -7,7 +7,7 @@
 
 import React, { useState, } from "react";
 import axios from "axios";
-import { Form } from "semantic-ui-react";
+import { Form, Item, GridColumn, Button, Grid, Icon, ItemHeader, ItemDescription } from "semantic-ui-react";
 import { Redirect, Router } from "react-router-dom";
 import Search from "./Search";
 import TabMenu from './TabMenu';
@@ -61,10 +61,20 @@ const ProjectForm = (props) => {
         setProject_Admins(e.target.value);
     }
 	
-    const handleProject_UsersChange = (e) => {
-        setProject_Users(e.target.value);
-    }
-
+    const addProjectUser = (user) => {
+			project_users ?
+				setProject_Users([...project_users,user])
+			:
+        setProject_Users([user]);
+		}
+		
+    const deleteProjectUser = (user) => {
+        setProject_Users(project_users.filter(u => {
+					if(user.id !== u.id)
+						return u;
+				}));
+		}
+		
     const handleCompleteChange = (e) => {
         setComplete(e.target.value);
     }
@@ -185,16 +195,26 @@ const ProjectForm = (props) => {
                     <br />
                 </Form.Group>
                 <Form.Group>
-                    <Form.Dropdown 
-                        width={9}
-                        placeholder='Assign a person...'
-                        name='all_users'
-                        required
-                        onChange={handleProject_UsersChange}
-                        value={project_users}
-                    />
+									<Search type="users" add={addProjectUser} current={project_users}/>
                 </Form.Group>
-				<Search/>
+									<Grid columns={4}>
+										{ project_users ? project_users.map(user => {
+											return <GridColumn key={user.id}>
+													<Button 
+														icon
+														labelPosition='right'
+														color='purple'
+														onClick={()=> deleteProjectUser(user)}
+													>
+														{user.first_name + " " + user.last_name}
+														<Icon name='x' />
+													</Button>
+											</GridColumn>
+											})
+											:
+											null
+										}
+									</Grid>
                 <br />
             <Form.Button inverted color="purple" type='submit'>Submit</Form.Button>
             <br />
@@ -204,3 +224,4 @@ const ProjectForm = (props) => {
 }
 
 export default ProjectForm;
+

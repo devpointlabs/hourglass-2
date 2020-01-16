@@ -1,7 +1,8 @@
 class Api::UsersController < ApplicationController
 
 	def index
-		render json: User.search(params[:search])
+		object = User.search(params[:search], params[:current])
+		render json: object
 	end
 
 	private
