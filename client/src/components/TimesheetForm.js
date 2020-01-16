@@ -47,6 +47,7 @@ const TimesheetForm = (props) => {
     axios.post("/api/", {monday, tuesday, wednesday, thursday, friday, saturday, sunday, totalhours })
     .then( res => {
         props.history.push('/');
+        props.toggleTimesheetForm();
       })
       .catch(err => {
         console.log(err);
