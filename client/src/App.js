@@ -23,6 +23,8 @@ import Settings from './components/Settings';
 import StopWatch from './components/StopWatch';
 import TabMenu from './components/TabMenu';
 import Task from './components/Task';
+import Tasks from './components/Tasks';
+import TaskForm from './components/TaskForm';
 import Timesheet from './components/Timesheet';
 import TimesheetForm from './components/TimesheetForm';
 import Timesheets from './components/Timesheets';
@@ -41,6 +43,8 @@ const App = () => (
           <ProtectedRoute exact path='/projects' component={Projects} />
           <ProtectedRoute exact path='/timesheets' component={Timesheets} />
           <ProtectedRoute exact path='/task' component={Task} />
+          <ProtectedRoute exact path='/tasks' component={Tasks} />
+          <ProtectedRoute exact path='/taskform' component={TaskForm} />
           <ProtectedRoute exact path='/expenses' component={Expenses} />
           <ProtectedRoute exact path='/invoices' component={Invoices} />
           <ProtectedRoute exact path='/estimates' component={Estimates} />
@@ -56,7 +60,11 @@ const App = () => (
           <ProtectedRoute exact path='/unsubmitted' component={Unsubmitted} />
           <ProtectedRoute exact path='/archive' component={Archive} />
           <ProtectedRoute exact path='/tabmenu' component={TabMenu} />
+<<<<<<< Updated upstream
           <ProtectedRoute exact path='/tabmenu' component={TabMenu} />
+=======
+
+>>>>>>> Stashed changes
           <Route component={NoMatch} />
         </Switch>
       </Container>

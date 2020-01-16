@@ -2,7 +2,7 @@ import React from 'react';
 
 const Task = () => (
   <div>
-    Tasks
+    Task
   </div>
 )
 

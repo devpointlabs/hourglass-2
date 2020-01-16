@@ -2,7 +2,7 @@
 //client dropdown menu to populate with available clients
 //project admin dropdown field populated with users associated with the project
 //'edit form' button to disappear upon form render
-//complete?
+// do we want a project complete button?
 //function to add a user??? or would we like that to live somewhere else?
 
 import React, { useState, } from "react";
@@ -123,8 +123,8 @@ const ProjectForm = (props) => {
                         value={client_name}
                     />
                     <Form.Input
+                        label='+ New Client'
                         width={3}
-                        label=' '
                         placeholder='+ New Client'
                         name="client name"
                         onChange={handleClient_NameChange}
@@ -141,14 +141,14 @@ const ProjectForm = (props) => {
                     onChange={handleTitleChange}
                     value={title}
                     />
+                    <Form.Input 
+                        width={4}
+                        fluid label='Project Code' 
+                        placeholder='PROJECT ID GOES HERE' 
+                        readOnly 
+                    />
                 </Form.Group>
                 <Form.Group> 
-                <Form.Input 
-                    width={4}
-                    fluid label='Project Code' 
-                    placeholder='PROJECT ID GOES HERE' 
-                    readOnly 
-                />
                 </Form.Group>
                 <Form.Group widths="equal">
                     <Form.Input
