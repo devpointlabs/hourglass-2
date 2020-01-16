@@ -1,5 +1,4 @@
 //NEED: 
-//function for the budget progress bar, 
 //function for budget percentage
 //decimal limit on budget, spent, cost.
 
@@ -9,6 +8,8 @@ import { Header, Container, Dropdown, Menu, Segment, Table, Progress, Button} fr
 import axios from 'axios';
 import {AuthContext} from '../providers/AuthProvider';
 import ProjectForm from './ProjectForm';
+import Task from './Task';
+import Tasks from './Tasks';
 
 
 const Projects = (props) => {
@@ -44,9 +45,20 @@ const Projects = (props) => {
 		{ key: 3, text: 'Choice 3', value: 3 },
 	]
 
-
 	return (
     <>
+        <>
+    {/* <div className="ui tabular menu">
+      <a className="active item" href="/projects">
+        Projects
+      </a>
+      <a className="item" href="/tasks">
+        Tasks
+      </a>
+    </div> */}
+    <br />
+    <Header as='h1'>Projects</Header>
+    </>
       <div class="ui menu">
         <div class="item">
           <Button color='purple' onClick={() => toggleProjectForm (!projectForm)}>
@@ -70,12 +82,12 @@ const Projects = (props) => {
       
       : 
         <>
-          <Header as="h1">Projects</Header>
           <Menu compact>
             <Dropdown text='Active Projects' options={ActiveProjects} simple item />
             <Dropdown text='All Clients' options={Clients} simple item />
           </Menu>
             <Container>
+              <br />
               <Segment>
               {projects.map(project => {  
                 return <Table striped>
