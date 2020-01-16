@@ -20,20 +20,26 @@ class User < ApplicationRecord
 		self.update(projects: self.projects.push(id))
 	end
 
-	def self.search str
-		unless str.empty?
-			return User.find_by_sql(%(
-				SELECT * 
-				FROM users AS u
-				WHERE u.first_name LIKE '%#{str}%' OR u.last_name LIKE '%#{str}%' OR u.nickname LIKE '%#{str}%'
-				)
-			)
-		else
-			return User.find_by_sql(%(
-				SELECT * 
-				FROM users
-				)
-			)
+	def self.search str, currents
+		if str != nil &&  !str.empty?
+			str = str.downcase
+			if currents
+				return User.find_by_sql([%(
+					SELECT * 
+					FROM users AS u
+					WHERE u.id NOT IN (?) AND (LOWER(u.first_name) 
+					LIKE '%#{str}%' OR LOWER(u.last_name) 
+					LIKE '%#{str}%' OR LOWER(u.nickname) 
+					LIKE '%#{str}%')),currents])
+			else
+				return User.find_by_sql(%(
+					SELECT * 
+					FROM users AS u
+					WHERE LOWER(u.first_name) 
+					LIKE '%#{str}%' OR LOWER(u.last_name) 
+					LIKE '%#{str}%' OR LOWER(u.nickname) 
+					LIKE '%#{str}%'))
+			end
 		end
 	end
 
