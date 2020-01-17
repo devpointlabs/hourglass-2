@@ -5,7 +5,7 @@
 // do we want a project complete button?
 //function to add a user??? or would we like that to live somewhere else?
 
-import React, { useState, } from "react";
+import React, { useState, Fragment } from "react";
 import axios from "axios";
 import { Form, Item, GridColumn, Button, Grid, Icon, ItemHeader, ItemDescription } from "semantic-ui-react";
 import { Redirect, Router } from "react-router-dom";
@@ -24,7 +24,6 @@ const ProjectForm = (props) => {
   const [project_admins, setProject_Admins] = useState(props.project.project_admins);
   const [project_users, setProject_Users] = useState(props.project.all_users);
   const [complete, setComplete] = useState(props.project.complete);
-
 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
@@ -195,26 +194,30 @@ const ProjectForm = (props) => {
                     <br />
                 </Form.Group>
                 <Form.Group>
-									<Search type="users" add={addProjectUser} current={project_users}/>
-                </Form.Group>
-									<Grid columns={4}>
+									<Grid relaxed columns={4}>
 										{ project_users ? project_users.map(user => {
-											return <GridColumn key={user.id}>
-													<Button 
-														icon
-														labelPosition='right'
-														color='purple'
-														onClick={()=> deleteProjectUser(user)}
-													>
-														{user.first_name + " " + user.last_name}
-														<Icon name='x' />
-													</Button>
-											</GridColumn>
-											})
+												return(
+													<Fragment key={user.id}>
+														<GridColumn>
+															<Button 
+																icon
+																labelPosition='right'
+																color='purple'
+																onClick={()=> deleteProjectUser(user)}
+															>
+																{user.first_name + " " + user.last_name}
+																<Icon name='x' />
+															</Button>
+														</GridColumn>
+													</Fragment>
+													)
+												})
 											:
-											null
+												null
 										}
 									</Grid>
+                </Form.Group>
+								<Search type="users" add={addProjectUser} current={project_users}/>
                 <br />
             <Form.Button inverted color="purple" type='submit'>Submit</Form.Button>
             <br />
