@@ -1,12 +1,13 @@
 import React, { Fragment, useState, useEffect, } from 'react';
-import { Button, Dropdown, Icon, Label, Table, Popup, } from 'semantic-ui-react';
+import { Button, Dropdown, Label, Table, Popup, } from 'semantic-ui-react';
 import axios from 'axios';
 import Cal from './Calendar';
 import TimesheetForm from './TimesheetForm';
 
 
+
 const Timesheet = (props) => {
-  const [time, setTime] = useState([]);
+  const [timesheet, setTimesheet] = useState([]);
   const [showForm, setShowForm] = useState(false);
     
   const Teams = [
@@ -20,20 +21,22 @@ const Timesheet = (props) => {
   useEffect( () => {
     axios.get(`/api/timesheets`)
       .then( res => {
-        setTime(res.data);
+        setTimesheet(res.data);
       })
    }, [showForm])
 
   const toggleTimesheetForm = () => {
 		setShowForm(!showForm);
-	}
+  }
+  
+  const now = Date.now();
 
   const header = (
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell colSpan='9'>
           <Table.HeaderCell>
-          Wednesday, Responsive Date/Time
+          {now}
           </Table.HeaderCell>
           <Table.HeaderCell>
             <Label>Pending Approval</Label>
@@ -83,42 +86,42 @@ const Timesheet = (props) => {
           <Table.Cell >
             Monday
             <br />
-            5.00
+            {timesheet.monday}
           </Table.Cell>
           <Table.Cell>
             Tuesday
             <br />
-            5.00
+            {timesheet.tuesday}
           </Table.Cell>
           <Table.Cell>
             Wednesday
             <br />
-            5.00
+            {timesheet.wednesday}
           </Table.Cell>
           <Table.Cell>
             Thursday
             <br />
-            5.00
+            {timesheet.thursday}
           </Table.Cell>
           <Table.Cell>
             Friday
             <br />
-            5.00
+            {timesheet.friday}
           </Table.Cell>
           <Table.Cell>
             Saturday
             <br />
-            5.00
+            {timesheet.saturday}
           </Table.Cell>
           <Table.Cell>
             Sunday
             <br />
-            5.00
+            {timesheet.sunday}
           </Table.Cell>
           <Table.Cell>
             Weekly
             <br />
-            35.00
+            {timesheet.total_hours}
           </Table.Cell>
         </Table.Row>
       </Table.Body>
@@ -160,7 +163,7 @@ const Timesheet = (props) => {
       </a>
     </div>
 
-      {showForm ? <TimesheetForm {...props} isEditing={true} toggleTimesheetForm={toggleTimesheetForm} 
+      {showForm ? <TimesheetForm {...props} isEditing={false} toggleTimesheetForm={toggleTimesheetForm} 
       />
       :
         <div>
