@@ -60,11 +60,6 @@ const App = () => (
           <ProtectedRoute exact path='/unsubmitted' component={Unsubmitted} />
           <ProtectedRoute exact path='/archive' component={Archive} />
           <ProtectedRoute exact path='/tabmenu' component={TabMenu} />
-<<<<<<< Updated upstream
-          <ProtectedRoute exact path='/tabmenu' component={TabMenu} />
-=======
-
->>>>>>> Stashed changes
           <Route component={NoMatch} />
         </Switch>
       </Container>

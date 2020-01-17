@@ -1,58 +1,40 @@
 import React, { useState, } from "react";
 import axios from "axios";
-import { Icon, Button, Container, Form, Header, Segment, } from "semantic-ui-react";
+import { Redirect, } from 'react-router-dom';
+import { Container, Form, Header, Segment, } from "semantic-ui-react";
 
 const TimesheetForm = (props) => {
-  const [monday, setMonday] = useState("");
-  const [tuesday, setTuesday] = useState("");
-  const [wednesday, setWednesday] = useState("");
-  const [thursday, setThursday] = useState("");
-  const [friday, setFriday] = useState("");
-  const [saturday, setSaturday] = useState("");
-  const [sunday, setSunday] = useState("");
-  const [totalhours, setTotalhours] = useState("");
-  const [title, setTitle] = useState("");
+  const [monday, setMonday] = useState([]);
+  const [tuesday, setTuesday] = useState([]);
+  const [wednesday, setWednesday] = useState([]);
+  const [thursday, setThursday] = useState([]);
+  const [friday, setFriday] = useState([]);
+  const [saturday, setSaturday] = useState([]);
+  const [sunday, setSunday] = useState([]);
 
-  const handleMondayChange = (e) => {
-    setMonday(e.target.value);
-  };
-
-  const handleTuesdayChange = (e) => {
-    setTuesday(e.target.value);
-  };
-
-  const handleWednesdayChange = (e) => {
-    setWednesday(e.target.value);
-  };
-
-  const handleThursdayChange = (e) => {
-    setThursday(e.target.value);
-  };
-
-  const handleFridayChange = (e) => {
-    setFriday(e.target.value);
-  };
-
-  const handleSaturdayChange = (e) => {
-    setSaturday(e.target.value);
-  };
-
-  const handleSundayChange = (e) => {
-    setSunday(e.target.value);
-  };
+  const days = [monday, tuesday, wednesday, thursday, friday, saturday, sunday];
 
 
   const handleSubmit = (e) => {
-		e.preventDefault();
-    axios.post("/api/", {monday, tuesday, wednesday, thursday, friday, saturday, sunday, totalhours })
-    .then( res => {
-        props.history.push('/');
-        props.toggleTimesheetForm();
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  };
+    e.preventDefault();
+    const now = Date.now();
+    if(!props.isEditing) {
+      axios.post(`/api/timesheets/`, {start_date: now, total_minutes: days})
+      .then( res => {
+          props.toggleTimesheetForm();
+          return <Redirect to='/timesheets' />
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    else {
+      axios.post(`/api/timesheets/${props.timesheet.id}`, {start_date: now, total_minutes: days})
+      .then( res => {
+          props.toggleTimesheetForm();
+        })
+      };
+    }
 
 
 
@@ -72,7 +54,8 @@ const TimesheetForm = (props) => {
                 label="Project Title"
                 type="text"
                 name="title"
-                value={title}
+                // onChange={handleTitleChange}
+                // value={title}
               />
 
 
@@ -86,7 +69,7 @@ const TimesheetForm = (props) => {
                 placeholder="HRS"
                 name="monday"
                 required
-                onChange={handleMondayChange}
+                onChange={(e) => {setMonday(e.target.value)}}
                 value={monday}
               />
 
@@ -101,7 +84,7 @@ const TimesheetForm = (props) => {
                 placeholder="HRS"
                 name="tuesday"
                 required
-                onChange={handleTuesdayChange}
+                onChange={(e) => {setTuesday(e.target.value)}}
                 value={tuesday}
               />
 
@@ -117,7 +100,7 @@ const TimesheetForm = (props) => {
                 placeholder="HRS"
                 name="wednesday"
                 required
-                onChange={handleWednesdayChange}
+                onChange={(e) => {setWednesday(e.target.value)}}
                 value={wednesday}
               />
 
@@ -132,7 +115,7 @@ const TimesheetForm = (props) => {
                 placeholder="HRS"
                 name="thursday"
                 required
-                onChange={handleThursdayChange}
+                onChange={(e) => {setThursday(e.target.value)}}
                 value={thursday}
               />
 
@@ -147,7 +130,7 @@ const TimesheetForm = (props) => {
                 placeholder="HRS"
                 name="friday"
                 required
-                onChange={handleFridayChange}
+                onChange={(e) => {setFriday(e.target.value)}}
                 value={friday}
               />
 
@@ -162,7 +145,7 @@ const TimesheetForm = (props) => {
                 placeholder="HRS"
                 name="saturday"
                 required
-                onChange={handleSaturdayChange}
+                onChange={(e) => {setSaturday(e.target.value)}}
                 value={saturday}
               />
 
@@ -177,27 +160,16 @@ const TimesheetForm = (props) => {
                 placeholder="HRS"
                 name="sunday"
                 required
-                onChange={handleSundayChange}
+                onChange={(e) => {setSunday(e.target.value)}}
                 value={sunday}
-              />
+                />
 
 
-              <Form.Field
-                width="4"
-                size="big"
-                label="Total Hours"
-                type="number"
-                min="0"
-                max="40"
-                name="totalhours"
-                value={totalhours}
-              />
 
 
             </Form.Group>
             <Header>
-            <Button content='New Row' size='big' color='purple' icon='plus' />
-            <Button content='Save' size='big' fitted icon='save' color='purple' />
+            <Form.Button content='Save' size='big' fitted icon='save' color='purple' type='submit' />
             </Header>
           </Form>
         </Segment>

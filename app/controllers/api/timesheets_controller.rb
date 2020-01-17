@@ -11,7 +11,7 @@ class Api::TimesheetsController < ApplicationController
   end
 
 	def create
-		timesheet = Timesheet.new(timesheet_params)
+		timesheet = current_user.timesheets.new(timesheet_params)
 		if timesheet.save
 			render json: timesheet
 		else
@@ -42,7 +42,6 @@ class Api::TimesheetsController < ApplicationController
 		def timesheet_params
 			params.require(:timesheet).permit(
         :start_date,
-        :user_id
 				)
 		end
 end

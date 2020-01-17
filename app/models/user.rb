@@ -5,7 +5,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable
   include DeviseTokenAuth::Concerns::User
-  has_many :sessions
+	has_many :sessions
+	has_many :timesheets
 	has_many :tasks, through: :sessions
 	
 	def get_projects
