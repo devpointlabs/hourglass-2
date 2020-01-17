@@ -23,7 +23,6 @@ const Search = (props) => {
 		setSearchObj({...searchObj, isLoading: !searchObj.isLoading, value: e.target.value})
 	}
 	const handleChange = (e) => {
-		console.log("Toggled!");
 		var choice = {};
 		const options = getOptions();
 		for(var i =0; i < options.length; i++) {
@@ -35,7 +34,10 @@ const Search = (props) => {
 		props.add(choice);
 		setSearchObj(defaultState);
 	}
-
+	const handleMouseDown = (e) => {
+		const obj = e.target.id ? e.target.object : e.target;
+		console.log(e.target);
+	}
 	const getOptions = () => {
 		let i =0;
 		const o = searchObj.results.map(res => {
@@ -62,6 +64,7 @@ const Search = (props) => {
 						searchQuery={searchObj.value}
 						onSearchChange={handleValueChange}
 						onChange={handleChange}
+						onMouseDown={handleMouseDown}
 						selection
 						options={getOptions()}
 					/>
