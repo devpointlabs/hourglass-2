@@ -61,9 +61,13 @@ const Projects = (props) => {
     </>
       <div class="ui menu">
         <div class="item">
-          <Button color='purple' onClick={() => toggleProjectForm (!projectForm)}>
-            { ProjectForm ? "+ New Project" : "Close Form" }
+            { ProjectForm ? 
+          <Button color='purple' onClick={() => toggleProjectForm (!projectForm)}>+ New Project
           </Button>
+          :
+          <Button color='purple' onClick={() => toggleProjectForm (!projectForm)}>Close Form
+          </Button>
+          }
         </div>
         <div class="item">
           <div class="ui button">Import</div>
@@ -136,6 +140,8 @@ const Projects = (props) => {
                 }
               </Segment>
             </Container>
+            <br />
+            <br />
           </>
         }
     </>

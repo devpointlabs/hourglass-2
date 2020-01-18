@@ -3,13 +3,11 @@
 //complete boolean not populating
 //project admins not populating(as we haven't assigned any?)
 //function to pull all users
-//make task button toggle the task form
-
 
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Container, Header, Table, Button, Menu, Dropdown, Segment } from 'semantic-ui-react';
+import { Container, Header, Table, Button, Menu, Dropdown, Segment, Icon } from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import {AuthContext} from '../providers/AuthProvider';
 import ProjectForm from './ProjectForm';
@@ -21,6 +19,8 @@ const Project = (props) => {
   const [project, setProject] = useState([]);
   const [projectForm, setProjectForm] = useState(false);
   const user = useContext(AuthContext);
+  const [taskForm, setTaskForm] = useState(false);
+  const [tasks, setTasks] = useState([]);
   
   useEffect( () => {
 		const { id } = props.match.params;
@@ -28,11 +28,30 @@ const Project = (props) => {
     .then( res =>{
 			setProject(res.data);
     })
-  },[projectForm])
+    axios.get(`/api/projects/${id}/tasks`)
+    .then( res =>{
+			setTasks(res.data);
+    })
+  },[])
 
 	const toggleProjectForm = () => {
 		setProjectForm(!projectForm);
-	}
+  }
+
+  const toggleTaskForm = () => {
+		setTaskForm(!taskForm);
+  }
+  
+  const handleDeleteTask =(task) => {
+    const { id } = props.match.params;
+    axios.delete(`/api/projects/${id}/tasks/${task.id}`)
+    .then( res =>{
+      setTasks(tasks.filter(t => {
+        if (t.id !== task.id)
+        return t
+      }))
+    })
+  }
 
   return (
     <Container>
@@ -70,7 +89,7 @@ const Project = (props) => {
 
           <Table.Body>
             <Table.Row>
-              <Table.Cell>'project.code'</Table.Cell>
+              <Table.Cell>{project.id}</Table.Cell>
               <Table.Cell>{project.description}</Table.Cell>
               <Table.Cell>{project.client_name}</Table.Cell>
               <Table.Cell>{project.planned_start}</Table.Cell>
@@ -87,49 +106,68 @@ const Project = (props) => {
         </Table>
         </Segment>
         <Segment>
+            <Header>Tasks</Header>
+            <Button color='purple' onClick={() => toggleTaskForm(!taskForm)}>
+              { TaskForm ? "+ Add Task" : "Close Form" }
+            </Button>
+            {taskForm ? <TaskForm {...props} isEditing={false} toggleTaskForm={toggleTaskForm} 
+        /> 
+        : null }
+        {tasks.map(task => {
+          return (
           <Table celled striped>
             <Table.Header>
               <Table.Row>
-                  <Table.HeaderCell width={5}>Title</Table.HeaderCell>
+                  <Table.HeaderCell width={5}>Task</Table.HeaderCell>
                   <Table.HeaderCell width={5}>Description</Table.HeaderCell>
                   <Table.HeaderCell width={1}>Complete?</Table.HeaderCell>
                   <Table.HeaderCell width={1}>Billable</Table.HeaderCell>
                   <Table.HeaderCell width={3}>Hourly Rate</Table.HeaderCell>
                   <Table.HeaderCell width={2}>Project Id</Table.HeaderCell>
                   <Table.HeaderCell width={3}>Owner</Table.HeaderCell>
+                  <Table.Cell width={3}>
+                  <Button 
+                    icon='pencil'
+                    onClick=''
+                  />
+                  </Table.Cell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
               <Table.Row>
                   <Table.Cell>
-                    task.title
+                    {task.title}
                   </Table.Cell>
                   <Table.Cell>
-                      task.description
+                      {task.description}
                   </Table.Cell>
                   <Table.Cell>
-                      task.complete
+                      {task.complete}
                   </Table.Cell>
                   <Table.Cell>
-                      task.billable
+                      {task.billable}
                   </Table.Cell>
                   <Table.Cell>
-                      $task.price_per_hour
+                      ${task.price_per_hour}
                   </Table.Cell>
                   <Table.Cell>
-                      task.project_id
+                      {task.project_id}
                   </Table.Cell>
                   <Table.Cell>
-                      task.user_id
+                      {task.user_id}
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Button 
+                      icon='trash'
+                      onClick={() => handleDeleteTask(task)} 
+                    />
                   </Table.Cell>
               </Table.Row>
           </Table.Body>
       </Table>
-          <Button inverted color='purple'>
-            <Link to=''>
-              +  New Task
-            </Link>
-          </Button>
+        )}
+        )}
+        <br />
     </Segment>
     </>
     }
