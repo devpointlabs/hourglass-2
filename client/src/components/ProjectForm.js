@@ -143,7 +143,7 @@ const ProjectForm = (props) => {
                     <Form.Input 
                         width={4}
                         fluid label='Project Code' 
-                        placeholder='PROJECT ID GOES HERE' 
+                        placeholder='Project id here?'
                         readOnly 
                     />
                 </Form.Group>
@@ -194,30 +194,30 @@ const ProjectForm = (props) => {
                     <br />
                 </Form.Group>
                 <Form.Group>
-									<Grid relaxed columns={4}>
-										{ project_users ? project_users.map(user => {
-												return(
-													<Fragment key={user.id}>
-														<GridColumn>
-															<Button 
-																icon
-																labelPosition='right'
-																color='purple'
-																onClick={()=> deleteProjectUser(user)}
-															>
-																{user.first_name + " " + user.last_name}
-																<Icon name='x' />
-															</Button>
-														</GridColumn>
-													</Fragment>
-													)
-												})
-											:
-												null
-										}
-									</Grid>
+                    <Grid relaxed columns={4}>
+                        { project_users ? project_users.map(user => {
+                                return(
+                                    <Fragment key={user.id}>
+                                        <GridColumn>
+                                            <Button 
+                                                icon
+                                                labelPosition='right'
+                                                color='purple'
+                                                onClick={()=> deleteProjectUser(user)}
+                                            >
+                                                {user.first_name + " " + user.last_name}
+                                                <Icon name='x' />
+                                            </Button>
+                                        </GridColumn>
+                                    </Fragment>
+                                    )
+                                })
+                            :
+                                null
+                        }
+                    </Grid>
                 </Form.Group>
-								<Search type="users" add={addProjectUser} current={project_users}/>
+					<Search type="users" add={addProjectUser} current={project_users}/>
                 <br />
             <Form.Button inverted color="purple" type='submit'>Submit</Form.Button>
             <br />

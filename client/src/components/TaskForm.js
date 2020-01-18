@@ -6,17 +6,17 @@
 
 import React, { useState, } from "react";
 import axios from "axios";
-import { Form, Checkbox, } from "semantic-ui-react";
+import { Form, Checkbox, Header, } from "semantic-ui-react";
 import { Redirect, Router } from "react-router-dom";
 import Search from "./Search";
 
 const TaskForm = (props) => {
-    const [title, setTitle] = useState(props.task.title);
-    const [description, setDescription] = useState(props.task.description);
-    const [price_per_hour, setPrice_Per_Hour] = useState(props.task.price_per_hour);
-    const [billable, setBillable] = useState(props.task.budget);
-    const [project_id] = useState(props.task.project_id);
-    const [complete, setComplete] = useState(props.task.complete);
+    const [title, setTitle] = useState(props.title);
+    const [description, setDescription] = useState(props.description);
+    const [price_per_hour, setPrice_Per_Hour] = useState(props.price_per_hour);
+    const [billable, setBillable] = useState(props.budget);
+    const project_id = props.match.params.id ;
+    const [complete, setComplete] = useState(props.complete);
   
   
       const handleTitleChange = (e) => {
@@ -48,19 +48,22 @@ const TaskForm = (props) => {
       const handleSubmit = (e) => {
           e.preventDefault();
           if(!props.isEditing) {
-              axios.post(`/api/projects/${project_id}/tasks`, {title, description, billable,price_per_hour,  project_id, complete, } )
+              axios.post(`/api/projects/${project_id}/tasks`, {title, description, billable, price_per_hour, complete, } )
               .then( res => {
                   props.toggleTaskForm();
                   return <Redirect to='/tasks' />
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+            }
+            else {
+                axios.put(`/api/projects/${project_id}/${props.task.id}`, {title, description, billable,price_per_hour, complete, })
+                .then( res => {
+                  props.toggleTaskForm();
               })
               .catch(err => {
                   console.log(err);
-              })
-          }
-          else {
-              axios.put(`/api/projects/${project_id}/${props.task.id}`, {title, description, billable,price_per_hour,  project_id, complete, })
-              .then( res => {
-                  props.toggleTaskForm();
               })
               };
           }
@@ -72,22 +75,18 @@ const TaskForm = (props) => {
           
               <Form onSubmit={handleSubmit}>
                   <Form.Group>
-                      <Form.Dropdown
-                          width={9}
-                          fluid
-                          selection
-                          label="Project"
-                          placeholder='Choose a  project...'
-                          options={projectOptions}
-                          onChange=''
-                          value=''
-                      />
-                      <Form.Input 
-                          width={4}
-                          fluid label='Project Code' 
-                          placeholder='PROJECT ID GOES HERE' 
-                          readOnly 
-                      />
+                  <Form.Input 
+                    width={2}
+                    fluid label='Project Name' 
+                    placeholder='project name?'
+                    readOnly 
+                    />
+                    <Form.Input 
+                        width={2}
+                        fluid label='Project Code' 
+                        placeholder={project_id}
+                        readOnly 
+                    />
                   </Form.Group>
                   <Form.Group>
                       <Form.Input
@@ -105,7 +104,7 @@ const TaskForm = (props) => {
                             label='Completed?'
                             name='complete'
                             value='complete'
-                            checked={complete === true}
+                            checked={complete}
                             onChange={handleCompleteChange}
                         />
                         <p></p>
@@ -113,7 +112,7 @@ const TaskForm = (props) => {
                             label='Billable?'
                             name='billable'
                             value='billable'
-                            checked={billable === true}
+                            checked={billable}
                             onChange={handleBillableChange}
                         />
                     </Form.Field>
