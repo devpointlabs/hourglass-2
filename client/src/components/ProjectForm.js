@@ -7,7 +7,7 @@
 
 import React, { useState, Fragment } from "react";
 import axios from "axios";
-import { Form, Item, GridColumn, Button, Grid, Icon, ItemHeader, ItemDescription } from "semantic-ui-react";
+import { Form, GridColumn, Button, Grid, Icon } from "semantic-ui-react";
 import { Redirect, Router } from "react-router-dom";
 import Search from "./Search";
 import TabMenu from './TabMenu';
@@ -141,9 +141,9 @@ const ProjectForm = (props) => {
                     value={title}
                     />
                     <Form.Input 
-                        width={4}
+                        width={2}
                         fluid label='Project Code' 
-                        placeholder='Project id here?'
+                        placeholder={props.project.id}
                         readOnly 
                     />
                 </Form.Group>
