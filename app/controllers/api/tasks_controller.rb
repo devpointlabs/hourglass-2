@@ -29,7 +29,7 @@ class Api::TasksController < ApplicationController
 	
 	private
 		def task_params
-			params.require(:task).permit(:title, :description,:complete,:billable,:price_per_hour,:project_id)
+			params.require(:task).permit(:title, :description,:complete,:billable,:price_per_hour)
 		end
 		def set_task
 			@task = Task.find(params[:id])
