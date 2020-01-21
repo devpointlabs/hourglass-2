@@ -19,7 +19,7 @@ const Timesheet = (props) => {
     ]
 
   useEffect( () => {
-    axios.get(`/api/timesheets`)
+    axios.post(`/api/timesheets`)
       .then( res => {
         setTimesheet(res.data);
       })
@@ -29,14 +29,15 @@ const Timesheet = (props) => {
 		setShowForm(!showForm);
   }
   
-  const now = Date.now();
-
+  const date = Date.now();
+  
+  
   const header = (
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell colSpan='9'>
           <Table.HeaderCell>
-          {now}
+          {date}
           </Table.HeaderCell>
           <Table.HeaderCell>
             <Label>Pending Approval</Label>
@@ -85,43 +86,27 @@ const Timesheet = (props) => {
           </Table.Cell>
           <Table.Cell >
             Monday
-            <br />
-            {timesheet.monday}
           </Table.Cell>
           <Table.Cell>
             Tuesday
-            <br />
-            {timesheet.tuesday}
           </Table.Cell>
           <Table.Cell>
             Wednesday
-            <br />
-            {timesheet.wednesday}
           </Table.Cell>
           <Table.Cell>
             Thursday
-            <br />
-            {timesheet.thursday}
           </Table.Cell>
           <Table.Cell>
             Friday
-            <br />
-            {timesheet.friday}
           </Table.Cell>
           <Table.Cell>
             Saturday
-            <br />
-            {timesheet.saturday}
           </Table.Cell>
           <Table.Cell>
             Sunday
-            <br />
-            {timesheet.sunday}
           </Table.Cell>
           <Table.Cell>
             Weekly
-            <br />
-            {timesheet.total_hours}
           </Table.Cell>
         </Table.Row>
       </Table.Body>
