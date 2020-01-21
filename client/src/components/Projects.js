@@ -1,5 +1,4 @@
 //NEED: 
-//function for budget percentage
 //decimal limit on budget, spent, cost.
 
 import React, { useState, useEffect, useContext } from 'react';
@@ -8,8 +7,6 @@ import { Header, Container, Dropdown, Menu, Segment, Table, Progress, Button} fr
 import axios from 'axios';
 import {AuthContext} from '../providers/AuthProvider';
 import ProjectForm from './ProjectForm';
-import Task from './Task';
-import Tasks from './Tasks';
 
 
 const Projects = (props) => {

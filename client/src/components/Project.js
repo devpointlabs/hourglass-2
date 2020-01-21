@@ -3,6 +3,7 @@
 //complete boolean not populating
 //project admins not populating(as we haven't assigned any?)
 //function to pull all users
+//do we need to update schema to include project type??
 
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
@@ -115,24 +116,27 @@ const Project = (props) => {
         : null }
         {tasks.map(task => {
           return (
-          <Table celled striped>
+            <Table celled striped>
+            {taskForm ? <TaskForm {...props} isEditing={true} toggleTaskForm={toggleTaskForm}
+                /> : null }
             <Table.Header>
               <Table.Row>
-                  <Table.HeaderCell width={5}>Task</Table.HeaderCell>
-                  <Table.HeaderCell width={5}>Description</Table.HeaderCell>
-                  <Table.HeaderCell width={1}>Complete?</Table.HeaderCell>
-                  <Table.HeaderCell width={1}>Billable</Table.HeaderCell>
-                  <Table.HeaderCell width={3}>Hourly Rate</Table.HeaderCell>
-                  <Table.HeaderCell width={2}>Project Id</Table.HeaderCell>
-                  <Table.HeaderCell width={3}>Owner</Table.HeaderCell>
-                  <Table.Cell width={3}>
+                <Table.HeaderCell width={5}>Task</Table.HeaderCell>
+                <Table.HeaderCell width={5}>Description</Table.HeaderCell>
+                <Table.HeaderCell width={1}>Complete?</Table.HeaderCell>
+                <Table.HeaderCell width={1}>Billable</Table.HeaderCell>
+                <Table.HeaderCell width={3}>Hourly Rate</Table.HeaderCell>
+                <Table.HeaderCell width={2}>Project Id</Table.HeaderCell>
+                <Table.HeaderCell width={3}>Owner</Table.HeaderCell>
+                <Table.Cell width={3}>
                   <Button 
                     icon='pencil'
-                    onClick=''
-                  />
-                  </Table.Cell>
+                    onClick={() => toggleTaskForm(!taskForm)}
+                    />
+                </Table.Cell>
               </Table.Row>
-            </Table.Header>
+            </Table.Header> 
+            <>
             <Table.Body>
               <Table.Row>
                   <Table.Cell>
@@ -160,16 +164,17 @@ const Project = (props) => {
                     <Button 
                       icon='trash'
                       onClick={() => handleDeleteTask(task)} 
-                    />
+                      />
                   </Table.Cell>
               </Table.Row>
           </Table.Body>
+        </>
       </Table>
         )}
         )}
         <br />
-    </Segment>
-    </>
+        </Segment>
+        </>
     }
     <br />
       <Button color='purple'>
