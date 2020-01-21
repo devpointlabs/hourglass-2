@@ -11,7 +11,8 @@ import ProjectForm from './ProjectForm';
 
 const Projects = (props) => {
 	const [projects, setProjects] = useState([]);
-	const [project, setProject] = useState([]);
+	const [project, setProject] = useState({});
+	const [projectButton, setProjectButton] = useState("+ New Project");
 	const [projectForm, setProjectForm] = useState(false);
 	const user = useContext(AuthContext);
 	
@@ -23,10 +24,11 @@ const Projects = (props) => {
 		}).catch(err => {
 			console.log(err);
 			})
-		},[projectForm])
+		},[])
 	
 	const toggleProjectForm = () => {
 		setProjectForm(!projectForm);
+		!projectForm ? setProjectButton("Cancel") : setProjectButton("+ New Project");
 	}
 	
 
@@ -58,13 +60,9 @@ const Projects = (props) => {
     </>
       <div class="ui menu">
         <div class="item">
-            { ProjectForm ? 
-          <Button color='purple' onClick={() => toggleProjectForm (!projectForm)}>+ New Project
+          <Button color='purple' onClick={() => toggleProjectForm (!projectForm)}>
+            {projectButton}
           </Button>
-          :
-          <Button color='purple' onClick={() => toggleProjectForm (!projectForm)}>Close Form
-          </Button>
-          }
         </div>
         <div class="item">
           <div class="ui button">Import</div>

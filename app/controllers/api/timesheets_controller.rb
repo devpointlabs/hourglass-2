@@ -7,7 +7,7 @@ class Api::TimesheetsController < ApplicationController
   end
 
 	def show
-		render json: @timesheet
+		render json: @timesheet.get_array
   end
 
 	def create
