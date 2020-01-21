@@ -69,9 +69,9 @@ const ProjectForm = (props) => {
 		
     const deleteProjectUser = (user) => {
         setProject_Users(project_users.filter(u => {
-					if(user.id !== u.id)
-						return u;
-				}));
+			if(user.id !== u.id)
+				return u;
+			}));
 		}
 		
     const handleCompleteChange = (e) => {

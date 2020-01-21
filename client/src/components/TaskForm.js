@@ -1,7 +1,8 @@
 //assign a user?? dropdown of available team members based on the project?
 //need the project options to be dynamic based on the user and what projects they are associated with
-//need the project id to automatically populate based on what they select in the project options
 //routes are incorrect
+//potentially change the task edit/create form to a partial? might render in a smoother way for the user
+//need code to automatically refresh the page when you add a task
 
 
 import React, { useState, } from "react";
@@ -67,18 +68,19 @@ const TaskForm = (props) => {
               })
               };
           }
+          
   
       return (
           <>
           <br />
-          <h2>New Task</h2>
-          
+          <br />
+
               <Form onSubmit={handleSubmit}>
                   <Form.Group>
                   <Form.Input 
                     width={2}
                     fluid label='Project Name' 
-                    placeholder='project name?'
+                    placeholder='project name'
                     readOnly 
                     />
                     <Form.Input 
@@ -87,10 +89,8 @@ const TaskForm = (props) => {
                         placeholder={project_id}
                         readOnly 
                     />
-                  </Form.Group>
-                  <Form.Group>
                       <Form.Input
-                        width={9}
+                        width={6}
                         label="Task Name"
                         placeholder='Task Name'
                         name="title"
@@ -116,10 +116,6 @@ const TaskForm = (props) => {
                             onChange={handleBillableChange}
                         />
                     </Form.Field>
-                  </Form.Group>
-                  <Form.Group>
-                    </Form.Group>
-                  <Form.Group>
                       <Form.Input
                         width={3}
                         type='number'
@@ -149,14 +145,14 @@ const TaskForm = (props) => {
                       <br />
                   </Form.Group>
                   <Form.Group>
-                      <Form.Dropdown 
+                      {/* <Form.Dropdown 
                           width={9}
                           placeholder='Assign a person...'
                           name='all_users'
                           required
                           onChange=''
                           value=''
-                      />
+                      /> */}
                   </Form.Group>
                   <Search/>
                   <br />
