@@ -8,11 +8,10 @@
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Container, Header, Table, Button, Menu, Dropdown, Segment, Icon } from 'semantic-ui-react';
+import { Container, Header, Table, Button, Segment, } from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import {AuthContext} from '../providers/AuthProvider';
 import ProjectForm from './ProjectForm';
-import Task from './Task';
 import TaskForm from './TaskForm';
 
 
@@ -21,7 +20,9 @@ const Project = (props) => {
   const [projectForm, setProjectForm] = useState(false);
   const user = useContext(AuthContext);
   const [taskForm, setTaskForm] = useState(false);
+  const [taskEditForm, setTaskEditForm] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [task, setTask] = useState([]);
   
   useEffect( () => {
 		const { id } = props.match.params;
@@ -42,6 +43,10 @@ const Project = (props) => {
   const toggleTaskForm = () => {
 		setTaskForm(!taskForm);
   }
+
+  const toggleTaskEditForm = () => {
+    setTaskEditForm(!taskEditForm);
+  } 
   
   const handleDeleteTask =(task) => {
     const { id } = props.match.params;
@@ -111,14 +116,13 @@ const Project = (props) => {
             <Button color='purple' onClick={() => toggleTaskForm(!taskForm)}>
               { TaskForm ? "+ Add Task" : "Close Form" }
             </Button>
-            {taskForm ? <TaskForm {...props} isEditing={false} toggleTaskForm={toggleTaskForm} 
+            {taskForm ? <TaskForm {...props} project_id={project.id} isEditing={false} toggleTaskForm={toggleTaskForm} 
         /> 
         : null }
         {tasks.map(task => {
-          return (
+          return ( 
+            <>
             <Table celled striped>
-            {taskForm ? <TaskForm {...props} isEditing={true} toggleTaskForm={toggleTaskForm}
-                /> : null }
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell width={5}>Task</Table.HeaderCell>
@@ -131,7 +135,7 @@ const Project = (props) => {
                 <Table.Cell width={3}>
                   <Button 
                     icon='pencil'
-                    onClick={() => toggleTaskForm(!taskForm)}
+                    onClick={() => toggleTaskEditForm(!taskEditForm)}
                     />
                 </Table.Cell>
               </Table.Row>
@@ -170,6 +174,9 @@ const Project = (props) => {
           </Table.Body>
         </>
       </Table>
+        {taskEditForm ? <TaskForm {...task} project_id={task.project_id} isEditing={true} taskEditForm={toggleTaskEditForm}
+          /> : null }
+          </>
         )}
         )}
         <br />
