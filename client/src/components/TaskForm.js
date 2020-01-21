@@ -7,7 +7,7 @@
 
 import React, { useState, } from "react";
 import axios from "axios";
-import { Form, Checkbox, Header, } from "semantic-ui-react";
+import { Form, Checkbox, } from "semantic-ui-react";
 import { Redirect, Router } from "react-router-dom";
 import Search from "./Search";
 
@@ -16,7 +16,7 @@ const TaskForm = (props) => {
     const [description, setDescription] = useState(props.description);
     const [price_per_hour, setPrice_Per_Hour] = useState(props.price_per_hour);
     const [billable, setBillable] = useState(props.budget);
-    const project_id = props.match.params.id ;
+    const project_id = props.project_id ;
     const [complete, setComplete] = useState(props.complete);
   
   
@@ -52,18 +52,19 @@ const TaskForm = (props) => {
               axios.post(`/api/projects/${project_id}/tasks`, {title, description, billable, price_per_hour, complete, } )
               .then( res => {
                   props.toggleTaskForm();
-                  return <Redirect to='/tasks' />
+                  window.location.reload()
                 })
                 .catch(err => {
                     console.log(err);
                 })
             }
             else {
-                axios.put(`/api/projects/${project_id}/${props.task.id}`, {title, description, billable,price_per_hour, complete, })
+                axios.put(`/api/projects/${project_id}/tasks/${props.id}`, {title, description, billable,price_per_hour, complete, })
                 .then( res => {
-                  props.toggleTaskForm();
-              })
-              .catch(err => {
+                    props.taskEditForm();
+                    window.location.reload()
+                })
+                .catch(err => {
                   console.log(err);
               })
               };
@@ -74,7 +75,6 @@ const TaskForm = (props) => {
           <>
           <br />
           <br />
-
               <Form onSubmit={handleSubmit}>
                   <Form.Group>
                   <Form.Input 
