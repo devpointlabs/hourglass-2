@@ -9,11 +9,6 @@ const StopWatch = () => {
     setIsActive(!isActive);
   }
 
-  function reset() {
-    setSeconds(0);
-    setIsActive(false);
-  }
-
   useEffect(() => {
     let interval = null;
     if (isActive) {
@@ -28,28 +23,21 @@ const StopWatch = () => {
 
   return (
     <div className="app">
-      <div className="time">
-        {seconds}s
-      </div>
       <div className="row">
-        <button className="button" onClick={reset}>
-          Reset
-        </button>
         <Modal trigger={<Button>Show Modal</Button>}>
           <Modal.Header>New Time Entry</Modal.Header>
           <Modal.Content image>
             <Modal.Description>
               <Header>Default Profile Image</Header>
-              <p>
-                We've found the following gravatar image associated with your e-mail
-                address.
-              </p>
-              <button 
+              <div className="time">
+                {seconds}s
+              </div>
+              <Button 
                 className={`button button-primary button-primary-${isActive ? 'active' : 'inactive'}`} 
                 size="large"                
                 onClick={toggle}>
                 {isActive ? 'Stop' : 'Start'}
-              </button>
+              </Button>
               <Button 
                 size="large"
               >
