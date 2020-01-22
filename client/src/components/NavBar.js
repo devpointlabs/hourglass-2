@@ -4,7 +4,11 @@
 
 import React from 'react'
 import { AuthConsumer, } from "../providers/AuthProvider";
+<<<<<<< Updated upstream
 import { Menu, Dropdown, Image, Modal, Header, Card, DropdownItem, Divider, Button, Grid} from 'semantic-ui-react'
+=======
+import { Menu, Dropdown, Image, Button, Modal } from 'semantic-ui-react'
+>>>>>>> Stashed changes
 import { Link, withRouter, } from 'react-router-dom'
 import hourglass from './Images/hourglass_icon.png'
 import AccountForm from './AccountForm'
@@ -20,8 +24,11 @@ class Navbar extends React.Component {
     if (user) {
       return (
         <Menu color='violet' inverted>
-          <Menu.Item>
-              <Image src={hourglass} href="/" />
+          <Menu.Item> 
+          <Modal trigger={
+            <Button>
+              <Image src={hourglass}/>
+            </Button>}/>
           </Menu.Item>
           <Menu.Item>
             <Link to='/timesheets'>
