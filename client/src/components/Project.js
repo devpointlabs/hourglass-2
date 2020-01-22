@@ -22,7 +22,9 @@ const Project = (props) => {
   const [taskForm, setTaskForm] = useState(false);
   const [taskEditForm, setTaskEditForm] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const [task, setTask] = useState([]);
+	const [task, setTask] = useState([]);
+	const [addTaskButton, setTaskButton] = useState('+ Add Task');
+	const [projectFormButton, setProjectButton] = useState('Edit Project');
   
   useEffect( () => {
 		const { id } = props.match.params;
@@ -38,10 +40,12 @@ const Project = (props) => {
 
 	const toggleProjectForm = () => {
 		setProjectForm(!projectForm);
+		!projectForm ? setProjectButton("Cancel") : setProjectButton("Edit Project");
   }
 
   const toggleTaskForm = () => {
 		setTaskForm(!taskForm);
+		!taskForm ? setTaskButton("Cancel") : setTaskButton("+ Add Task");
   }
 
   const toggleTaskEditForm = () => {
@@ -67,7 +71,7 @@ const Project = (props) => {
       </Header>
       <br />
         <Button color='purple' onClick={() => toggleProjectForm(!projectForm)}>
-          { ProjectForm ? "Edit Project" : "Close Form" }
+          { projectFormButton}
         </Button>
         <br />
       {projectForm ? <ProjectForm {...props} project={project} isEditing={true} toggleProjectForm={toggleProjectForm} 
@@ -114,7 +118,7 @@ const Project = (props) => {
         <Segment>
             <Header>Tasks</Header>
             <Button color='purple' onClick={() => toggleTaskForm(!taskForm)}>
-              { TaskForm ? "+ Add Task" : "Close Form" }
+              { addTaskButton }
             </Button>
             {taskForm ? <TaskForm {...props} project_id={project.id} isEditing={false} toggleTaskForm={toggleTaskForm} 
         /> 
@@ -122,61 +126,61 @@ const Project = (props) => {
         {tasks.map(task => {
           return ( 
             <>
-            <Table celled striped>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell width={5}>Task</Table.HeaderCell>
-                <Table.HeaderCell width={5}>Description</Table.HeaderCell>
-                <Table.HeaderCell width={1}>Complete?</Table.HeaderCell>
-                <Table.HeaderCell width={1}>Billable</Table.HeaderCell>
-                <Table.HeaderCell width={3}>Hourly Rate</Table.HeaderCell>
-                <Table.HeaderCell width={2}>Project Id</Table.HeaderCell>
-                <Table.HeaderCell width={3}>Owner</Table.HeaderCell>
-                <Table.Cell width={3}>
-                  <Button 
-                    icon='pencil'
-                    onClick={() => toggleTaskEditForm(!taskEditForm)}
-                    />
-                </Table.Cell>
-              </Table.Row>
-            </Table.Header> 
-            <>
-            <Table.Body>
-              <Table.Row>
-                  <Table.Cell>
-                    {task.title}
-                  </Table.Cell>
-                  <Table.Cell>
-                      {task.description}
-                  </Table.Cell>
-                  <Table.Cell>
-                      {task.complete}
-                  </Table.Cell>
-                  <Table.Cell>
-                      {task.billable}
-                  </Table.Cell>
-                  <Table.Cell>
-                      ${task.price_per_hour}
-                  </Table.Cell>
-                  <Table.Cell>
-                      {task.project_id}
-                  </Table.Cell>
-                  <Table.Cell>
-                      {task.user_id}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Button 
-                      icon='trash'
-                      onClick={() => handleDeleteTask(task)} 
-                      />
-                  </Table.Cell>
-              </Table.Row>
-          </Table.Body>
-        </>
-      </Table>
-        {taskEditForm ? <TaskForm {...task} project_id={task.project_id} isEditing={true} taskEditForm={toggleTaskEditForm}
-          /> : null }
-          </>
+							<Table celled striped>
+								<Table.Header>
+									<Table.Row>
+										<Table.HeaderCell width={5}>Task</Table.HeaderCell>
+										<Table.HeaderCell width={5}>Description</Table.HeaderCell>
+										<Table.HeaderCell width={1}>Complete?</Table.HeaderCell>
+										<Table.HeaderCell width={1}>Billable</Table.HeaderCell>
+										<Table.HeaderCell width={3}>Hourly Rate</Table.HeaderCell>
+										<Table.HeaderCell width={2}>Project Id</Table.HeaderCell>
+										<Table.HeaderCell width={3}>Owner</Table.HeaderCell>
+										<Table.Cell width={3}>
+											<Button 
+												icon='pencil'
+												onClick={() => toggleTaskEditForm(!taskEditForm)}
+												/>
+										</Table.Cell>
+									</Table.Row>
+								</Table.Header> 
+								<>
+									<Table.Body>
+										<Table.Row>
+												<Table.Cell>
+													{task.title}
+												</Table.Cell>
+												<Table.Cell>
+														{task.description}
+												</Table.Cell>
+												<Table.Cell>
+														{task.complete}
+												</Table.Cell>
+												<Table.Cell>
+														{task.billable}
+												</Table.Cell>
+												<Table.Cell>
+														${task.price_per_hour}
+												</Table.Cell>
+												<Table.Cell>
+														{task.project_id}
+												</Table.Cell>
+												<Table.Cell>
+														{task.user_id}
+												</Table.Cell>
+												<Table.Cell>
+													<Button 
+														icon='trash'
+														onClick={() => handleDeleteTask(task)} 
+														/>
+												</Table.Cell>
+										</Table.Row>
+									</Table.Body>
+								</>
+							</Table>
+						{taskEditForm ? <TaskForm {...task} project_id={task.project_id} isEditing={true} taskEditForm={toggleTaskEditForm}
+							/> : null }
+					</>
         )}
         )}
         <br />
