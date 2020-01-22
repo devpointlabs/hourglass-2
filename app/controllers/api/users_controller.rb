@@ -5,6 +5,18 @@ class Api::UsersController < ApplicationController
 		render json: object
 	end
 
+	def update
+		if current_user.update(user_params)
+			render json: current_user
+		else
+			render json: current_user.errors, status: 418
+		end
+	end
+
 	private
+
+	def user_params
+		params.require(:user).permit(:first_name, :last_name, :email, :phone)
+	end
 	
 end
