@@ -1,14 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Modal, Header } from 'semantic-ui-react'
+import React, { Component } from "react";
+import "../App.css";
 
-const StopWatch = () => {
-  const [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(false);
+class Stopwatch extends Component {
+  state = {
+    timerOn: false,
+    timerStart: 0,
+    timerTime: 0
+  };
 
-  function toggle() {
-    setIsActive(!isActive);
-  }
+  startTimer = () => {
+    this.setState({
+      timerOn: true,
+      timerTime: this.state.timerTime,
+      timerStart: Date.now() - this.state.timerTime
+    });
+    this.timer = setInterval(() => {
+      this.setState({
+        timerTime: Date.now() - this.state.timerStart
+      });
+    }, 10);
+  };
 
+<<<<<<< Updated upstream
   useEffect(() => {
     let interval = null;
     if (isActive) {
@@ -51,5 +64,48 @@ const StopWatch = () => {
     </div>
   );
 };
+=======
+  stopTimer = () => {
+    this.setState({ timerOn: false });
+    clearInterval(this.timer);
+  };
 
-export default StopWatch;
+  resetTimer = () => {
+    this.setState({
+      timerStart: 0,
+      timerTime: 0
+    });
+  };
+
+  render() {
+    const { timerTime } = this.state;
+    let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
+    let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
+    let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
+    let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
+>>>>>>> Stashed changes
+
+    return (
+      <div className="Stopwatch">
+        <div className="Stopwatch-header">Stopwatch</div>
+        <div className="Stopwatch-display">
+          {hours} : {minutes} : {seconds}
+        </div>
+          {this.state.timerOn === false && this.state.timerTime === 0 && (
+            <button onClick={this.startTimer}>Start</button>
+          )}
+          {this.state.timerOn === true && (
+            <button onClick={this.stopTimer}>Stop</button>
+          )}
+          {this.state.timerOn === false && this.state.timerTime > 0 && (
+            <button onClick={this.startTimer}>Resume</button>
+          )}
+          {this.state.timerOn === false && this.state.timerTime > 0 && (
+            <button onClick={this.resetTimer}>Submit</button>
+          )}
+      </div>
+    );
+  }
+}
+
+export default Stopwatch;
