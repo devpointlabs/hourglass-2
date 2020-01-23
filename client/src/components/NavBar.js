@@ -27,7 +27,7 @@ class Navbar extends React.Component {
             </Button>}/>
           </Menu.Item>
           <Menu.Item>
-            <Link to='/timesheets'>
+            <Link to='/timesheet'>
               Time
             </Link>
           </Menu.Item>

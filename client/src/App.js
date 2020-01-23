@@ -27,7 +27,7 @@ import Tasks from './components/Tasks';
 import TaskForm from './components/TaskForm';
 import Timesheet from './components/Timesheet';
 import TimesheetForm from './components/TimesheetForm';
-import Timesheets from './components/Timesheets';
+import Timesheets from './components/TimesheetsBar';
 import Unsubmitted from './components/Unsubmitted';
 
 const App = () => (
@@ -41,7 +41,6 @@ const App = () => (
           <ProtectedRoute exact path='/' component={Home} />
           <ProtectedRoute exact path='/session' component={Session} />
           <ProtectedRoute exact path='/projects' component={Projects} />
-          <ProtectedRoute exact path='/timesheets' component={Timesheets} />
           <ProtectedRoute exact path='/task' component={Task} />
           <ProtectedRoute exact path='/tasks' component={Tasks} />
           <ProtectedRoute exact path='/taskform' component={TaskForm} />

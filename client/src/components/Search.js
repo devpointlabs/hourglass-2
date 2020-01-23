@@ -30,7 +30,7 @@ const Search = (props) => {
 				choice = options[i].object;
 			}
 		}
-		console.log("adding...", choice);
+		// console.log("adding...", choice);
 		props.add(choice);
 		setSearchObj(defaultState);
 	}

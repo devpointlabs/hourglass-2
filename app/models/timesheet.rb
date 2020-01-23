@@ -10,7 +10,7 @@ class Timesheet < ApplicationRecord
 				Task.find(task_id).sessions.create(total_minutes: minutes).id
 			)
 		end
-		self.save
+		return self.update(session_ids: sessions_ids)
 	end
 
 	def get_array
