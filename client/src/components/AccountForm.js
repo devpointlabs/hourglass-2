@@ -8,6 +8,7 @@ class AccountForm extends React.Component {
   state = { 
     first_name: this.context.user.first_name, 
     last_name: this.context.user.last_name, 
+    bio: this.context.user.bio,
     email: this.context.user.email, 
     phone: this.context.user.phone, 
   };
@@ -16,7 +17,6 @@ class AccountForm extends React.Component {
   handleChange = (e, { name, value }) => this.setState({ [name]: value, });
   
   handleSubmit = (e) => {
-
     e.preventDefault(); 
     const user = { ...this.state, };
     axios.put(`/api/users/${this.context.user.id}`, { user, })
@@ -25,10 +25,10 @@ class AccountForm extends React.Component {
   render() {
 
     console.log(this.context.user)
-    const { first_name, last_name, email, phone } = this.state;
+    const { first_name, last_name, bio, email, phone } = this.state;
     return (
       <Form onSubmit={this.handleSubmit}>
-        <h2>Account settings</h2>
+        <h2>Account Settings</h2>
         <Form.Input
           label="First Name"
           type="text"
@@ -41,6 +41,13 @@ class AccountForm extends React.Component {
           type="text"
           name="last_name"
           value={last_name}
+          onChange={this.handleChange}
+        />
+        <Form.Input
+          label="Bio"
+          type="text"
+          name="bio"
+          value={bio}
           onChange={this.handleChange}
         />
         <Form.Input
@@ -57,7 +64,7 @@ class AccountForm extends React.Component {
           value={phone}
           onChange={this.handleChange}
         />
-        <Form.Button color="blue">Save</Form.Button>
+        <Form.Button color="blue" type='submit'>Save</Form.Button>
       </Form>
     )
   }
