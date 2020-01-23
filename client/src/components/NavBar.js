@@ -13,7 +13,7 @@ import { Menu, Dropdown, DropdownItem, Grid, Card, Header, Image, Button, Modal 
 import { Link, withRouter, } from 'react-router-dom'
 import StopWatch from './StopWatch';
 import hourglass from './Images/hourglass_icon.png'
-import AccountForm from './AccountForm'
+import Profile from './Profile'
 
 class Navbar extends React.Component {
 
@@ -58,65 +58,8 @@ class Navbar extends React.Component {
           <Menu.Menu position='right' >
             <Dropdown item text={user.email}>
               <Dropdown.Menu color='violet ' inverted>
-                {/* <Dropdown.Item text='Your Profile' a href='/profile' /> */}
-
-
-                {/* This is the current work area */}
-                <Modal size="tiny" trigger={<DropdownItem>Profile</DropdownItem>} centered={false}>
-                  <Modal.Content image>
-                    <Modal.Description>
-                      <Grid>
-                        <Grid.Column width={8}>
-                          <Card>
-                            <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
-                            {/* <Card.Content extra>
-                            possibly keep this 
-                            <a>
-                            <Icon name='pencil' />
-                            6 Active Projects
-                            </a>
-                          </Card.Content> */}
-                          </Card>
-                        </Grid.Column>
-                        <Grid.Column width={8}>                        
-                          <Header>
-                            Put Name here
-                          </Header>
-
-                          <p>
-                            Put bio Here
-                          </p>
-                          <p>
-
-                            {/* second modal */}
-                              <Modal 
-                                trigger={<Button>Account Settings</Button>} 
-                                centered={false}
-                                size="small"
-                              >
-                                <Modal.Content image>
-                                  <Modal.Description>
-                                    
-                                    <AccountForm />
-
-
-
-                                    {/* put text below it for there motto or something */}
-                                    {/* put an account settings button here */}
-                                  </Modal.Description>
-                                </Modal.Content>
-                              </Modal>
-                            {/* end of second modal */}
-
-                          </p>
-                        </Grid.Column>
-                      </Grid>
-                    </Modal.Description>
-                  </Modal.Content>
-                </Modal>
-                {/* This ends the current work area */}
-
-
+                <Modal size="tiny" trigger={<DropdownItem><Profile /></DropdownItem>} centered={false}>
+                  </Modal>
                 <Dropdown.Item text='Settings' a href='/settings' />
                 <Dropdown.Item text='Help' a href='/help' />
                 <Dropdown.Item
