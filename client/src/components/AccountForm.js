@@ -11,6 +11,7 @@ class AccountForm extends React.Component {
     bio: this.context.user.bio,
     email: this.context.user.email, 
     phone: this.context.user.phone, 
+    open: false,
   };
   
   
@@ -23,7 +24,7 @@ class AccountForm extends React.Component {
   }
   
   render() {
-
+ 
     console.log(this.context.user)
     const { first_name, last_name, bio, email, phone } = this.state;
     return (
@@ -64,7 +65,11 @@ class AccountForm extends React.Component {
           value={phone}
           onChange={this.handleChange}
         />
-        <Form.Button color="blue" type='submit'>Save</Form.Button>
+        <Form.Button 
+          color="blue" 
+          type='submit' 
+          >Save
+        </Form.Button>
       </Form>
     )
   }

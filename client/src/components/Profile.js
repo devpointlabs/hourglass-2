@@ -12,14 +12,7 @@ import AccountForm from './AccountForm'
 
 
 const Profile = () => {
-  // const { auth: { user }} = this.props;
-  // state = { 
-  //   first_name: this.context.user.first_name, 
-  //   last_name: this.context.user.last_name, 
-  //   bio: this.context.user.bio,
-  //   email: this.context.user.email, 
-  //   phone: this.context.user.phone, 
-  // };
+  const { user } = useContext(AuthContext);
   
     return (
       <Modal size="tiny" trigger={<DropdownItem>Profile</DropdownItem>} centered={false}>
@@ -40,13 +33,18 @@ const Profile = () => {
               </Grid.Column>
               <Grid.Column width={8}>                        
                 <Header>
-                User Name
+                { user.first_name } {user.last_name}
                 </Header>
-                  <p>
+
+                  {/* <p>
                     User Bio
+                  </p> */}
+                {/* we have not made the bio yet, so when we do use this ^ p tag to do so */}
+                  <p>
+                    { user.email }
                   </p>
                   <p>
-                    User Email
+                    { user.phone }
                   </p>
                   <p>
                   {/* second modal */}
