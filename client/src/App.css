@@ -69,22 +69,22 @@
     margin-bottom: 40px;
   }
 }
-.Countdown,
+/* .Countdown, */
 .Stopwatch {
   margin-left: 30px;
   margin-right: 30px;
   border: 2px solid grey;
   border-radius: 4px;
   padding: 20px;
-  width: 400px;
+  width: 375px;
   background-color: whitesmoke;
   box-shadow: 0 3px 6px rgb(12, 12, 12);
 }
-.Countdown {
+/* .Countdown {
   padding-top: 10px;
-}
+} */
 
-.Countdown-header,
+/* .Countdown-header, */
 .Stopwatch-header {
   font-size: 40px;
   font-weight: bold;
@@ -113,7 +113,7 @@ button:hover {
 }
 .Stopwatch-text {
 }
-.Countdown-display {
+/* .Countdown-display {
   margin-top: 5px;
   margin-bottom: 20px;
 }
@@ -137,4 +137,4 @@ button:hover {
 .Countdown-time {
   font-size: 36px;
   margin: 5px 0;
-}
+} */
