@@ -34,7 +34,7 @@ class Navbar extends React.Component {
             </Modal>
           </Menu.Item>
           <Menu.Item>
-            <Link to='/timesheets'>
+            <Link to='/timesheet'>
               Time
             </Link>
           </Menu.Item>

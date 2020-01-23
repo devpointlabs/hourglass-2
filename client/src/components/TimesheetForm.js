@@ -1,43 +1,38 @@
 import React, { useState, } from "react";
 import axios from "axios";
 import { Redirect, } from 'react-router-dom';
-import { Container, Form, Header, Segment, } from "semantic-ui-react";
+import { Container, Form, Header, Segment, Dropdown} from "semantic-ui-react";
 
 const TimesheetForm = (props) => {
-  const [monday, setMonday] = useState([]);
-  const [tuesday, setTuesday] = useState([]);
-  const [wednesday, setWednesday] = useState([]);
-  const [thursday, setThursday] = useState([]);
-  const [friday, setFriday] = useState([]);
-  const [saturday, setSaturday] = useState([]);
-  const [sunday, setSunday] = useState([]);
+  const [monday, setMonday] = useState('0:00');
+  const [tuesday, setTuesday] = useState('0:00');
+  const [wednesday, setWednesday] = useState('0:00');
+  const [thursday, setThursday] = useState('0:00');
+  const [friday, setFriday] = useState('0:00');
+  const [saturday, setSaturday] = useState('0:00');
+  const [sunday, setSunday] = useState('0:00');
 
-  const days = [monday, tuesday, wednesday, thursday, friday, saturday, sunday];
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const now = Date.now();
-    if(!props.isEditing) {
-      axios.post(`/api/timesheets/`, {start_date: now, total_minutes: days})
-      .then( res => {
-          props.toggleTimesheetForm();
-          return <Redirect to='/timesheets' />
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
-    else {
-      axios.post(`/api/timesheets/${props.timesheet.id}`, {start_date: now, total_minutes: days})
-      .then( res => {
-          props.toggleTimesheetForm();
-        })
-      };
-    }
-
-
-
+	const handleSubmit = (e) => {
+		const days = [monday, tuesday, wednesday, thursday, friday, saturday, sunday];
+		e.preventDefault();
+		const d = new Date();
+		if(!props.isEditing) {
+			axios.post(`/api/timesheets/`, {total_minutes: days, task_id: props.task.id})
+			.then( res => {
+					props.toggleTimesheetForm();
+					return <Redirect to='/timesheets' />
+				})
+				.catch(err => {
+					console.log(err);
+				})
+		}
+		else {
+			axios.post(`/api/timesheets/${props.timesheet.id}`, { total_minutes: days })
+			.then( res => {
+					props.toggleTimesheetForm();
+				})
+			};
+	}
 
   return (
     <>
@@ -46,7 +41,6 @@ const TimesheetForm = (props) => {
           <Form onSubmit={handleSubmit}>
             <Header>Week Of:</Header>
             <Form.Group widths='equal'>
-
 
               <Form.Field
                 width="10"
@@ -58,14 +52,14 @@ const TimesheetForm = (props) => {
                 // value={title}
               />
 
+							<Dropdown
+								options={props.tasks}
+							/>
 
               <Form.Input
                 width="3"
                 size="big"
                 label="Monday"
-                type="number"
-                min="0"
-                max="24"
                 placeholder="HRS"
                 name="monday"
                 required
@@ -73,14 +67,10 @@ const TimesheetForm = (props) => {
                 value={monday}
               />
 
-
               <Form.Input
                 width="3"
                 size="big"
                 label="Tuesday"
-                type="number"
-                min="0"
-                max="24"
                 placeholder="HRS"
                 name="tuesday"
                 required
@@ -88,15 +78,10 @@ const TimesheetForm = (props) => {
                 value={tuesday}
               />
 
-
-
               <Form.Input
                 width="3"
                 size="big"
                 label="Wednesday"
-                type="number"
-                min="0"
-                max="24"
                 placeholder="HRS"
                 name="wednesday"
                 required
@@ -109,9 +94,6 @@ const TimesheetForm = (props) => {
                 width="3"
                 size="big"
                 label="Thursday"
-                type="number"
-                min="0"
-                max="24"
                 placeholder="HRS"
                 name="thursday"
                 required
@@ -124,9 +106,6 @@ const TimesheetForm = (props) => {
                 width="3"
                 size="big"
                 label="Friday"
-                type="number"
-                min="0"
-                max="24"
                 placeholder="HRS"
                 name="friday"
                 required
@@ -139,9 +118,6 @@ const TimesheetForm = (props) => {
                 width="3"
                 size="big"
                 label="Saturday"
-                type="number"
-                min="0"
-                max="24"
                 placeholder="HRS"
                 name="saturday"
                 required
@@ -154,18 +130,12 @@ const TimesheetForm = (props) => {
                 width="3"
                 size="big"
                 label="Sunday"
-                type="number"
-                min="0"
-                max="24"
                 placeholder="HRS"
                 name="sunday"
                 required
                 onChange={(e) => {setSunday(e.target.value)}}
                 value={sunday}
                 />
-
-
-
 
             </Form.Group>
             <Header>

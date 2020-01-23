@@ -49,6 +49,14 @@ i = 0
 		project_admins: [random_admin],
 		all_users: users
 	)
+	3.times do 
+		project.tasks.create(
+			title: Faker::Job.title,
+			description: Faker::Job.field,
+			complete: false
+		)
+	end
+
 	User.all.each do |u|
 		if project.all_users.include?(u.id)
 			u.update(projects: u.projects.push(project.id))

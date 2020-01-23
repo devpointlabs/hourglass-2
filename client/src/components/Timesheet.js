@@ -1,15 +1,17 @@
 import React, { Fragment, useState, useEffect, } from 'react';
-import { Button, Dropdown, Label, Table, Popup, } from 'semantic-ui-react';
+import { Button, Dropdown, Label, Table, Popup, Header } from 'semantic-ui-react';
 import axios from 'axios';
 import Cal from './Calendar';
 import TimesheetForm from './TimesheetForm';
-
-
+import TimesheetsBar from './TimesheetsBar';
+import Tasks from './Tasks';
 
 const Timesheet = (props) => {
-  const [timesheet, setTimesheet] = useState([]);
+	const [timesheets, setTimesheets] = useState([]);
+	const [timeNumber, setTimesheet] = useState(0);
   const [showForm, setShowForm] = useState(false);
-    
+	const [tasks, setTasks] = useState([{description:"Katy Perry Sucks"},{description:"Today is Wednesday"}]);
+	
   const Teams = [
       { key: 'Team 1', text: 'Team 1', value: 'Team 1' },
       { key: 'Team 2', text: 'Team 2', value: 'Team 2' },
@@ -19,34 +21,56 @@ const Timesheet = (props) => {
     ]
 
   useEffect( () => {
-    axios.post(`/api/timesheets`)
+    axios.get(`/api/timesheets`)
       .then( res => {
-        setTimesheet(res.data);
+				setTimesheets(res.data);
       })
-   }, [showForm])
+   }, [])
 
   const toggleTimesheetForm = () => {
 		setShowForm(!showForm);
   }
   
-  const date = Date.now();
-  
+  const decTimesheets = () => {
+		if(timeNumber > 0)
+			setTimesheet(timeNumber-1);
+	}
+
+  const incTimesheets = () => {
+		if(timeNumber < timesheets.length-1)
+			setTimesheet(timeNumber+1);
+	}
+
+	const getTimes = (id) => {
+		axios.get(`/api/timesheets/${id}`)
+			.then(res => {
+				debugger
+				return body(res.data);
+			})
+			.catch( err => {
+				console.log(err);
+			})
+	}
   
   const header = (
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell colSpan='9'>
           <Table.HeaderCell>
-          {date}
+          {timesheets.length > 0 ? timesheets[timeNumber].start_date : null}
           </Table.HeaderCell>
           <Table.HeaderCell>
             <Label>Pending Approval</Label>
           </Table.HeaderCell>
           <Table.HeaderCell>
             <Button.Group>
-              <Button icon='left chevron' />
+              <Button icon='left chevron' 
+								onClick={()=> decTimesheets()}
+							/>
               <Button content='Today' />
-              <Button icon='right chevron' />
+              <Button icon='right chevron' 
+								onClick={()=> incTimesheets()}
+							/>
             </Button.Group>
           </Table.HeaderCell>
           <Table.HeaderCell>
@@ -77,36 +101,39 @@ const Timesheet = (props) => {
     
   )
 
-  const body = (
-
+  const body = (times) => (
       <Table.Body>
         <Table.Row>
-          <Table.Cell>
-            <Button color='purple' icon='plus square' />
+          <Table.Cell width='1' selectable>
+            <Header as="h3">M</Header>
+						<p>{times[0]}</p>
           </Table.Cell>
-          <Table.Cell >
-            Monday
+          <Table.Cell width='1' selectable>
+						<Header as="h3">T</Header>
+						<p>{times[1]}</p>
           </Table.Cell>
-          <Table.Cell>
-            Tuesday
+          <Table.Cell width='1' selectable>
+						<Header as="h3">W</Header>
+						<p>{times[2]}</p>
           </Table.Cell>
-          <Table.Cell>
-            Wednesday
+          <Table.Cell width='1' selectable>
+						<Header as="h3">TH</Header>
+						<p>{times[3]}</p>
           </Table.Cell>
-          <Table.Cell>
-            Thursday
+          <Table.Cell width='1' selectable>
+						<Header as="h3">F</Header>
+						<p>{times[4]}</p>
           </Table.Cell>
-          <Table.Cell>
-            Friday
+          <Table.Cell width='1' selectable>
+						<Header as="h3">S</Header>
+						<p>{times[5]}</p>
           </Table.Cell>
-          <Table.Cell>
-            Saturday
+          <Table.Cell width='1' selectable>
+						<Header as="h3">Su</Header>
+						<p>{times[6]}</p>
           </Table.Cell>
-          <Table.Cell>
-            Sunday
-          </Table.Cell>
-          <Table.Cell>
-            Weekly
+          <Table.Cell active width='2'>
+						<Header as="h3">Weekly Total: {times[7]}</Header>
           </Table.Cell>
         </Table.Row>
       </Table.Body>
@@ -114,50 +141,34 @@ const Timesheet = (props) => {
   
   const footer = (
     <Fragment>
-      <Table.Footer>
-        <Table.HeaderCell>
-          <Table.Row colSpan='7'>
-            <Table.Cell>
-            # Project (client)
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-            Programming
-            </Table.Cell>
-          </Table.Row>
-        </Table.HeaderCell>
-      </Table.Footer>
+			<Table.HeaderCell>
+				<Table.Footer>
+						{tasks.map(task => {
+							return <Table.Row colSpan='7'>
+								<Table.Cell>
+									{task.description}
+								</Table.Cell>
+							</Table.Row>
+							})
+						}
+				</Table.Footer>
+			</Table.HeaderCell>
     </Fragment>
-)
+	)
 
   return (
   <Fragment>
-    <div className="ui tabular menu">
-      <a className="active item" href="/timesheet">
-        Timesheet
-      </a>
-      <a className="item" href="/pendingapproval">
-        Pending Approval
-      </a>
-      <a className="item" href="/unsubmitted" >
-        Unubmitted
-      </a>
-      <a className="item" href="/archive">
-        Archive
-      </a>
-    </div>
-
-      {showForm ? <TimesheetForm {...props} isEditing={false} toggleTimesheetForm={toggleTimesheetForm} 
+    <TimesheetsBar/>
+      { showForm ? <TimesheetForm {...props} isEditing={false} toggleTimesheetForm={toggleTimesheetForm} tasks={tasks} 
       />
       :
         <div>
       <Table basic>
         {header}
       </Table>
-      <Table celled striped selectable>
-        {body}
-      </Table>
+			<Table celled striped columns={9}>
+				{ timesheets.length > 0 ? getTimes(timesheets[timeNumber].id) : null}
+			</Table>
       <Table basic>
         {footer}
       </Table>
