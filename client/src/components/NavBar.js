@@ -4,11 +4,7 @@
 
 import React from 'react'
 import { AuthConsumer, } from "../providers/AuthProvider";
-<<<<<<< Updated upstream
 import { Menu, Dropdown, Image, Modal, Header, Card, DropdownItem, Divider, Button, Grid} from 'semantic-ui-react'
-=======
-import { Menu, Dropdown, Image, Button, Modal } from 'semantic-ui-react'
->>>>>>> Stashed changes
 import { Link, withRouter, } from 'react-router-dom'
 import hourglass from './Images/hourglass_icon.png'
 import AccountForm from './AccountForm'

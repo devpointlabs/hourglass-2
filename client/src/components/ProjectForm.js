@@ -98,9 +98,9 @@ const ProjectForm = (props) => {
         }
         else {
             axios.put(`/api/projects/${props.project.id}`, {title, description, client_name, planned_start, planned_end, budget, cost, spent, project_admins, complete, })
-							.then( res => {
-									props.toggleProjectForm();
-							})
+            .then( res => {
+            props.toggleProjectForm();
+            })
             };
         }
 
@@ -194,28 +194,28 @@ const ProjectForm = (props) => {
                     <br />
                 </Form.Group>
                 <Form.Group>
-									<Grid relaxed columns={4}>
-										{ project_users ? project_users.map(user => {
-												return(
-													<Fragment key={user.id}>
-														<GridColumn>
-															<Button 
-																icon
-																labelPosition='right'
-																color='purple'
-																onClick={()=> deleteProjectUser(user)}
-															>
-																{user.first_name + " " + user.last_name}
-																<Icon circular name='x' />
-															</Button>
-														</GridColumn>
-													</Fragment>
-													)
-												})
-											:
-												null
-										}
-									</Grid>
+                <Grid relaxed columns={4}>
+                    { project_users ? project_users.map(user => {
+                            return(
+                                <Fragment key={user.id}>
+                                    <GridColumn>
+                                        <Button 
+                                            icon
+                                            labelPosition='right'
+                                            color='purple'
+                                            onClick={()=> deleteProjectUser(user)}
+                                        >
+                                            {user.first_name + " " + user.last_name}
+                                            <Icon circular name='x' />
+                                        </Button>
+                                    </GridColumn>
+                                </Fragment>
+                                )
+                            })
+                        :
+                            null
+                    }
+                </Grid>
                 </Form.Group>
 					<Search type="users" add={addProjectUser} current={project_users}/>
                 <br />
