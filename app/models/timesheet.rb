@@ -18,10 +18,11 @@ class Timesheet < ApplicationRecord
 		total_minutes = 0
 		self.sessions_ids.each do |i|
 			session = Session.find(i)
+			task_title = session.task_name
 			total_minutes += session.total_minutes
 			hours = (session.total_minutes / 60).truncate
 			minutes = session.total_minutes % 60
-			arr.push({hours: hours, minutes: minutes})
+			arr.push({task_title: task_title, hours: hours, minutes: minutes})
 		end
 		total_hours = (total_minutes / 60).truncate
 		minutes = total_minutes % 60
