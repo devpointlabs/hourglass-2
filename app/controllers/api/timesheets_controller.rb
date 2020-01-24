@@ -11,8 +11,7 @@ class Api::TimesheetsController < ApplicationController
   end
 
 	def create
-		timesheet = current_user.timesheets.new(DateTime.now)
-		
+		timesheet = current_user.timesheets.new(start_date: DateTime.now)
 		if timesheet.set_sessions(params[:total_minutes], params[:task_id])
 			render json: timesheet
 		else

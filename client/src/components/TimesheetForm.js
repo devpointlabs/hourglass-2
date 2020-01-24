@@ -1,7 +1,9 @@
 import React, { useState, } from "react";
 import axios from "axios";
 import { Redirect, } from 'react-router-dom';
-import { Container, Form, Header, Segment, Dropdown} from "semantic-ui-react";
+import { Container, Form, Header, Segment, Dropdown, Menu} from "semantic-ui-react";
+import Tasks from "./Tasks";
+import Task from "./Task";
 
 const TimesheetForm = (props) => {
   const [monday, setMonday] = useState('0:00');
@@ -12,12 +14,39 @@ const TimesheetForm = (props) => {
   const [saturday, setSaturday] = useState('0:00');
   const [sunday, setSunday] = useState('0:00');
 
+	const getOptions = (obj) => {
+		var options = [];
+		obj.map(o => {
+			o.tasks.map(t => {
+				options.push(
+					{
+						key: t.id,
+						text: `${o.project}: ${t.title}`,
+						value: `${o.project}: ${t.title}`,
+					}
+				)
+			})
+		})
+		return options;
+	}
+	
+	const [tasks, setTasks] = useState(getOptions(props.tasks));
+	const [taskId, setTaskId] = useState(null);
+
+
+	const handleOptionChange = (e, { name, value }) =>{
+		tasks.map(t => {
+			if(value === t.value)
+				setTaskId(t.key);
+		})
+	}
+
 	const handleSubmit = (e) => {
 		const days = [monday, tuesday, wednesday, thursday, friday, saturday, sunday];
 		e.preventDefault();
 		const d = new Date();
 		if(!props.isEditing) {
-			axios.post(`/api/timesheets/`, {total_minutes: days, task_id: props.task.id})
+			axios.post(`/api/timesheets/`, {total_minutes: days, task_id: taskId})
 			.then( res => {
 					props.toggleTimesheetForm();
 					return <Redirect to='/timesheets' />
@@ -27,7 +56,7 @@ const TimesheetForm = (props) => {
 				})
 		}
 		else {
-			axios.post(`/api/timesheets/${props.timesheet.id}`, { total_minutes: days })
+			axios.post(`/api/timesheets/${props.timesheet.id}`, { total_minutes: days , task_id: taskId})
 			.then( res => {
 					props.toggleTimesheetForm();
 				})
@@ -53,8 +82,13 @@ const TimesheetForm = (props) => {
               />
 
 							<Dropdown
-								options={props.tasks}
-							/>
+									placeholder='Select Task'
+									name="task"
+									fluid
+									selection
+									onChange={handleOptionChange}
+									options={tasks}
+								/>
 
               <Form.Input
                 width="3"
