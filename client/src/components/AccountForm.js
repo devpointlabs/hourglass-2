@@ -1,7 +1,8 @@
 import React, { useState, } from "react";
-import { Form,} from "semantic-ui-react";
+import { Form, Grid, } from "semantic-ui-react";
 import {AuthContext} from '../providers/AuthProvider';
 import axios from 'axios'
+import Dropzone from 'react-dropzone';
 
 
 class AccountForm extends React.Component {
@@ -11,9 +12,8 @@ class AccountForm extends React.Component {
     bio: this.context.user.bio,
     email: this.context.user.email, 
     phone: this.context.user.phone, 
-    open: false,
+    image: this.context.user.image,
   };
-  
   
   handleChange = (e, { name, value }) => this.setState({ [name]: value, });
   
@@ -21,6 +21,19 @@ class AccountForm extends React.Component {
     e.preventDefault(); 
     const user = { ...this.state, };
     axios.put(`/api/users/${this.context.user.id}`, { user, })
+    .then(res => {
+      this.setState({ user: res.data.data, });
+    })
+  }
+
+  caller = (e) => {
+    this.handleSubmit(e)
+    window.location.reload();
+  }
+
+  onDrop = (files) => {
+    debugger
+    this.setState( { ...this.state, image: files[0], } );
   }
   
   render() {
@@ -28,7 +41,31 @@ class AccountForm extends React.Component {
     console.log(this.context.user)
     const { first_name, last_name, bio, email, phone } = this.state;
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Grid>
+        <Grid.Column width={8}>
+        <Dropzone
+          onDrop={this.onDrop}
+          multiple={false}
+        >
+          {({ getRootProps, getInputProps, isDragActive }) => {
+            return (
+              <div
+                {...getRootProps()}
+                style={styles.dropzone}
+              >
+                <input {...getInputProps()} />
+                {
+                  isDragActive ?
+                    <p>Drop file here...</p> :
+                    <p>Try dropping some files here, or click to select files to upload.</p>
+                }
+              </div>
+            )
+          }}
+        </Dropzone>
+            </Grid.Column>
+            <Grid.Column width={8}>
+      <Form>
         <h2>Account Settings</h2>
         <Form.Input
           label="First Name"
@@ -44,7 +81,7 @@ class AccountForm extends React.Component {
           value={last_name}
           onChange={this.handleChange}
         />
-        <Form.Input
+        <Form.TextArea
           label="Bio"
           type="text"
           name="bio"
@@ -66,15 +103,31 @@ class AccountForm extends React.Component {
           onChange={this.handleChange}
         />
         <Form.Button 
+          inverted
           color="blue" 
-          type='submit' 
+          type='submit'
+          onClick={e => this.caller(e)}
           >Save
         </Form.Button>
       </Form>
+        </Grid.Column>
+        </Grid>
     )
   }
 }
 
+const styles = {
+dropzone: {
+  height: "150px",
+  width: "150px",
+  border: "1px dashed black",
+  borderRadius: "5px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "10px",
+},
+}
 
 
 AccountForm.contextType = AuthContext;

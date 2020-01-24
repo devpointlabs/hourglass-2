@@ -6,17 +6,31 @@ class Api::UsersController < ApplicationController
 	end
 
 	def update
+
+		file = params[:file]
+    
+		if file
+			begin
+				ext = File.extname(file.tempfile)
+				cloud_image = Cloudinary::Uploader.upload(file, public_id: file.original_filename, secure: true)
+				user.image = cloud_image['secure_url']
+			rescue => e
+				render json: { errors: e }, status: 422
+			end
+		end
+
 		if current_user.update(user_params)
+		
 			render json: current_user
 		else
-			render json: current_user.errors, status: 418
+			render json: current_user.errors, status: 422
 		end
 	end
 
 	private
 
 	def user_params
-		params.require(:user).permit(:first_name, :last_name, :email, :phone)
+		params.require(:user).permit(:first_name, :last_name, :bio, :email, :phone)
 	end
 	
 end
