@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dropdown, Grid } from 'semantic-ui-react'
+import { Dropdown, Grid, Menu } from 'semantic-ui-react'
 import axios from 'axios'
 import _ from 'lodash'
 import "../App.css";
@@ -73,13 +73,60 @@ class Stopwatch extends Component {
       <>
       <Grid>
         <Grid.Column width={8}>
-          <label>Select Project</label>
-          <Dropdown
-          fluid
-          selection
-          options={getProject(4)}
-          onChange={this.handleChange}
-          />
+            <Dropdown text='Projects'>
+              <Dropdown.Menu>
+                <Dropdown.Item>
+                  <Dropdown text='Project 1'>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>Task 1</Dropdown.Item>
+                      <Dropdown.Item>Task 2</Dropdown.Item>
+                      <Dropdown.Item>Task 3</Dropdown.Item>
+                      <Dropdown.Item>Task 4</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Dropdown text='Project 2'>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>Task 1</Dropdown.Item>
+                      <Dropdown.Item>Task 2</Dropdown.Item>
+                      <Dropdown.Item>Task 3</Dropdown.Item>
+                      <Dropdown.Item>Task 4</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Dropdown text='Project 3'>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>Task 1</Dropdown.Item>
+                      <Dropdown.Item>Task 2</Dropdown.Item>
+                      <Dropdown.Item>Task 3</Dropdown.Item>
+                      <Dropdown.Item>Task 4</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Dropdown text='Project 4'>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>Task 1</Dropdown.Item>
+                      <Dropdown.Item>Task 2</Dropdown.Item>
+                      <Dropdown.Item>Task 3</Dropdown.Item>
+                      <Dropdown.Item>Task 4</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Dropdown text='Project 5'>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>Task 1</Dropdown.Item>
+                      <Dropdown.Item>Task 2</Dropdown.Item>
+                      <Dropdown.Item>Task 3</Dropdown.Item>
+                      <Dropdown.Item>Task 4</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
         </Grid.Column>
         <Grid.Column width={8}>
           <div className="Stopwatch">
