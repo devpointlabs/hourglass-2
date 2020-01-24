@@ -53,7 +53,6 @@ class Navbar extends React.Component {
                 Reports
             </Link> */}
           </Menu.Item>
-<<<<<<< Updated upstream
           <Menu.Item style={{ width: 1000 }}>
           </Menu.Item >
           <Menu.Menu position='right' >
@@ -61,40 +60,6 @@ class Navbar extends React.Component {
               <Dropdown.Menu color='violet ' inverted>
                 <Modal size="tiny" trigger={<DropdownItem><Profile /></DropdownItem>} centered={false}>
                   </Modal>
-=======
-          <Menu.Item>  
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>      
-          </Menu.Item><Menu.Item>
-          </Menu.Item><Menu.Item>
-          </Menu.Item>
-            <Menu.Menu position='right'>
-            <Dropdown item text={user.email}>
-              <Dropdown.Menu color='violet ' inverted>
-                <Modal size="tiny" trigger={<DropdownItem><Profile/></DropdownItem>} centered={false}>
-                </Modal>
->>>>>>> Stashed changes
                 <Dropdown.Item text='Settings' a href='/settings' />
                 <Dropdown.Item text='Help' a href='/help' />
                 <Dropdown.Item
