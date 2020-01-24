@@ -158,7 +158,9 @@ const Timesheet = (props) => {
 
   return (
   <Fragment>
-    <TimesheetsBar/>
+    <TimesheetsBar
+      activeItem='timesheet'
+    />
       { showForm ? <TimesheetForm {...props} isEditing={false} toggleTimesheetForm={toggleTimesheetForm} tasks={tasks} 
       />
       :
