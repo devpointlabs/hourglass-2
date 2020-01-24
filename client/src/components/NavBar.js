@@ -58,14 +58,8 @@ class Navbar extends React.Component {
           <Menu.Menu position='right' >
             <Dropdown item text={user.email}>
               <Dropdown.Menu color='violet ' inverted>
-<<<<<<< Updated upstream
                 <Modal size="tiny" trigger={<DropdownItem><Profile /></DropdownItem>} centered={false}>
                   </Modal>
-=======
-              <DropdownItem><Modal size="tiny" trigger={<Profile />} centered={false}>
-              </Modal>
-              </DropdownItem>
->>>>>>> Stashed changes
                 <Dropdown.Item text='Settings' a href='/settings' />
                 <Dropdown.Item text='Help' a href='/help' />
                 <Dropdown.Item
