@@ -39,7 +39,7 @@ class AccountForm extends React.Component {
   render() {
  
     console.log(this.context.user)
-    const { first_name, last_name, bio, email, phone } = this.state;
+    const { first_name, last_name, bio, email, phone, image } = this.state;
     return (
       <Grid>
         <Grid.Column width={8}>

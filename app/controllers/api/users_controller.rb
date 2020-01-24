@@ -7,7 +7,7 @@ class Api::UsersController < ApplicationController
 
 	def update
 
-		file = params[:file]
+		file = params[:image]
     
 		if file
 			begin
@@ -30,7 +30,7 @@ class Api::UsersController < ApplicationController
 	private
 
 	def user_params
-		params.require(:user).permit(:first_name, :last_name, :bio, :email, :phone)
+		params.require(:user).permit(:first_name, :last_name, :bio, :email, :phone, :image)
 	end
 	
 end
