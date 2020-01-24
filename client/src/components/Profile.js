@@ -13,6 +13,8 @@ import AccountForm from './AccountForm'
 const Profile = () => {
   const { user } = useContext(AuthContext);
   
+  const defaultImage = 'https://react.semantic-ui.com/images/avatar/large/matthew.png'
+
   const [showAccountForm, setShowAccountForm ] = useState(false);
   
   const toggle = () => { setShowAccountForm(!showAccountForm);
@@ -23,9 +25,12 @@ const Profile = () => {
         <Modal.Content image>
           <Modal.Description>
             <Grid>
+                  {showAccountForm ? <AccountForm first_name={user.first_name} image={user.image} last_name={user.last_name} bio={user.bio} email={user.email} phone={user.phone} toggle={toggle} isEditing={true}/> 
+                    :
+                    <>
               <Grid.Column width={8}>
                 <Card>
-                  <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
+                <Image src={user.image || defaultImage} />
                 </Card>
                 <Card.Content extra>
                   {/* <a>
@@ -35,18 +40,15 @@ const Profile = () => {
                   </a> */}
                 </Card.Content>
               </Grid.Column>
-              {showAccountForm ? <AccountForm first_name={user.first_name} last_name={user.last_name} bio={user.bio} email={user.email} phone={user.phone} toggle={toggle} isEditing={true}/> 
-                :
-                <>
               <Grid.Column width={8}>
-                <Header>
+                <Header as='h2'>
                 {user.first_name} {user.last_name}
                 </Header>
                   <strong>
                     Bio
                   </strong>
                   <p>
-                    user.bio
+                    {user.bio}
                   </p>
                   <strong>Email</strong>
                   <p>

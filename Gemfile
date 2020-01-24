@@ -8,9 +8,11 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.1'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'devise_token_auth'
+gem 'cloudinary'
 
 group :development, :test do
 gem 'pry-rails'
+gem 'dotenv-rails'
 gem 'faker'
 end
 
