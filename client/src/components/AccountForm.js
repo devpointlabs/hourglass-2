@@ -1,7 +1,8 @@
 import React, { useState, } from "react";
-import { Form,} from "semantic-ui-react";
+import { Form, Button, Modal, DropdownItem, } from "semantic-ui-react";
 import {AuthContext} from '../providers/AuthProvider';
 import axios from 'axios'
+import Profile from './Profile'
 
 
 class AccountForm extends React.Component {
@@ -11,9 +12,7 @@ class AccountForm extends React.Component {
     bio: this.context.user.bio,
     email: this.context.user.email, 
     phone: this.context.user.phone, 
-    open: false,
   };
-  
   
   handleChange = (e, { name, value }) => this.setState({ [name]: value, });
   
@@ -21,6 +20,14 @@ class AccountForm extends React.Component {
     e.preventDefault(); 
     const user = { ...this.state, };
     axios.put(`/api/users/${this.context.user.id}`, { user, })
+    .then(res => {
+      this.setState({ user: res.data.data, });
+    })
+  }
+
+  caller = (e) => {
+    this.handleSubmit(e)
+    window.location.reload();
   }
   
   render() {
@@ -28,7 +35,7 @@ class AccountForm extends React.Component {
     console.log(this.context.user)
     const { first_name, last_name, bio, email, phone } = this.state;
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form>
         <h2>Account Settings</h2>
         <Form.Input
           label="First Name"
@@ -66,8 +73,10 @@ class AccountForm extends React.Component {
           onChange={this.handleChange}
         />
         <Form.Button 
+          inverted
           color="blue" 
-          type='submit' 
+          type='submit'
+          onClick={e => this.caller(e)}
           >Save
         </Form.Button>
       </Form>
