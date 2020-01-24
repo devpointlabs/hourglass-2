@@ -9,7 +9,7 @@ class Api::UsersController < ApplicationController
 		if current_user.update(user_params)
 			render json: current_user
 		else
-			render json: current_user.errors, status: 418
+			render json: current_user.errors, status: 422
 		end
 	end
 
