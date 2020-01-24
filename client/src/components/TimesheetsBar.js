@@ -1,22 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom'
+import { Menu } from 'semantic-ui-react'
 
-const TimesheetsBar = (props) => (
-  <>
-		<div className="ui tabular menu">
-			<a className="active item" href="/timesheet">
-				Timesheet
-			</a>
-			<a className="item" href="/pendingapproval">
-				Pending Approval
-			</a>
-			<a className="item" href="/unsubmitted" >
-				Unubmitted
-			</a>
-			<a className="item" href="/archive">
-				Archive
-			</a>
-		</div>
-  </>
-)
+const TimesheetsBar = (props) => {
+	
+	
+	const [activeItem, setActiveItem] = useState(props.activeItem)
+	const handleItemClick = (e, { name }) => setActiveItem( name )
+	
+	return (
+		<>
+			<Menu pointing secondary>
+				<Link 
+					to="/timesheet"
+					>
+				<Menu.Item
+					name="timesheet"
+					active={activeItem === 'timesheet'} 
+					onClick={handleItemClick}
+				>
+						Timesheet
+				</Menu.Item>
+					</Link>
+					<Link 
+						to="/pendingapproval"
+						>
+				<Menu.Item
+					name="pendingapproval"
+					active={activeItem === 'pendingapproval'} 
+					onClick={handleItemClick}
+				>
+						Pendingapproval
+				</Menu.Item>
+					</Link>
+					<Link to="/unsubmitted" >
+				<Menu.Item
+					name="unsubmitted"
+					active={activeItem === 'unsubmitted'} 
+					onClick={handleItemClick}
+				>
+						Unsubmitted
+				</Menu.Item>
+					</Link>
+					<Link to="/archive">
+				<Menu.Item
+					name="archive"
+					active={activeItem === 'archive'} 
+					onClick={handleItemClick}
+				>
+						Archive
+				</Menu.Item>
+				</Link>
+			</Menu>
+		</>
+	)
+}
 
 export default TimesheetsBar;
