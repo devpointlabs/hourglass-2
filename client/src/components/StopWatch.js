@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Dropdown, Container, Grid } from 'semantic-ui-react'
+import { Dropdown, Grid } from 'semantic-ui-react'
+import axios from 'axios'
 import _ from 'lodash'
 import "../App.css";
 
@@ -10,6 +11,7 @@ text: `${prefix}${index}`,
 value: index,
 }))
 
+
 class Stopwatch extends Component {
   state = {
     timerOn: false,
@@ -18,6 +20,17 @@ class Stopwatch extends Component {
     default: '',
     false: ''
   };
+  
+  submitTime = () => {
+    const{timerTime}=this.state
+    debugger
+    axios.post(`/api/sessions`, {timerTime})
+      .then( res =>{
+        this.setState(res.data);
+      }).catch(err => {
+        console.log(err);
+        })
+  }
 
   startTimer = () => {
     this.setState({
@@ -38,6 +51,7 @@ class Stopwatch extends Component {
   };
 
   resetTimer = () => {
+    this.submitTime();
     this.setState({
       timerStart: 0,
       timerTime: 0
@@ -60,10 +74,9 @@ class Stopwatch extends Component {
       <Grid>
         <Grid.Column width={8}>
           <label>Select Project</label>
-          <Dropdown 
-          fluid 
-          multiple 
-          selection 
+          <Dropdown
+          fluid
+          selection
           options={getProject(4)}
           onChange={this.handleChange}
           />
