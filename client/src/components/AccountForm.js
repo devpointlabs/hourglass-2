@@ -20,10 +20,14 @@ class AccountForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault(); 
     const user = { ...this.state, };
-    axios.put(`/api/users/${this.context.user.id}`, { user, })
-    .then(res => {
-      this.setState({ user: res.data.data, });
-    })
+    this.updateUser(user)
+  }
+
+  updateUser = (user) => {
+    let data = new FormData();
+    data.append('image', user.image);
+    axios.put(`/api/users/${this.context.user.id}?first_name=${user.first_name}&last_name=${user.last_name}&email=${user.email}&bio=${user.bio}&phone=${user.phone}`, data)
+      .then( res => this.setState({ user: res.data, }) )
   }
 
   caller = (e) => {
@@ -32,7 +36,6 @@ class AccountForm extends React.Component {
   }
 
   onDrop = (files) => {
-    debugger
     this.setState( { ...this.state, image: files[0], } );
   }
   
