@@ -6,7 +6,6 @@ import Estimates from './components/Estimates';
 import Expenses from './components/Expenses';
 import FetchUser from './components/FetchUser';
 import Help from './components/Help';
-import Home from './components/Home';
 import Login from './components/Login';
 import Invoices from './components/Invoices';
 import Manage from './components/Manage';
@@ -39,7 +38,7 @@ const App = () => (
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <ProtectedRoute exact path='/' component={Home} />
+          <ProtectedRoute exact path='/' component={Projects} />
           <ProtectedRoute exact path='/session' component={Session} />
           <ProtectedRoute exact path='/projects' component={Projects} />
           <ProtectedRoute exact path='/task' component={Task} />
