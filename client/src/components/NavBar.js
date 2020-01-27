@@ -39,22 +39,18 @@ class Navbar extends React.Component {
             </Link>
           </Menu.Item>
           <Menu.Item>
-          <Link to='/'>
+          <Link to='/team'>
                 Team
             </Link>
-          </Menu.Item>
-          <Menu.Item>
-            {/* <Link to='/reports/timesheet'>
-                Reports
-            </Link> */}
           </Menu.Item>
           <Menu.Item style={{ width: 850 }}>
           </Menu.Item >
           <Menu.Menu position='right' >
             <Dropdown item text={user.email}>
               <Dropdown.Menu color='violet ' inverted>
-                <Modal size="tiny" trigger={<DropdownItem><Profile /></DropdownItem>} centered={false}>
-                  </Modal>
+                <Dropdown.Item text='Profile'>
+                  <Profile />
+                </Dropdown.Item>
                 <Dropdown.Item text='Settings' a href='/settings' />
                 <Dropdown.Item text='Help' a href='/help' />
                 <Dropdown.Item

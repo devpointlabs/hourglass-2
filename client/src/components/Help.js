@@ -1,9 +1,11 @@
 import React from 'react';
+import { Container, Header } from 'semantic-ui-react';
 
 const Help = () => (
-  <div>
-    Help
-  </div>
+<Container>
+  <br />
+  <Header as='h1'>Help</Header>
+</Container>
 )
 
 export default Help;

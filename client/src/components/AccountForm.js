@@ -38,7 +38,17 @@ class AccountForm extends React.Component {
   onDrop = (files) => {
     this.setState( { ...this.state, image: files[0], } );
   }
-  
+
+  // showPreview = () => {
+  //   return (
+  //     <img
+  //       alt='thumbnail'
+  //       style={{ width: '100%', height: '100%' }}
+  //       src={this.state.file_thumbnail[0].preview}></img>
+  //   )
+  // }
+
+
   render() {
  
     console.log(this.context.user)
@@ -58,9 +68,11 @@ class AccountForm extends React.Component {
               >
                 <input {...getInputProps()} />
                 {
-                  isDragActive ?
-                    <p>Drop file here...</p> :
-                    <p>Try dropping some files here, or click to select files to upload.</p>
+                  isDragActive ? (
+                    this.showPreview()
+                  ) : (
+                    <p>Drop an image file here, or click to select file to upload.</p>
+                  )
                 }
               </div>
             )
