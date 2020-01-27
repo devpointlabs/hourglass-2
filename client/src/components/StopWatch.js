@@ -75,8 +75,7 @@ class Stopwatch extends Component {
         <Grid.Column width={8}>
             <Dropdown text='Projects'>
               <Dropdown.Menu>
-                <Dropdown.Item>
-                  <Dropdown text='Project 1'>
+                  <Dropdown item text='Project 1'>
                     <Dropdown.Menu>
                       <Dropdown.Item>Task 1</Dropdown.Item>
                       <Dropdown.Item>Task 2</Dropdown.Item>
@@ -84,9 +83,7 @@ class Stopwatch extends Component {
                       <Dropdown.Item>Task 4</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <Dropdown text='Project 2'>
+                  <Dropdown item text='Project 2'>
                     <Dropdown.Menu>
                       <Dropdown.Item>Task 1</Dropdown.Item>
                       <Dropdown.Item>Task 2</Dropdown.Item>
@@ -94,9 +91,7 @@ class Stopwatch extends Component {
                       <Dropdown.Item>Task 4</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <Dropdown text='Project 3'>
+                  <Dropdown item text='Project 3'>
                     <Dropdown.Menu>
                       <Dropdown.Item>Task 1</Dropdown.Item>
                       <Dropdown.Item>Task 2</Dropdown.Item>
@@ -104,9 +99,7 @@ class Stopwatch extends Component {
                       <Dropdown.Item>Task 4</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <Dropdown text='Project 4'>
+                  <Dropdown item text='Project 4'>
                     <Dropdown.Menu>
                       <Dropdown.Item>Task 1</Dropdown.Item>
                       <Dropdown.Item>Task 2</Dropdown.Item>
@@ -114,9 +107,7 @@ class Stopwatch extends Component {
                       <Dropdown.Item>Task 4</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <Dropdown text='Project 5'>
+                  <Dropdown item text='Project 5'>
                     <Dropdown.Menu>
                       <Dropdown.Item>Task 1</Dropdown.Item>
                       <Dropdown.Item>Task 2</Dropdown.Item>
@@ -124,7 +115,6 @@ class Stopwatch extends Component {
                       <Dropdown.Item>Task 4</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
-                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
         </Grid.Column>
