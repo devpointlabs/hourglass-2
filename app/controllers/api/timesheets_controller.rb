@@ -12,7 +12,7 @@ class Api::TimesheetsController < ApplicationController
 
 	def create
 		timesheet = current_user.timesheets.new(start_date: DateTime.now)
-		if timesheet.set_sessions(params[:total_minutes], params[:task_id])
+		if timesheet.set_sessions(params[:total_minutes], params[:task_id], current_user.id)
 			render json: timesheet
 		else
 			render json: timesheet.errors, status: 422
