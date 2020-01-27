@@ -1,10 +1,5 @@
-//Need:
-//content adjusted to wireframes when we receive them
-//data pulled in from whatever user is logged in
-
-import React, { useState, useEffect, useContext } from 'react';
-import { withRouter } from 'react-router-dom';
-import { Modal, Header, Image, Icon, Grid, Card, Button, DropdownItem, ModalContent } from 'semantic-ui-react';
+import React, { useState, useContext } from 'react';
+import { Modal, Header, Image, Grid, Card, Button, DropdownItem, } from 'semantic-ui-react';
 import {AuthContext} from '../providers/AuthProvider';
 import AccountForm from './AccountForm'
 
