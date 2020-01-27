@@ -5,6 +5,7 @@ import Archive from './components/Archive';
 import Estimates from './components/Estimates';
 import Expenses from './components/Expenses';
 import FetchUser from './components/FetchUser';
+import Footer from './components/Footer';
 import Help from './components/Help';
 import Login from './components/Login';
 import Invoices from './components/Invoices';
@@ -65,6 +66,7 @@ const App = () => (
         </Switch>
       </Container>
     </FetchUser>
+    <Footer />
   </Fragment>
 );
 

@@ -10,12 +10,13 @@ const Panes = (props)=> ( [
       <Form.Group>
         <Form.Input
           type='number'
-          min='0'
+          min='0.00'
+          step="any"
           placeholder='Project Hourly Rate'
-          name=""
+          name="hourly rate"
           required
-          onChange=''
-          value=''
+          onChange={props.handleRateChange}
+          value={props.rate}
         />$
         <Form.Input 
           width={4}
@@ -28,12 +29,12 @@ const Panes = (props)=> ( [
       <Form.Group>
         <Form.Input
           type='number'
-          min='0'
           placeholder='Total Project Fees'
           name="budget"
           required
-          onChange={props.handleBudgetChange}
-          value={props.budget}
+          // testnonsense is just there so it actually has input, it doesn't do anything or links to anything
+          onChange={props.testnonsense}
+          value={props.testnonsense}
         />
         $
         <Form.Input 
@@ -54,10 +55,10 @@ const Panes = (props)=> ( [
             $<Form.Input
               type='number'
               min='0'
-              placeholder=''
-              name=""
-              onChange=''
-              value=''
+              placeholder='Enter Amount'
+              name="Invoice"
+              onChange={props.testnonsense}
+              value={props.testnonsense}
             />
           </Form.Group>
           <h4>Budget</h4>
@@ -66,7 +67,10 @@ const Panes = (props)=> ( [
             $
             <Form.Input 
               width={4}
-              placeholder=''
+              placeholder='fees'
+              name="fees"
+              onChange={props.testnonsense}
+              value={props.testnonsense}
               readOnly
             />
             </Form.Group>
