@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Modal, Header, Image, Grid, Card, Button, DropdownItem, } from 'semantic-ui-react';
+import { Modal, Header, Image, Grid, Card, Button, DropdownItem,} from 'semantic-ui-react';
 import {AuthContext} from '../providers/AuthProvider';
 import AccountForm from './AccountForm'
 
@@ -16,7 +16,7 @@ const Profile = () => {
   } 
 
     return (
-      <Modal size="tiny" trigger={<DropdownItem text='Profile'>Profile</DropdownItem>} centered={false}>
+      <Modal size="tiny" trigger={<DropdownItem>Profile</DropdownItem>} centered={false}>
         <Modal.Content image>
           <Modal.Description>
             <Grid>
