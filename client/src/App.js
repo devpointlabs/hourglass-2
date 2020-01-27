@@ -25,6 +25,7 @@ import TabMenu from './components/TabMenu';
 import Task from './components/Task';
 import Tasks from './components/Tasks';
 import TaskForm from './components/TaskForm';
+import Team from './components/Team';
 import Timesheet from './components/Timesheet';
 import TimesheetForm from './components/TimesheetForm';
 import Timesheets from './components/TimesheetsBar';
@@ -53,8 +54,10 @@ const App = () => (
           <ProtectedRoute exact path='/profile' component={Profile} />
           <ProtectedRoute exact path='/projects/:id' component={Project} />
           <ProtectedRoute exact path='/pendingapproval' component={PendingApproval} />
+          <ProtectedRoute exact path='/team' component={Team} />
           <ProtectedRoute exact path='/timesheetform' component={TimesheetForm} />
           <ProtectedRoute exact path='/timesheet' component={Timesheet} />
+          <ProtectedRoute exact path='/settogms' component={Settings} />
           <ProtectedRoute exact path='/StopWatch' component={StopWatch} />
           <ProtectedRoute exact path='/unsubmitted' component={Unsubmitted} />
           <ProtectedRoute exact path='/archive' component={Archive} />

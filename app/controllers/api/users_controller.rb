@@ -14,7 +14,7 @@ class Api::UsersController < ApplicationController
 		user.phone = params[:phone] ? params[:phone] : user.phone
 
 		file = params[:image]
-		binding.pry
+		
 		if file
 			begin
 				ext = File.extname(file.tempfile)

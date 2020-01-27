@@ -4,7 +4,7 @@ import {AuthContext} from '../providers/AuthProvider';
 import AccountForm from './AccountForm'
 
 
-
+ 
 const Profile = () => {
   const { user } = useContext(AuthContext);
   
