@@ -1,7 +1,7 @@
 import React, { useState, } from "react";
 import axios from "axios";
 import { Redirect, } from 'react-router-dom';
-import { Container, Form, Header, Segment, Dropdown, Menu} from "semantic-ui-react";
+import { Container, Form, Header, Segment, Dropdown, Menu, Table} from "semantic-ui-react";
 import Tasks from "./Tasks";
 import Task from "./Task";
 
@@ -67,6 +67,11 @@ const TimesheetForm = (props) => {
     <>
       <Container>
         <Segment>
+					<Table.Body>
+						<Table.Header>
+							
+						</Table.Header>
+					</Table.Body>
           <Form onSubmit={handleSubmit}>
             <Header>Week Of:</Header>
             <Form.Group widths='equal'>
