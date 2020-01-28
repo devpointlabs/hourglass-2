@@ -77,7 +77,7 @@ class Stopwatch extends Component {
       this.setState({
         timerTime: Date.now() - this.state.timerStart
       });
-    }, 10000);
+    }, 1000);
   };
 
   stopTimer = () => {
