@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { Dropdown, Grid, Menu } from 'semantic-ui-react'
 import axios from 'axios'
 import _ from 'lodash'
@@ -10,7 +10,6 @@ key: index,
 text: `${prefix}${index}`,
 value: index,
 }))
-
 
 class Stopwatch extends Component {
   state = {
@@ -42,7 +41,7 @@ class Stopwatch extends Component {
       this.setState({
         timerTime: Date.now() - this.state.timerStart
       });
-    }, 10);
+    }, 10000);
   };
 
   stopTimer = () => {
