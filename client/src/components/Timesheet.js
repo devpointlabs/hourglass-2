@@ -66,6 +66,10 @@ const Timesheet = (props) => {
 			setTimesheet(timeNumber-1);
 	}
 
+	const handleStartClick = () => {
+		
+	}
+
   const incTimesheets = () => {
 		if(timeNumber < timesheets.length-1)
 			setTimesheet(timeNumber+1);
@@ -264,7 +268,10 @@ const Timesheet = (props) => {
 							<p>{task.time}</p>
 						</Table.Cell>
 						<Table.Cell width='1'>
-							<Button basic>
+							<Button 
+								basic
+								onClick={() => handleStartClick()}
+							>
 								Start
 							</Button>
 							<Icon

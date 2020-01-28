@@ -50,11 +50,16 @@ i = 0
 		all_users: users
 	)
 	3.times do 
-		project.tasks.create(
+		task = project.tasks.create(
 			title: Faker::Job.title,
 			description: Faker::Job.field,
 			complete: false
 		)
+		sheet = Timesheet.create(
+			start_date: Faker::Date.between(from: 14.days.ago, to: Date.today),
+			user_id: a.id,
+		)
+		puts (sheet.set_sessions ['0:30','1:30', '2:00', '2:15', '1:00', '5:15', '1:15'], task.id, a.id)
 	end
 
 	User.all.each do |u|
