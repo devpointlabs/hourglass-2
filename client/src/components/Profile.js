@@ -14,9 +14,9 @@ const Profile = () => {
   
   const toggle = () => { setShowAccountForm(!showAccountForm);
   } 
-
+	// 
     return (
-      <Modal size="tiny" trigger={<DropdownItem>Profile</DropdownItem>} centered={false}>
+      <Modal size="tiny" trigger={<p>Profile</p>} centered={false}>
         <Modal.Content image>
           <Modal.Description>
             <Grid>
@@ -60,7 +60,7 @@ const Profile = () => {
                 </Grid>
               </Modal.Description>
             </Modal.Content>
-          </Modal>
+				</Modal>
     )
 }
 

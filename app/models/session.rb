@@ -6,4 +6,8 @@ class Session < ApplicationRecord
 		self.task.title
 	end
 
+	def project_name
+		self.task.project.title
+	end
+
 end

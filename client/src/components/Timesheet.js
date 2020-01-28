@@ -1,9 +1,10 @@
 import React, { Fragment, useState, useEffect, } from 'react';
-import { Button, Dropdown, Label, Table, Popup, Header } from 'semantic-ui-react';
+import { Button, Dropdown, Label, Table, Popup, Header, Divider, Icon } from 'semantic-ui-react';
 import axios from 'axios';
 import Cal from './Calendar';
 import TimesheetForm from './TimesheetForm';
 import TimesheetsBar from './TimesheetsBar';
+import dateFormat from '../tools/dateFormat';
 
 /**
  * TO DO:
@@ -19,7 +20,6 @@ import TimesheetsBar from './TimesheetsBar';
  *
  */
 
-
 const Timesheet = (props) => {
 	const [timesheets, setTimesheets] = useState([]);
 	const [timeNumber, setTimesheet] = useState(0);
@@ -27,6 +27,7 @@ const Timesheet = (props) => {
 	const [isLoaded, setLoaded] = useState(false);
 	const [isWeekView, setWeekView] = useState(false);
 	const [projects, setProjects] = useState([]);
+	const [task, setTask] = useState(null);
 	const [times, setTimes] = useState([]);
 	const [activeItem, setActiveItem] = useState('');
 	
@@ -73,11 +74,17 @@ const Timesheet = (props) => {
 	const handleViewClick = (e) => {
 		if(e.target.innerText === 'Day')
 			setWeekView(false);
-		else
+		else {
+			setTask(null);
 			setWeekView(true);
+			setActiveItem('');
+		}
 	}
 
-	const handleItemClick = (name) => {setActiveItem(name)};
+	const handleItemClick = (name, index) => {
+		setTask(times[index]);
+		setActiveItem(name);
+	};
 
 	const getTimes = (id) => {
 		axios.get(`/api/timesheets/${id}`)
@@ -95,7 +102,12 @@ const Timesheet = (props) => {
       <Table.Row>
         <Table.HeaderCell colSpan='9'>
           <Table.HeaderCell>
-          {timesheets.length > 0 ? timesheets[timeNumber].start_date : null}
+					{timesheets.length > 0 ? 
+						dateFormat(
+							Date.parse(timesheets[timeNumber].start_date.split('T')[0]),  
+							"dddd, mmmm dS, yyyy"
+						)
+					: null}
           </Table.HeaderCell>
           <Table.HeaderCell>
             <Label>Pending Approval</Label>
@@ -142,14 +154,19 @@ const Timesheet = (props) => {
   )
 
   const body = () => {
-		if(isLoaded) getTimes(timesheets[timeNumber].id)
+		if(isLoaded) getTimes(timesheets[timeNumber].id);
 		if(!times[0])
 			return null;
 		else {
 			return(
 				isWeekView ?
 					<>
-						<Header>Weekly View (In Progress)</Header>
+						<TimesheetForm 
+							{...props} 
+							isEditing={false} 
+							toggleTimesheetForm={toggleTimesheetForm} 
+							tasks={projects} 
+						/>
 					</>
 				:
 					<Table.Body>
@@ -159,7 +176,7 @@ const Timesheet = (props) => {
 								name='m'
 								selectable
 								active={activeItem ==='m'}
-								onClick={() => handleItemClick('m')}
+								onClick={() => handleItemClick('m', 0)}
 							>
 								<Header as="h3">M</Header>
 								<p>{times[0].time}</p>
@@ -169,7 +186,7 @@ const Timesheet = (props) => {
 								name='t'
 								selectable
 								active={activeItem ==='t'}
-								onClick={() => handleItemClick('t')}
+								onClick={() => handleItemClick('t', 1)}
 							>
 								<Header as="h3">T</Header>
 								<p>{times[1].time}</p>
@@ -179,7 +196,7 @@ const Timesheet = (props) => {
 								name='w'
 								selectable
 								active={activeItem ==='w'}
-								onClick={() => handleItemClick('w')}
+								onClick={() => handleItemClick('w', 2)}
 							>
 								<Header as="h3">W</Header>
 								<p>{times[2].time}</p>
@@ -189,7 +206,7 @@ const Timesheet = (props) => {
 								name='th'
 								selectable
 								active={activeItem ==='th'}
-								onClick={() => handleItemClick('th')}
+								onClick={() => handleItemClick('th', 3)}
 							>
 								<Header as="h3">TH</Header>
 								<p>{times[3].time}</p>
@@ -199,7 +216,7 @@ const Timesheet = (props) => {
 							 name='f'
 							 selectable
 							 active={activeItem ==='f'}
-							 onClick={() => handleItemClick('th')}
+							 onClick={() => handleItemClick('f', 4)}
 							 >
 								<Header as="h3">F</Header>
 								<p>{times[4].time}</p>
@@ -209,7 +226,7 @@ const Timesheet = (props) => {
 								name='s'
 								selectable
 								active={activeItem ==='s'}
-								onClick={() => handleItemClick('s')}
+								onClick={() => handleItemClick('s', 5)}
 							>
 								<Header as="h3">S</Header>
 								<p>{times[5].time}</p>
@@ -219,7 +236,7 @@ const Timesheet = (props) => {
 								name='su'
 								selectable
 								active={activeItem ==='su'}
-								onClick={() => handleItemClick('su')}
+								onClick={() => handleItemClick('su', 6)}
 							>
 								<Header as="h3">Su</Header>
 								<p>{times[6].time}</p>
@@ -235,11 +252,31 @@ const Timesheet = (props) => {
   
   const footer = (
     <Fragment>
-			<Table.HeaderCell>
-				<Table.Footer>
-						Footer bro
-				</Table.Footer>
-			</Table.HeaderCell>
+				{ task ? 
+					<Table.Row>
+						<Table.Cell width='2'>
+							<Header as ="h3">{task.project_title}</Header>
+							<p>{task.task_title}</p>
+						</Table.Cell>
+						<Table.Cell width='5'>
+						</Table.Cell>
+						<Table.Cell width='1'>
+							<p>{task.time}</p>
+						</Table.Cell>
+						<Table.Cell width='1'>
+							<Button basic>
+								Start
+							</Button>
+							<Icon
+								name='pencil'
+								onClick={() => toggleTimesheetForm(!showForm)}
+							>
+							</Icon>
+						</Table.Cell>
+					</Table.Row>
+				:
+					null
+			}
     </Fragment>
 	)
 
@@ -248,31 +285,18 @@ const Timesheet = (props) => {
     <TimesheetsBar 
 			activeItem='timesheet'
 		/>
-			{ showForm ? 
-				<TimesheetForm 
-					{...props} 
-					isEditing={false} 
-					toggleTimesheetForm={toggleTimesheetForm} 
-					tasks={projects} 
-				/>
-      :
-        <div>
+		<div>
       <Table basic>
         {header}
       </Table>
 			<Table celled striped columns={9}>
 				{ timesheets.length > 0 ? body() : null}
 			</Table>
-      <Table basic>
+      <Table basic='very' columns={9}>
         {footer}
       </Table>
-      </div>
-    }
-      <Table.Cell>
-        <Button onClick={() => toggleTimesheetForm(!showForm)}>
-          { showForm ? 'Enter Time' : 'Show Time' }
-        </Button>
-      </Table.Cell>
+		</div>
+			<Divider />
     </Fragment>
   )
 }

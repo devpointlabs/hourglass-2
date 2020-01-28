@@ -24,6 +24,7 @@ class Timesheet < ApplicationRecord
 			else
 				session = Session.find(i)
 				task_title = session.task_name
+				project_title = session.project_name
 				total_minutes += session.total_minutes
 				hours = (session.total_minutes / 60).truncate
 				minutes = session.total_minutes % 60
@@ -32,7 +33,7 @@ class Timesheet < ApplicationRecord
 					m_str = "0"+m_str
 				end
 				time = hours.to_s + ":" + m_str
-				arr.push({task_title: task_title, time: time})
+				arr.push({project_title: project_title, task_title: task_title, time: time})
 			end
 		end
 		total_hours = (total_minutes / 60).truncate

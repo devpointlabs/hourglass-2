@@ -12,9 +12,6 @@ import Profile from './Profile';
 
 class Navbar extends React.Component {
 
-  
-  
-
   rightNavItems = () => {
     const { auth: { user, handleLogout, }, location, } = this.props;
 
@@ -47,10 +44,11 @@ class Navbar extends React.Component {
           </Menu.Item >
           <Menu.Menu position='right' >
             <Dropdown item text={user.email}>
-              <Dropdown.Menu color='violet ' inverted>
-                <Dropdown.Item text='Profile'>
-                  <Profile />
-                </Dropdown.Item>
+              <Dropdown.Menu color='violet' inverted>
+								<Dropdown.Item color='black'>
+									<Modal size="tiny" trigger={<Profile />} centered={false}>
+									</Modal>
+								</Dropdown.Item>
                 <Dropdown.Item text='Settings' a href='/settings' />
                 <Dropdown.Item text='Help' a href='/help' />
                 <Dropdown.Item
