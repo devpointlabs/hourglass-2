@@ -57,6 +57,11 @@ const Timesheet = (props) => {
 		})
 	}, [])
 	
+	const getToday = () => {
+		// var d = new Date();
+		// document.getElementById("today").innerHTML = d;
+	}
+	
   const toggleTimesheetForm = () => {
 		setShowForm(!showForm);
   }
@@ -106,32 +111,33 @@ const Timesheet = (props) => {
       <Table.Row>
         <Table.HeaderCell colSpan='9'>
           <Table.HeaderCell>
-					{timesheets.length > 0 ? 
-						dateFormat(
-							Date.parse(timesheets[timeNumber].start_date.split('T')[0]),  
-							"dddd, mmmm dS, yyyy"
-						)
-					: null}
+			{timesheets.length > 0 ? 
+				dateFormat(
+					Date.parse(timesheets[timeNumber].start_date.split('T')[0]),  
+					"dddd, mmmm dS, yyyy"
+				)
+			: null }
           </Table.HeaderCell>
           <Table.HeaderCell>
             <Label>Pending Approval</Label>
           </Table.HeaderCell>
           <Table.HeaderCell>
             <Button.Group>
-              <Button icon='left chevron' 
-								onClick={()=> decTimesheets()}
-							/>
-              <Button content='Today' />
+				<Button icon='left chevron' 
+					onClick={()=> decTimesheets()}
+				/>
+              <Button content='Today' 
+					onClick={()=> getToday()}/>
               <Button icon='right chevron' 
-								onClick={()=> incTimesheets()}
-							/>
+				onClick={()=> incTimesheets()}
+				/>
             </Button.Group>
           </Table.HeaderCell>
           <Table.HeaderCell>
           <Popup
             content={<Cal />}
             on='click'
-            pinned
+            // pinned
             trigger={<Button icon='calendar alternate outline' />}
           />
           </Table.HeaderCell>
