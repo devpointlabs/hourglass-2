@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import Stopwatch from "../components/StopWatch";
 
 export const AuthContext = React.createContext();
 export const AuthConsumer = AuthContext.Consumer;
