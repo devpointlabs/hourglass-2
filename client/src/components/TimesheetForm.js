@@ -1,9 +1,8 @@
 import React, { useState, } from "react";
 import axios from "axios";
 import { Redirect, } from 'react-router-dom';
-import { Container, Form, Header, Segment, Dropdown, Menu, Table} from "semantic-ui-react";
-import Tasks from "./Tasks";
-import Task from "./Task";
+import { Table, Button} from "semantic-ui-react";
+
 
 const TimesheetForm = (props) => {
   const [monday, setMonday] = useState('0:00');
@@ -65,124 +64,214 @@ const TimesheetForm = (props) => {
 
   return (
     <>
-      <Container>
-        <Segment>
-					<Table.Body>
-						<Table.Header>
-							
-						</Table.Header>
-					</Table.Body>
-          <Form onSubmit={handleSubmit}>
-            <Header>Week Of:</Header>
-            <Form.Group widths='equal'>
+			<Table.Header>
+				<Table.HeaderCell width='6'>
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					<p>M</p>
+					<p>11 Feb</p>
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					<p>T</p>
+					<p>11 Feb</p>
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					<p>W</p>
+					<p>11 Feb</p>
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					<p>TH</p>
+					<p>11 Feb</p>
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					<p>F</p>
+					<p>11 Feb</p>
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					<p>S</p>
+					<p>11 Feb</p>
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					<p>Su</p>
+					<p>11 Feb</p>
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+				</Table.HeaderCell>
+			</Table.Header>
+			<Table.Body>
+				<Table.Cell width='6'>
+					Project Name
+					Task Title
+				</Table.Cell>
+				{/* Change cells below to inputs  */}
+				<Table.Cell width='1'>
+					M
+				</Table.Cell>
+				<Table.Cell width='1'>
+					T
+				</Table.Cell>
+				<Table.Cell width='1'>
+					W
+				</Table.Cell>
+				<Table.Cell width='1'>
+					TH
+				</Table.Cell>
+				<Table.Cell width='1'>
+					F
+				</Table.Cell>
+				<Table.Cell width='1'>
+					S
+				</Table.Cell>
+				<Table.Cell width='1'>
+					Su
+				</Table.Cell>
 
-              <Form.Field
-                width="10"
-                size="big"
-                label="Project Title"
-                type="text"
-                name="title"
-                // onChange={handleTitleChange}
-                // value={title}
-              />
+				{/* Inputs above^ */}
 
-							<Dropdown
-									placeholder='Select Task'
-									name="task"
-									fluid
-									selection
-									onChange={handleOptionChange}
-									options={tasks}
-								/>
+				<Table.Cell width='1'>
+					Total
+				</Table.Cell>
+			</Table.Body>
+			<Table.Footer>
+				<Table.HeaderCell width='1'>
+					<Button basic>+ New Row</Button>
+					<Button basic>Save</Button>
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					M
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					T
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					W
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					TH
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					F
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					S
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					Su
+				</Table.HeaderCell>
+				<Table.HeaderCell width='1'>
+					Total
+				</Table.HeaderCell>
 
-              <Form.Input
-                width="3"
-                size="big"
-                label="Monday"
-                placeholder="HRS"
-                name="monday"
-                required
-                onChange={(e) => {setMonday(e.target.value)}}
-                value={monday}
-              />
+			</Table.Footer>
+			{/* <Form onSubmit={handleSubmit}>
+				<Header>Week Of:</Header>
+				<Form.Group widths='equal'>
 
-              <Form.Input
-                width="3"
-                size="big"
-                label="Tuesday"
-                placeholder="HRS"
-                name="tuesday"
-                required
-                onChange={(e) => {setTuesday(e.target.value)}}
-                value={tuesday}
-              />
+					<Form.Field
+						width="10"
+						size="big"
+						label="Project Title"
+						type="text"
+						name="title"
+						// onChange={handleTitleChange}
+						// value={title}
+					/>
 
-              <Form.Input
-                width="3"
-                size="big"
-                label="Wednesday"
-                placeholder="HRS"
-                name="wednesday"
-                required
-                onChange={(e) => {setWednesday(e.target.value)}}
-                value={wednesday}
-              />
+					<Dropdown
+							placeholder='Select Task'
+							name="task"
+							fluid
+							selection
+							onChange={handleOptionChange}
+							options={tasks}
+						/>
 
+					<Form.Input
+						width="3"
+						size="big"
+						label="Monday"
+						placeholder="HRS"
+						name="monday"
+						required
+						onChange={(e) => {setMonday(e.target.value)}}
+						value={monday}
+					/>
 
-              <Form.Input
-                width="3"
-                size="big"
-                label="Thursday"
-                placeholder="HRS"
-                name="thursday"
-                required
-                onChange={(e) => {setThursday(e.target.value)}}
-                value={thursday}
-              />
+					<Form.Input
+						width="3"
+						size="big"
+						label="Tuesday"
+						placeholder="HRS"
+						name="tuesday"
+						required
+						onChange={(e) => {setTuesday(e.target.value)}}
+						value={tuesday}
+					/>
 
-
-              <Form.Input
-                width="3"
-                size="big"
-                label="Friday"
-                placeholder="HRS"
-                name="friday"
-                required
-                onChange={(e) => {setFriday(e.target.value)}}
-                value={friday}
-              />
-
-
-              <Form.Input
-                width="3"
-                size="big"
-                label="Saturday"
-                placeholder="HRS"
-                name="saturday"
-                required
-                onChange={(e) => {setSaturday(e.target.value)}}
-                value={saturday}
-              />
+					<Form.Input
+						width="3"
+						size="big"
+						label="Wednesday"
+						placeholder="HRS"
+						name="wednesday"
+						required
+						onChange={(e) => {setWednesday(e.target.value)}}
+						value={wednesday}
+					/>
 
 
-              <Form.Input
-                width="3"
-                size="big"
-                label="Sunday"
-                placeholder="HRS"
-                name="sunday"
-                required
-                onChange={(e) => {setSunday(e.target.value)}}
-                value={sunday}
-                />
+					<Form.Input
+						width="3"
+						size="big"
+						label="Thursday"
+						placeholder="HRS"
+						name="thursday"
+						required
+						onChange={(e) => {setThursday(e.target.value)}}
+						value={thursday}
+					/>
 
-            </Form.Group>
-            <Header>
-            <Form.Button content='Save' size='big' fitted icon='save' color='purple' type='submit' />
-            </Header>
-          </Form>
-        </Segment>
-      </Container>
+
+					<Form.Input
+						width="3"
+						size="big"
+						label="Friday"
+						placeholder="HRS"
+						name="friday"
+						required
+						onChange={(e) => {setFriday(e.target.value)}}
+						value={friday}
+					/>
+
+
+					<Form.Input
+						width="3"
+						size="big"
+						label="Saturday"
+						placeholder="HRS"
+						name="saturday"
+						required
+						onChange={(e) => {setSaturday(e.target.value)}}
+						value={saturday}
+					/>
+
+
+					<Form.Input
+						width="3"
+						size="big"
+						label="Sunday"
+						placeholder="HRS"
+						name="sunday"
+						required
+						onChange={(e) => {setSunday(e.target.value)}}
+						value={sunday}
+						/>
+
+				</Form.Group>
+				<Header>
+				<Form.Button content='Save' size='big' fitted icon='save' color='purple' type='submit' />
+				</Header>
+			</Form> */}
     </>
   )
 };
