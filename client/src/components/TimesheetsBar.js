@@ -30,7 +30,7 @@ const TimesheetsBar = (props) => {
 					active={activeItem === 'pendingapproval'} 
 					onClick={handleItemClick}
 				>
-						Pendingapproval
+						Pending Approval
 				</Menu.Item>
 					</Link>
 					<Link to="/unsubmitted" >

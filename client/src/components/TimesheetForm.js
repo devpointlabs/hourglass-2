@@ -1,7 +1,7 @@
 import React, { useState, } from "react";
 import axios from "axios";
 import { Redirect, } from 'react-router-dom';
-import { Table, Button} from "semantic-ui-react";
+import { Table, Button, Segment, Input } from "semantic-ui-react";
 
 
 const TimesheetForm = (props) => {
@@ -40,6 +40,16 @@ const TimesheetForm = (props) => {
 		})
 	}
 
+
+	// const newRow = () => {
+	// 	var table = document.getElementById('newTimesheet')
+	// 	var row = table.insertRow(-1)
+	// 	var cell1 = row.insertCell(0);
+	// 	var cell2 = row.insertCell(1);
+	// 	cell1.innerHTML = "NEW CELL1";
+	// 	cell2.innerHTML = "NEW CELL2";
+	// }
+
 	const handleSubmit = (e) => {
 		const days = [monday, tuesday, wednesday, thursday, friday, saturday, sunday];
 		e.preventDefault();
@@ -64,105 +74,224 @@ const TimesheetForm = (props) => {
 
   return (
     <>
+	<Segment>
+		<Table celled striped>
 			<Table.Header>
-				<Table.HeaderCell width='6'>
+				<Table.HeaderCell width='equal'>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
+				<Table.HeaderCell width='equal'>
 					<p>M</p>
-					<p>11 Feb</p>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
+				<Table.HeaderCell width='equal'>
 					<p>T</p>
-					<p>11 Feb</p>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
+				<Table.HeaderCell width='equal'>
 					<p>W</p>
-					<p>11 Feb</p>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
+				<Table.HeaderCell width='equal'>
 					<p>TH</p>
-					<p>11 Feb</p>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
+				<Table.HeaderCell width='equal'>
 					<p>F</p>
-					<p>11 Feb</p>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
+				<Table.HeaderCell width='equal'>
 					<p>S</p>
-					<p>11 Feb</p>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
-					<p>Su</p>
-					<p>11 Feb</p>
+				<Table.HeaderCell width='equal'>
+					<p>SU</p>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
+				<Table.HeaderCell width='equal'>
 				</Table.HeaderCell>
 			</Table.Header>
-			<Table.Body>
-				<Table.Cell width='6'>
-					Project Name
-					Task Title
+			<Table.Body id='newTimesheet'>
+				<Table.Row>
+				<Table.Cell width='1'>
+					<p>Project Name</p>
+					<p>Task Title</p>
 				</Table.Cell>
 				{/* Change cells below to inputs  */}
-				<Table.Cell width='1'>
-					M
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='20th'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setMonday(e.target.value)}}
+						value={monday}
+					/>
 				</Table.Cell>
-				<Table.Cell width='1'>
-					T
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='21st'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setTuesday(e.target.value)}}
+						value={tuesday}
+					/>
 				</Table.Cell>
-				<Table.Cell width='1'>
-					W
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='22nd'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setWednesday(e.target.value)}}
+						value={wednesday}
+					/>
 				</Table.Cell>
-				<Table.Cell width='1'>
-					TH
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='23rd'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setThursday(e.target.value)}}
+						value={thursday}
+					/>
 				</Table.Cell>
-				<Table.Cell width='1'>
-					F
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='24th'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setFriday(e.target.value)}}
+						value={friday}
+					/>
 				</Table.Cell>
-				<Table.Cell width='1'>
-					S
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='25th'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setSaturday(e.target.value)}}
+						value={saturday}
+					/>
 				</Table.Cell>
-				<Table.Cell width='1'>
-					Su
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='26th'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setSunday(e.target.value)}}
+						value={sunday}
+					/>
 				</Table.Cell>
-
-				{/* Inputs above^ */}
-
-				<Table.Cell width='1'>
-					Total
+				<Table.Cell width='2'>
+					Week Total
 				</Table.Cell>
+				</Table.Row>
+				<Table.Row>
+				<Table.Cell width='1'>
+					<p>Project Name</p>
+					<p>Task Title</p>
+				</Table.Cell>
+				{/* Change cells below to inputs  */}
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='20th'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setMonday(e.target.value)}}
+						value={monday}
+					/>
+				</Table.Cell>
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='21st'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setTuesday(e.target.value)}}
+						value={tuesday}
+					/>
+				</Table.Cell>
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='22nd'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setWednesday(e.target.value)}}
+						value={wednesday}
+					/>
+				</Table.Cell>
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='23rd'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setThursday(e.target.value)}}
+						value={thursday}
+					/>
+				</Table.Cell>
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='24th'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setFriday(e.target.value)}}
+						value={friday}
+					/>
+				</Table.Cell>
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='25th'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setSaturday(e.target.value)}}
+						value={saturday}
+					/>
+				</Table.Cell>
+				<Table.Cell width='2'>
+					<Input
+						fluid
+						label='26th'
+						type="text"
+						placeholder='0:00'
+						onChange={(e) => {setSunday(e.target.value)}}
+						value={sunday}
+					/>
+				</Table.Cell>
+				<Table.Cell width='2'>
+					Week Total
+				</Table.Cell>
+				</Table.Row>	
 			</Table.Body>
 			<Table.Footer>
-				<Table.HeaderCell width='1'>
-					<Button basic>+ New Row</Button>
+				<Table.HeaderCell>
+					<Button basic
+					//  onClick={newRow()}
+					 >
+						 + New Row</Button>
+				</Table.HeaderCell>
+				<Table.HeaderCell>
 					<Button basic>Save</Button>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
-					M
+				<Table.HeaderCell>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
-					T
+				<Table.HeaderCell>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
-					W
+				<Table.HeaderCell>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
-					TH
+				<Table.HeaderCell>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
-					F
+				<Table.HeaderCell>
 				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
-					S
-				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
-					Su
-				</Table.HeaderCell>
-				<Table.HeaderCell width='1'>
-					Total
+				<Table.HeaderCell>
+					Total:
 				</Table.HeaderCell>
 
 			</Table.Footer>
+			</Table>
+			</Segment>
 			{/* <Form onSubmit={handleSubmit}>
 				<Header>Week Of:</Header>
 				<Form.Group widths='equal'>
