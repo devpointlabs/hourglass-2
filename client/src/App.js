@@ -8,6 +8,7 @@ import FetchUser from './components/FetchUser';
 import Footer from './components/Footer';
 import Help from './components/Help';
 import Login from './components/Login';
+import LeBox from './components/LeBox';
 import Invoices from './components/Invoices';
 import Manage from './components/Manage';
 import NavBar from './components/NavBar';
@@ -34,6 +35,7 @@ import Unsubmitted from './components/Unsubmitted';
 const App = () => (
   <Fragment>
     <NavBar />
+    <LeBox />
     <FetchUser>
       <Container>
         <Switch>
