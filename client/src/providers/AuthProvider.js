@@ -43,7 +43,6 @@ export class AuthProvider extends React.Component {
 		const{time} = this.state;
     axios.post(`/api/sessions`, {time, task_id})
       .then( res =>{
-				debugger
         this.setState({...this.state, timer: null, timerStart: 0, time: 0});
       }).catch(err => {
         console.log(err);
