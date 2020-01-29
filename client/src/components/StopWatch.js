@@ -1,8 +1,9 @@
-import React, { Component, useEffect } from "react";
+import React, { Component } from "react";
 import { Dropdown, Grid, Menu } from 'semantic-ui-react'
 import axios from 'axios'
 import _ from 'lodash'
 import "../App.css";
+
 
 
 class Stopwatch extends Component {
@@ -93,7 +94,6 @@ class Stopwatch extends Component {
     });
   };
 
-  handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
   render() {
     const { timerTime } = this.state;
