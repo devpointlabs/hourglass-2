@@ -113,8 +113,9 @@ class AccountForm extends React.Component {
               />
               <Form.Input
                 label="Phone"
-                type="number"
+                type="text"
                 name="phone"
+                placeholder="(xxx) xxx - xxxx"
                 value={phone}
                 onChange={this.handleChange}
               />
