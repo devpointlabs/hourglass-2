@@ -3,6 +3,7 @@ import { Dropdown, Grid, Menu } from 'semantic-ui-react'
 import axios from 'axios'
 import _ from 'lodash'
 import "../App.css";
+import { AuthContext } from "../providers/AuthProvider"
 
 
 
@@ -11,22 +12,42 @@ class Stopwatch extends Component {
     timerOn: false,
     timerStart: 0,
     timerTime: 0,
+    hours: '',
+    minutes: '',
+    seconds: '',
     tasks: [],
     taskOptions: [],
     currentProj: '',
     currentTask: '',
   };
-  
+
   componentDidMount = () => {
     axios.get(`/api/user_tasks`)
       .then(res => {
-        this.setState({ tasks: res.data,}, () => this.getTask());
+        this.setState({ tasks: res.data, }, () => this.getTask());
       })
       .catch(err => {
         console.log(err);
       })
   };
-  
+
+  componentDidUpdate(prevprops, prevState) {
+    const { getTime, timerOn } = this.context
+    const time = getTime()
+    if (prevState.timerOn !== timerOn) {
+      this.setState({ ...this.state, timerOn: timerOn })
+    }
+    if (prevState.hours !== time.hours ||
+    prevState.minutes !== time.minutes ||
+    prevState.seconds !== time.seconds) {
+      this.setState({ ...this.state,
+        hours: time.hours,
+        minutes: time.minutes,
+        seconds: time.seconds,
+      })
+    }
+  }
+
   handleProject = (e) => {
     this.setState({ currentProj: e.currentTarget.innerText })
   }
@@ -54,7 +75,7 @@ class Stopwatch extends Component {
       value: t.title,
     })
     )
-    return this.setState({taskOptions: userTasks})
+    return this.setState({ taskOptions: userTasks })
   };
 
 
@@ -96,11 +117,11 @@ class Stopwatch extends Component {
 
 
   render() {
-    const { timerTime } = this.state;
-    let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
-    let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
-    let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
-    let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
+    const { timerTime, hours, minutes, seconds, } = this.state;
+    // let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
+    // let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
+    // let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
+    // let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
 
 
     return (
@@ -113,16 +134,16 @@ class Stopwatch extends Component {
               value={this.state.currentProj}
               placeholder='Select Project'
               selection
-              >
+            >
             </Dropdown>
-              <Dropdown
+            <Dropdown
               options={this.state.taskOptions}
               onChange={e => this.handleTask(e)}
               value={this.state.currentTask}
               placeholder='Select Task'
               selection
-              >
-              </Dropdown>
+            >
+            </Dropdown>
           </Grid.Column>
           <Grid.Column width={8}>
             <div className="Stopwatch">
@@ -131,16 +152,16 @@ class Stopwatch extends Component {
                 {hours} : {minutes} : {seconds}
               </div>
               {this.state.timerOn === false && this.state.timerTime === 0 && (
-                <button onClick={this.startTimer}>Start</button>
+                <button onClick={this.context.startTimer}>Start</button>
               )}
               {this.state.timerOn === true && (
-                <button onClick={this.stopTimer}>Stop</button>
+                <button onClick={this.context.stopTimer}>Stop</button>
               )}
-              {this.state.timerOn === false && this.state.timerTime > 0 && (
-                <button onClick={this.startTimer}>Resume</button>
+              {this.state.timerOn === false && this.state.seconds !== '00' && (
+                <button onClick={this.context.startTimer}>Resume</button>
               )}
-              {this.state.timerOn === false && this.state.timerTime > 0 && (
-                <button onClick={this.resetTimer}>Submit</button>
+              {this.state.timerOn === false && this.state.seconds !== '00' && (
+                <button onClick={this.context.resetTimer}>Submit</button>
               )}
             </div>
           </Grid.Column>
@@ -150,4 +171,5 @@ class Stopwatch extends Component {
   }
 }
 
+Stopwatch.contextType = AuthContext
 export default Stopwatch;

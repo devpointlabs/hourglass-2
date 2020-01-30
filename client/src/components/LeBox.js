@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
 import { Button, Divider, Segment, Transition, Icon } from 'semantic-ui-react'
+import { AuthContext } from "../providers/AuthProvider"
 
 export default class LeBox extends Component {
-  state = { visible: true }
+  state = { visible: true, hours: '', minutes: '', seconds: ''  }
 
   toggleVisibility = () =>
     this.setState((prevState) => ({ visible: !prevState.visible }))
+
+  componentDidMount(){
+    const time = this.context.getTime()
+    this.setState({hours: time.hours, minutes: time.minutes, seconds: time.seconds})
+  }
 
   render() {
     const { visible } = this.state
@@ -33,6 +39,7 @@ export default class LeBox extends Component {
             transform: "translateY(-145%)" 
           }}>    
             {/* put the clock in here */}
+              {/* {console.log(this.context.getTime())} */}
               Dude
           </Segment>
         </Transition>
@@ -41,3 +48,4 @@ export default class LeBox extends Component {
   }
 }
 
+LeBox.contextType = AuthContext
