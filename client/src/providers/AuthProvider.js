@@ -5,7 +5,7 @@ export const AuthContext = React.createContext();
 export const AuthConsumer = AuthContext.Consumer;
 
 export class AuthProvider extends React.Component {
-  state = { user: null, timer: null , time: 0, timerStart: 0};
+  state = { user: null, timer: null , time: 0, timerStart: 0, timerOn: false};
 
   handleRegister = (user, history) => {
     axios.post("/api/auth", user)
@@ -25,7 +25,8 @@ export class AuthProvider extends React.Component {
 			timer: setInterval(() => {
 				this.setTime(Date.now() - timerStart);
 			},1000), 
-			timerStart: timerStart
+      timerStart: timerStart,
+      timerOn: true
 		});
 	}
 
@@ -36,8 +37,16 @@ export class AuthProvider extends React.Component {
 	stopTimer = () => {
 		const {timer} = this.state;
 		clearInterval(timer);
-		this.setState({...this.state, timer: null});
-	}
+		this.setState({...this.state, timer: null, timerOn: false});
+  }
+  
+  resetTimer = () => {
+    // this.submitTime();
+    this.setState({
+      timerStart: 0,
+      timerTime: 0
+    });
+  };
 
 	submitTime = (task_id) => {
 		const{time} = this.state;
@@ -69,7 +78,7 @@ export class AuthProvider extends React.Component {
   }
   
   handleLogout = (history) => {
-    axios.deconste("/api/auth/sign_out")
+    axios.delete("/api/auth/sign_out")
       .then( res => {
         this.setState({ user: null, });
         history.push('/login');
@@ -89,9 +98,11 @@ export class AuthProvider extends React.Component {
         handleLogout: this.handleLogout,
 				updateUser: this.updateUser,
 				startTimer: this.startTimer,
-				stopTimer: this.stopTimer,
+        stopTimer: this.stopTimer,
+        resetTimer: this.resetTimer,
 				submitTime: this.submitTime,
-				getTime: this.getTime,
+        getTime: this.getTime,
+        timerOn: this.state.timerOn,
         setUser: (user) => this.setState({ user, timer: this.state.timer}),
       }}>
         { this.props.children }
