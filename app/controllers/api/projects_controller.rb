@@ -30,8 +30,11 @@ class Api::ProjectsController < ApplicationController
   end
 
 	def destroy
-		if @project.project_admins.includes(current_user.id)
+		if 
+		# @project.project_admins.include?(current_user.id)
+			current_user.remove_project(@project.id)
 			@project.destroy
+			render json: current_user.get_projects
 		else
 			render status: 401
 		end
@@ -41,6 +44,7 @@ class Api::ProjectsController < ApplicationController
 		def set_project
 			@project = Project.find(params[:id])
 		end
+
 		def project_params
 			params.require(:project).permit(
 				:title,
