@@ -105,7 +105,7 @@ const Projects = (props) => {
                     <Table.Row>
                       <Table.Cell>
                         <Link to={`projects/${project.id}`}>
-                          {project.title} 
+                          {project.title}
                         </Link>
                       </Table.Cell>
                       <Table.Cell>

@@ -9,7 +9,7 @@ import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Container, Header, Table, Button, Segment, } from 'semantic-ui-react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {AuthContext} from '../providers/AuthProvider';
 import ProjectForm from './ProjectForm';
 import TaskForm from './TaskForm';
@@ -52,10 +52,10 @@ const Project = (props) => {
     setTaskEditForm(!taskEditForm);
   } 
   
-  const handleDeleteTask =(task) => {
+  const handleDeleteTask = (task) => {
     const { id } = props.match.params;
     axios.delete(`/api/projects/${id}/tasks/${task.id}`)
-    .then( res =>{
+    .then( res => {
       setTasks(tasks.filter(t => {
         if (t.id !== task.id)
         return t
@@ -63,6 +63,18 @@ const Project = (props) => {
     })
   }
 
+  const handleDeleteProject = () => {
+    const { id } = props.match.params;
+    axios.delete(`/api/projects/${id}`)
+    .then( res => {
+      return <Redirect to='/projects' />
+    })
+    .catch(err => {
+			console.log(err);
+    })
+  } 
+
+  
   return (
     <Container>
       <br />
@@ -72,6 +84,8 @@ const Project = (props) => {
       <br />
         <Button color='purple' onClick={() => toggleProjectForm(!projectForm)}>
           { projectFormButton}
+        </Button>
+        <Button color='red' onClick={() => handleDeleteProject(project)}>Delete Project
         </Button>
         <br />
       {projectForm ? <ProjectForm {...props} project={project} isEditing={true} toggleProjectForm={toggleProjectForm} 
@@ -137,7 +151,9 @@ const Project = (props) => {
 										<Table.HeaderCell width={2}>Project Id</Table.HeaderCell>
 										<Table.HeaderCell width={3}>Owner</Table.HeaderCell>
 										<Table.Cell width={3}>
-											<Button 
+                      <Button 
+                        inverted
+                        color='purple'
 												icon='pencil'
 												onClick={() => toggleTaskEditForm(!taskEditForm)}
 												/>
@@ -169,8 +185,10 @@ const Project = (props) => {
 														{task.user_id}
 												</Table.Cell>
 												<Table.Cell>
-													<Button 
-														icon='trash'
+                          <Button 
+                            inverted
+                            color='red'
+                            icon='trash'
 														onClick={() => handleDeleteTask(task)} 
 														/>
 												</Table.Cell>
@@ -188,11 +206,18 @@ const Project = (props) => {
         </>
     }
     <br />
-      <Button color='purple'>
+      <Button inverted color='purple'>    
         <Link to={`/projects`}>
           Back to Projects
         </Link>
       </Button>
+      <br /> 
+      <br /> 
+      <br /> 
+      <br /> 
+      <br /> 
+      <br /> 
+      <br /> 
     </Container>
   )
 };

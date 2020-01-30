@@ -21,6 +21,10 @@ class User < ApplicationRecord
 		self.update(projects: self.projects.push(id))
 	end
 
+	def remove_project id
+		self.update(projects: self.projects-[id])
+	end
+
 	def self.search str, currents
 		if str != nil &&  !str.empty?
 			str = str.downcase
