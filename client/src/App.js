@@ -28,7 +28,7 @@ import Tasks from './components/Tasks';
 import TaskForm from './components/TaskForm';
 import Team from './components/Team';
 import Timesheet from './components/Timesheet';
-import TimesheetForm from './components/TimesheetForm';
+import TimesheetForm from './components/TimesheetWeek';
 import Timesheets from './components/TimesheetsBar';
 import Unsubmitted from './components/Unsubmitted';
 

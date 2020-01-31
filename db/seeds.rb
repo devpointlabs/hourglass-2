@@ -42,10 +42,10 @@ i = 0
 		client_name: "Me Foo",
 		planned_start: DateTime.now,
 		planned_end: nil,
-		budget: 1000.00 * rand(12),
+		budget: (1000.00 * rand(12)).round(2),
 		complete: false,
-		spent: 500.25 * rand(25),
-		cost: 30.18 * rand(100),
+		spent: (500.25 * rand(25)).round(2),
+		cost: (30.18 * rand(100)).round(2),
 		project_admins: [random_admin],
 		all_users: users
 	)
@@ -55,11 +55,16 @@ i = 0
 			description: Faker::Job.field,
 			complete: false
 		)
-		sheet = Timesheet.create(
-			start_date: Faker::Date.between(from: 14.days.ago, to: Date.today),
-			user_id: a.id,
-		)
-		puts (sheet.set_sessions ['0:30','1:30', '2:00', '2:15', '1:00', '5:15', '1:15'], task.id, a.id)
+		2.times do 
+			now = Time.now 
+			s=Session.create(
+				task_id: task.id, 
+				user_id: a.id, 
+				start_time: DateTime.parse((now - (rand(1..14) * 24 * 60 * 60)).to_s),
+				total_minutes: rand(60...480)
+			)
+			puts s.id, s.start_time
+		end
 	end
 
 	User.all.each do |u|

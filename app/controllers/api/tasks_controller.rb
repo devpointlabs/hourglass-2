@@ -1,10 +1,14 @@
 class Api::TasksController < ApplicationController
-	before_action :set_task, only: [:destroy, :update]
+	before_action :set_task, only: [:destroy, :update, :show]
 	before_action :set_project, only: [:index, :create]
 	
 	def index
 		render json: @project.tasks
-  end
+	end
+	
+	def show
+		render json: {project: Project.find(@task.project_id).title, task: @task.title, id: @task.id}
+	end
 
 	def create
 		task = @project.tasks.new(task_params)
