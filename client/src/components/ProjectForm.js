@@ -88,7 +88,7 @@ const ProjectForm = (props) => {
             axios.post(`/api/projects`, {title, description, client_name, planned_start, planned_end, budget, cost, spent, project_admins, complete, } )
             .then( res => {
                 props.toggleProjectForm();
-                return <Redirect to='/projects' />
+                window.location.reload();
             })
             .catch(err => {
                 console.log(err);
@@ -147,7 +147,7 @@ const ProjectForm = (props) => {
             </Form.Group>
             <Form.Group> 
             </Form.Group>
-            <Form.Group widths="equal">
+            <Form.Group widths={4}>
                 <Form.Input
                     type='date'
                     label="Planned Start"

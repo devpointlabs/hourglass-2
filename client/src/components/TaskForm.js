@@ -1,14 +1,10 @@
 //assign a user?? dropdown of available team members based on the project?
 //need the project options to be dynamic based on the user and what projects they are associated with
-//routes are incorrect
-//potentially change the task edit/create form to a partial? might render in a smoother way for the user
-//need code to automatically refresh the page when you add a task
 
 
 import React, { useState, } from "react";
 import axios from "axios";
 import { Form, Checkbox, } from "semantic-ui-react";
-import { Redirect, Router } from "react-router-dom";
 import Search from "./Search";
 
 const TaskForm = (props) => {
@@ -17,6 +13,7 @@ const TaskForm = (props) => {
     const [price_per_hour, setPrice_Per_Hour] = useState(props.price_per_hour);
     const [billable, setBillable] = useState(props.budget);
     const project_id = props.project_id ;
+    const project_title = props.project_title ;
     const [complete, setComplete] = useState(props.complete);
   
   
@@ -80,7 +77,7 @@ const TaskForm = (props) => {
                   <Form.Input 
                     width={2}
                     fluid label='Project Name' 
-                    placeholder='project name'
+                    placeholder={project_title}
                     readOnly 
                     />
                     <Form.Input 
