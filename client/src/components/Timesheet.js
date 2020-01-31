@@ -8,7 +8,7 @@ import TimesheetsBar from './TimesheetsBar';
 import dateFormat from '../tools/dateFormat';
 import {AuthContext} from '../providers/AuthProvider';
 const DAY = 24 * 60 * 60 * 1000;
-const DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", 'saturday', 'sunday'];
+const DAYS = ['sunday', "monday", "tuesday", "wednesday", "thursday", "friday", 'saturday', 'sunday'];
 /**
  * TO DO:
  * 1. Add Default timesheet of current week, (start date = monday)
@@ -47,9 +47,9 @@ const Timesheet = (props) => {
 	]
 	
   useEffect( () => {
+		console.log('checking timesheet...');
 		axios.get(`/api/timesheets`, {params: {active_day: date(activeDay)}})
 			.then( res => {
-				console.log("Grabbing timesheet...", res.data);
 				setTimesheet(res.data);
 			})
 			.catch( err => {
@@ -74,9 +74,9 @@ const Timesheet = (props) => {
 	}, [buttonPressed])
 
 	useEffect( () => {
-		console.log(date(activeDay));
 		if(timesheet) {
-			setSameWeek(Date.parse(timesheet.start_date) > activeDay);
+			console.log((dateParse(timesheet.start_date) - activeDay)/DAY);
+			checkSameWeek();
 			axios.get(`/api/timesheets/${timesheet.id}`)
 				.then(res => {
 					setDaySessions(res.data);
@@ -93,16 +93,19 @@ const Timesheet = (props) => {
 				})
 				.catch(err => console.log(err))
 		}	else {
-			console.log('creating new timesheet.');
 			setDaySessions([]);
-			axios.post(`/api/timesheets/`)
+			axios.post(`/api/timesheets/`, {active_day: date(activeDay)})
 				.then(res => {
-					console.log(res.data);
 					setTimesheet(res.data);
 				})
 				.catch(err => console.log(err))
 		}
-	}, [activeDay, timesheet])
+	}, [activeDay, timesheet]);
+
+	const checkSameWeek = () => {
+		const bool = (dateParse(timesheet.start_date) - activeDay) / DAY > 0 || (dateParse(timesheet.start_date) - activeDay) / DAY <= -7 ? false : true;
+		setSameWeek(bool);
+	}
 
 	const setProjectTask = (id) => {
 		axios.get(`/api/tasks/${id}`)
@@ -124,6 +127,12 @@ const Timesheet = (props) => {
 		return (new Date(datetime));
 	}
 
+	const dateParse = (str) => {
+		const input = str.split('T')[0];
+		var parts = input.split('-');
+		return new Date(parts[0], parts[1]-1, parts[2]);
+	}
+
 	const checkToday = () => {
 		if(activeDay)
 		return date(activeDay).getDay() === date(Date.now()).getDay();
@@ -131,7 +140,6 @@ const Timesheet = (props) => {
   
   const decDay = () => {
 		setActiveDay(activeDay - DAY);
-		
 	}
 
   const incDay = () => {
@@ -139,7 +147,9 @@ const Timesheet = (props) => {
 	}
 
 	const setDay = (index) => {
-		setActiveDay(Date.parse(timesheet.start_date) + (DAY * index));
+		const day = dateParse(timesheet.start_date) + (DAY * index);
+		if(day <= Date.now())
+			setActiveDay(day);
 	}
 
 	// const handleStartClick = () => {
@@ -170,9 +180,7 @@ const Timesheet = (props) => {
       <Table.Row>
         <Table.HeaderCell colSpan='9'>
           <Table.HeaderCell>
-						{
-							getDay()
-						}
+						{getDay()}
           </Table.HeaderCell>
           <Table.HeaderCell>
             <Label>Pending Approval</Label>
@@ -191,12 +199,7 @@ const Timesheet = (props) => {
             </Button.Group>
           </Table.HeaderCell>
           <Table.HeaderCell>
-						<Popup
-							content={<Cal />}
-							on='click'
-							// pinned
-							trigger={<Button icon='calendar alternate outline' />}
-						/>
+						<Button icon='calendar alternate outline' />
           </Table.HeaderCell>
           <Table.HeaderCell>
 						<Button.Group buttons={['Day', 'Week']}
@@ -232,68 +235,41 @@ const Timesheet = (props) => {
 				</>
 			:
 				<>
-					<TimesheetDay sessions={daySessions} setDay={setDay} activeDay={DAYS[date(activeDay).getDay()-1]}/>
+					<TimesheetDay sessions={daySessions} setDay={setDay} activeDay={DAYS[date(activeDay).getDay()]}/>
 				</>
 		)
 	}
   
   const footer = (
     <Fragment>
-				{/* { task ?
-					<> 
-						<Table.Row>
-							<Table.Cell width='2'>
-								<Header as ="h3">{task.project_title}</Header>
-								<p>{task.task_title}</p>
-							</Table.Cell>
-							<Table.Cell width='5'>
-							</Table.Cell>
-							<Table.Cell width='1' textAlign='right'>
-								<p>{task.time} {showTimer? '+ ' + stopWatchTime : null}</p>
-							</Table.Cell>
-							<Table.Cell width='1'>
-									{showTimer ?
-										!timerOn?
-											<Button 
-												basic
-												onClick={() => handleStartClick()}
-											>
-												Start
-											</Button>
-										:
-											<Button 
-												basic
-												onClick={() => handleStopClick()}
-											>
-												Stop
-											</Button>
-									:
-										timerOn?
-											<Header as='h4'>Timer running...</Header>
-										:
-											null
-								}
-								<Icon
-									name='pencil'
-								>
-								</Icon>
-							</Table.Cell>
-						</Table.Row>
-						<Table.Row>
-							<Table.Cell width='2'>
-							</Table.Cell>
-							<Table.Cell width='5'>
-							</Table.Cell>
-							<Table.Cell width='2' textAlign='right'>
-								<Header>Daily Total: {task.time}</Header>
-							</Table.Cell>
-							<Table.Cell width='1'>
-							</Table.Cell>
-						</Table.Row>
-					</>
+				{/* { task ? 
+					<Table.Row>
+						<Table.Cell width='2'>
+							<Header as ="h3">{task.project_title}</Header>
+							<p>{task.task_title}</p>
+						</Table.Cell>
+						<Table.Cell width='5'>
+						</Table.Cell>
+						<Table.Cell width='1'>
+							<p>{task.time}</p>
+						</Table.Cell>
+						<Table.Cell width='1'>
+							<Button 
+								basic
+								onClick={() => handleStartClick()}
+							>
+								Start
+							</Button>
+							<Icon
+								name='pencil'
+								onClick={() => toggleTimesheetForm(!showForm)}
+							>
+							</Icon>
+						</Table.Cell>
+					</Table.Row>
 				:
 					null
-			} */}
+			}  */}
     </Fragment>
 	)
 

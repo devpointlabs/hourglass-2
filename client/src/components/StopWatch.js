@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { Dropdown, Grid, Menu } from 'semantic-ui-react'
+import { Dropdown, Grid, Menu, Button } from 'semantic-ui-react'
 import axios from 'axios'
 import _ from 'lodash'
 import "../App.css";
 import { AuthContext } from "../providers/AuthProvider"
-
-
 
 class Stopwatch extends Component {
   state = {
@@ -34,8 +32,8 @@ class Stopwatch extends Component {
   componentDidUpdate(prevprops, prevState) {
     const { getTime, timerOn } = this.context
     const time = getTime()
-    if (prevState.timerOn !== timerOn) {
-      this.setState({ ...this.state, timerOn: timerOn })
+    if (prevState.timerOn !== timerOn()) {
+      this.setState({ ...this.state, timerOn: timerOn() })
     }
     if (prevState.hours !== time.hours ||
     prevState.minutes !== time.minutes ||
@@ -49,6 +47,7 @@ class Stopwatch extends Component {
   }
 
   handleProject = (e) => {
+		debugger
     this.setState({ currentProj: e.currentTarget.innerText })
   }
 
@@ -151,17 +150,21 @@ class Stopwatch extends Component {
               <div className="Stopwatch-display">
                 {hours} : {minutes} : {seconds}
               </div>
-              {this.state.timerOn === false && this.state.timerTime === 0 && (
-                <button onClick={this.context.startTimer}>Start</button>
-              )}
-              {this.state.timerOn === true && (
-                <button onClick={this.context.stopTimer}>Stop</button>
+              {this.state.timerOn === false && this.state.seconds === '00' ? 
+                <Button onClick={this.context.startTimer}>Start</Button>
+								:
+								null
+              }
+              {this.state.timerOn === true ? 
+                <Button onClick={this.context.stopTimer}>Stop</Button>
+								:
+								null
+              }
+              {this.state.timerOn === false && this.state.seconds !== '00' && (
+                <Button onClick={this.context.startTimer}>Resume</Button>
               )}
               {this.state.timerOn === false && this.state.seconds !== '00' && (
-                <button onClick={this.context.startTimer}>Resume</button>
-              )}
-              {this.state.timerOn === false && this.state.seconds !== '00' && (
-                <button onClick={this.context.resetTimer}>Submit</button>
+                <Button onClick={this.context.resetTimer}>Submit</Button>
               )}
             </div>
           </Grid.Column>

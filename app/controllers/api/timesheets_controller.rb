@@ -12,10 +12,10 @@ class Api::TimesheetsController < ApplicationController
   end
 
 	def create
-		timesheet = Timesheet.where({start_date: find_recent_monday})[0]
-		unless timesheet
-			timesheet = current_user.timesheets.new(start_date: find_recent_monday)
-		end
+		# timesheet = Timesheet.where({start_date: find_recent_monday(params[:active_day])})[0]
+		timesheet = current_user.timesheets.new(start_date: find_recent_monday(params[:active_day]))
+		# unless timesheet
+		# end
 		if timesheet.save
 			render json: timesheet
 		else
@@ -44,9 +44,10 @@ class Api::TimesheetsController < ApplicationController
 			@timesheet = Timesheet.find(params[:id])
 		end
 
-		def find_recent_monday
-			date = DateTime.now().beginning_of_day
-			until date.monday?
+		def find_recent_monday d
+			d = DateTime.parse(d)
+			date = d.beginning_of_day
+			until date.wday == 1
 				date = date.advance(days: -1)
 			end
 			date
