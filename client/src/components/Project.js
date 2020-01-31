@@ -118,7 +118,9 @@ const Project = (props) => {
               <Table.Cell>{project.client_name}</Table.Cell>
               <Table.Cell>{project.planned_start}</Table.Cell>
               <Table.Cell>{project.planned_end}</Table.Cell>
-              <Table.Cell>'project.type'</Table.Cell>
+              <Table.Cell>
+                {/* 'project.type' */}
+                </Table.Cell>
               <Table.Cell>{project.budget}</Table.Cell>
               <Table.Cell>{project.spent}</Table.Cell>
               <Table.Cell>{project.cost}</Table.Cell>
@@ -134,7 +136,7 @@ const Project = (props) => {
             <Button color='purple' onClick={() => toggleTaskForm(!taskForm)}>
               { addTaskButton }
             </Button>
-            {taskForm ? <TaskForm {...props} project_id={project.id} isEditing={false} toggleTaskForm={toggleTaskForm} 
+            {taskForm ? <TaskForm {...props} project_id={project.id}  project_title={project.title} isEditing={false} toggleTaskForm={toggleTaskForm} 
         /> 
         : null }
         {tasks.map(task => {
@@ -148,7 +150,7 @@ const Project = (props) => {
 										<Table.HeaderCell width={1}>Complete?</Table.HeaderCell>
 										<Table.HeaderCell width={1}>Billable</Table.HeaderCell>
 										<Table.HeaderCell width={3}>Hourly Rate</Table.HeaderCell>
-										<Table.HeaderCell width={2}>Project Id</Table.HeaderCell>
+										<Table.HeaderCell width={2}>Project Code</Table.HeaderCell>
 										<Table.HeaderCell width={3}>Owner</Table.HeaderCell>
 										<Table.Cell width={3}>
                       <Button 
