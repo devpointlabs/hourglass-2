@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { Button, Divider, Segment, Transition, Icon } from 'semantic-ui-react'
 import { AuthContext } from "../providers/AuthProvider"
 
+// Hook up to Stopwatch, have it always display time
+// Clicking on it should bring up stopwatch modal
+
 export default class LeBox extends Component {
   state = { visible: true, hours: '', minutes: '', seconds: ''  }
 
@@ -42,7 +45,7 @@ export default class LeBox extends Component {
             position: "fixed", 
             bottom: 1, 
             right: 1, 
-            transform: "translateX(-40%) translateY(-700%) "
+						transform: "translateX(-40%) translateY(-700%) ",
           }} 
           name="stopwatch"
           // content={visible ? 'Hide' : 'Show'}

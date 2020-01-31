@@ -3,10 +3,10 @@ Rails.application.routes.draw do
 	namespace :api do
 		resources :users, only: [:index, :update]
 		resources :user_tasks, only: [:index]
+		resources :tasks, only: [:show]
 		resources :projects, except: [:new] do
 			resources :project_admins, only: :index
-			resources :tasks, except: [:new] do
-			end
+			resources :tasks, except: [:new, :show] 
 		end
 		resources :project_admins, only: :update
 		resources :project_users, only: [:index, :update]

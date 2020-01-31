@@ -48,4 +48,16 @@ class User < ApplicationRecord
 		end
 	end
 
+	def find_timesheet_by_day date
+		datetime = DateTime.parse(date)
+		datetime = datetime.beginning_of_day
+		self.timesheets.each do |t|
+			# Return timesheet if its active day falls within its scope
+			if datetime >= t.start_date && datetime <= t.start_date.advance(days:6)
+				return t
+			end
+		end
+		return nil
+	end
+
 end
