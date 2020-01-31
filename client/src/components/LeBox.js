@@ -13,8 +13,26 @@ export default class LeBox extends Component {
     this.setState({hours: time.hours, minutes: time.minutes, seconds: time.seconds})
   }
 
+  componentDidUpdate(prevprops, prevState) {
+    const { getTime, timerOn } = this.context
+    const time = getTime()
+    if (prevState.timerOn !== timerOn) {
+      this.setState({ ...this.state, timerOn: timerOn })
+    }
+    if (prevState.hours !== time.hours ||
+    prevState.minutes !== time.minutes ||
+    prevState.seconds !== time.seconds) {
+      this.setState({ ...this.state,
+        hours: time.hours,
+        minutes: time.minutes,
+        seconds: time.seconds,
+      })
+    }
+  }
+
   render() {
     const { visible } = this.state
+    const { timerTime, hours, minutes, seconds, } = this.state;
 
     return (
       <>
@@ -38,9 +56,7 @@ export default class LeBox extends Component {
             right: 0, 
             transform: "translateY(-145%)" 
           }}>    
-            {/* put the clock in here */}
-              {/* {console.log(this.context.getTime())} */}
-              Dude
+                {hours} : {minutes} : {seconds}
           </Segment>
         </Transition>
       </>
