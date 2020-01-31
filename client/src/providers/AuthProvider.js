@@ -119,7 +119,7 @@ export class AuthProvider extends React.Component {
         resetTimer: this.resetTimer,
 				submitTime: this.submitTime,
         getTime: this.getTime,
-        timerOn: this.state.timerOn,
+        timerOn: this.timerOn,
         setUser: (user) => this.setState({ user, timer: this.state.timer}),
       }}>
         { this.props.children }
