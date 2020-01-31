@@ -48,10 +48,12 @@ export class AuthProvider extends React.Component {
   }
   
   resetTimer = () => {
-    // this.submitTime();
+		// this.submitTime();
+		
     this.setState({
       timerStart: 0,
-      timerTime: 0
+			time: 0,
+			timer: null
     });
   };
 

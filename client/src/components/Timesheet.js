@@ -28,6 +28,7 @@ const Timesheet = (props) => {
 	const [isWeekView, setWeekView] = useState(false);
 	const [projects, setProjects] = useState([]);
 	const [activeItem, setActiveItem] = useState('');
+	const [disabled, setDisabled] = useState([]);
 	const [daySessions, setDaySessions] = useState([]);
 	const [tasks, setTasks] = useState([]);
 	const [activeDay, setActiveDay] = useState(Date.now());
@@ -75,7 +76,6 @@ const Timesheet = (props) => {
 
 	useEffect( () => {
 		if(timesheet) {
-			console.log((dateParse(timesheet.start_date) - activeDay)/DAY);
 			checkSameWeek();
 			axios.get(`/api/timesheets/${timesheet.id}`)
 				.then(res => {
@@ -103,7 +103,8 @@ const Timesheet = (props) => {
 	}, [activeDay, timesheet]);
 
 	const checkSameWeek = () => {
-		const bool = (dateParse(timesheet.start_date) - activeDay) / DAY > 0 || (dateParse(timesheet.start_date) - activeDay) / DAY <= -7 ? false : true;
+		const bool = (dateParse(timesheet.start_date) - activeDay) / DAY > 0 || 
+			(dateParse(timesheet.start_date) - activeDay) / DAY <= -7 ? false : true;
 		setSameWeek(bool);
 	}
 
@@ -134,9 +135,18 @@ const Timesheet = (props) => {
 	}
 
 	const checkToday = () => {
-		if(activeDay)
-		return date(activeDay).getDay() === date(Date.now()).getDay();
+		const bool = activeDay ?
+			datesAreOnSameDay(date(activeDay), date(Date.now()))
+		:
+			false;
+		
+		return bool;
 	}
+
+	const datesAreOnSameDay = (first, second) =>
+    first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() === second.getDate();
   
   const decDay = () => {
 		setActiveDay(activeDay - DAY);

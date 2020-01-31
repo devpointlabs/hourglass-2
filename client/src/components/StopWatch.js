@@ -6,7 +6,8 @@ import "../App.css";
 import { AuthContext } from "../providers/AuthProvider"
 
 class Stopwatch extends Component {
-  state = {
+
+	state = {
     timerOn: false,
     timerStart: 0,
     timerTime: 0,
@@ -19,6 +20,7 @@ class Stopwatch extends Component {
     currentTask: '',
   };
 
+
   componentDidMount = () => {
     axios.get(`/api/user_tasks`)
       .then(res => {
@@ -30,7 +32,7 @@ class Stopwatch extends Component {
   };
 
   componentDidUpdate(prevprops, prevState) {
-    const { getTime, timerOn } = this.context
+    const { getTime, timerOn} = this.context
     const time = getTime()
     if (prevState.timerOn !== timerOn()) {
       this.setState({ ...this.state, timerOn: timerOn() })
@@ -47,7 +49,6 @@ class Stopwatch extends Component {
   }
 
   handleProject = (e) => {
-		debugger
     this.setState({ currentProj: e.currentTarget.innerText })
   }
 
@@ -79,13 +80,7 @@ class Stopwatch extends Component {
 
 
   submitTime = () => {
-    const { timerTime } = this.state
-    axios.post(`/api/sessions`, { timerTime })
-      .then(res => {
-        this.setState(res.data);
-      }).catch(err => {
-        console.log(err);
-      })
+		this.context.resetTimer();
   };
 
   startTimer = () => {
@@ -107,11 +102,8 @@ class Stopwatch extends Component {
   };
 
   resetTimer = () => {
-    this.submitTime();
-    this.setState({
-      timerStart: 0,
-      timerTime: 0
-    });
+		this.submitTime();
+		this.setState({timerOn: false, timerTime: 0, hours: '00', minutes:'00', seconds:'00'});
   };
 
 
@@ -164,7 +156,7 @@ class Stopwatch extends Component {
                 <Button onClick={this.context.startTimer}>Resume</Button>
               )}
               {this.state.timerOn === false && this.state.seconds !== '00' && (
-                <Button onClick={this.context.resetTimer}>Submit</Button>
+                <Button onClick={() => this.resetTimer()}>Submit</Button>
               )}
             </div>
           </Grid.Column>

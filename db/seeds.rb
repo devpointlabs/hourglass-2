@@ -61,7 +61,7 @@ i = 0
 				task_id: task.id, 
 				user_id: a.id, 
 				start_time: DateTime.parse((now - (rand(1..14) * 24 * 60 * 60)).to_s),
-				total_minutes: rand(60...480)
+				total_minutes: rand(60...240)
 			)
 			puts s.id, s.start_time
 		end
