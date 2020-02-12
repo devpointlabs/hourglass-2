@@ -12,5 +12,6 @@ Rails.application.routes.draw do
 		resources :project_users, only: [:index, :update]
 		resources :sessions, except: [:new]
 		resources :timesheets, except: [:new]
+		resources :teams, except: [:show, :new]
 	end
 end

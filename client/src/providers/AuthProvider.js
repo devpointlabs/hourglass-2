@@ -18,7 +18,7 @@ export class AuthProvider extends React.Component {
     })
   }
 	
-	startTimer = (task_id, session_id) => {
+	startTimer = () => {
 		const timerStart = Date.now() - this.state.time;
 		const timer = setInterval(() => {
 			this.setTime(Date.now() - timerStart);
@@ -27,14 +27,11 @@ export class AuthProvider extends React.Component {
 			user: this.state.user, 
 			timer: timer, 
 			timerStart: timerStart,
-			task_id: task_id,
-			session_id: session_id
 		}); 
-		
 	}
 
 	setTime = (time) => {
-		this.setState({...this.state, time: time});
+		this.setState({...this.state, time: time}, () => console.log(this.state.time));
 	}
 
 	timerOn = () => {
@@ -47,29 +44,34 @@ export class AuthProvider extends React.Component {
 		this.setState({...this.state, timer: null, timerOn: false});
   }
   
-  resetTimer = () => {
-		// this.submitTime();
-		
-    this.setState({
-      timerStart: 0,
-			time: 0,
-			timer: null
-    });
-  };
+  resetTimer = (task, note) => {
+		this.submitTime(task, null, note);
+	};
+	
+	submitTime = (task_id, session_id, note) => {
+		this.setState({task_id: task_id, session_id: session_id}, () => {
+			session_id ? 
+				this.updateTime(session_id, note)
+			:
+				this.newTime(note, task_id, this.state.time);
+		});
+	}
 
-	submitTime = () => {
-		const{time, task_id} = this.state;
-    axios.post(`/api/sessions`, {time, task_id})
+	newTime = (note, task_id, time) => {
+    axios.post(`/api/sessions`, {time, task_id, note})
       .then( res =>{
-        this.setState({...this.state, timer: null, timerStart: 0, time: 0, task_id: null});
-      }).catch(err => {
+				console.log('Session saved.');
+        this.setState({...this.state, timer: null, timerStart: 0, time: 0, task_id: null, session_id: null});
+			})
+			.catch(err => {
         console.log(err);
       })
 	}
-	updateTime = (id, minutes) => {
-		axios.put(`/api/session/${id}`, {minutes})
+	updateTime = (id, note) => {
+		const minutes = this.state.time;
+		axios.put(`/api/session/${id}`, {minutes, note})
 			.then( res => {
-				debugger
+				console.log('Session updated.');
 				this.setState({...this.state, timer: null, timerStart: 0, time: 0, task_id: null});
 			})
 			.catch( err => {
@@ -85,6 +87,10 @@ export class AuthProvider extends React.Component {
 		return({hours,minutes,seconds});
 	}
 	
+	isSubmittable = () => {
+		return this.state.time / (1000 * 60 * 15) >= 1;
+	}
+
   handleLogin = (user, history) => {
     axios.post("/api/auth/sign_in", user)
       .then( res => {
@@ -120,6 +126,7 @@ export class AuthProvider extends React.Component {
         stopTimer: this.stopTimer,
         resetTimer: this.resetTimer,
 				submitTime: this.submitTime,
+				isSubmittable: this.isSubmittable,
         getTime: this.getTime,
         timerOn: this.timerOn,
         setUser: (user) => this.setState({ user, timer: this.state.timer}),

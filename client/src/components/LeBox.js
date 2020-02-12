@@ -2,26 +2,22 @@ import React, { Component } from 'react'
 import { Button, Divider, Segment, Transition, Icon } from 'semantic-ui-react'
 import { AuthContext } from "../providers/AuthProvider"
 
-// Hook up to Stopwatch, have it always display time
 // Clicking on it should bring up stopwatch modal
 
 export default class LeBox extends Component {
-  state = { visible: true, hours: '', minutes: '', seconds: ''  }
+  state = { visible: true, hours: '', minutes: '', seconds: ''  };
 
   toggleVisibility = () =>
-    this.setState((prevState) => ({ visible: !prevState.visible }))
+    this.setState((prevState) => ({ visible: !prevState.visible }));
 
   componentDidMount(){
-    const time = this.context.getTime()
-    this.setState({hours: time.hours, minutes: time.minutes, seconds: time.seconds})
+    const time = this.context.getTime();
+    this.setState({hours: time.hours, minutes: time.minutes, seconds: time.seconds});
   }
 
   componentDidUpdate(prevprops, prevState) {
-    const { getTime, timerOn } = this.context
-    const time = getTime()
-    if (prevState.timerOn !== timerOn) {
-      this.setState({ ...this.state, timerOn: timerOn })
-    }
+    const { getTime } = this.context;
+    const time = getTime();
     if (prevState.hours !== time.hours ||
     prevState.minutes !== time.minutes ||
     prevState.seconds !== time.seconds) {
@@ -29,12 +25,12 @@ export default class LeBox extends Component {
         hours: time.hours,
         minutes: time.minutes,
         seconds: time.seconds,
-      })
+      });
     }
   }
 
   render() {
-    const { visible } = this.state
+    const { visible } = this.state;
     const { timerTime, hours, minutes, seconds, } = this.state;
 
     return (

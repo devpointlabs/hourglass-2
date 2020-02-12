@@ -7,6 +7,7 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 	has_many :sessions
 	has_many :timesheets
+	has_one :team
 	has_many :tasks, through: :sessions
 	
 	def get_projects
@@ -51,6 +52,7 @@ class User < ApplicationRecord
 	def find_timesheet_by_day date
 		datetime = DateTime.parse(date)
 		datetime = datetime.beginning_of_day
+		puts 'Finding timesheet...', date, datetime
 		self.timesheets.each do |t|
 			# Return timesheet if its active day falls within its scope
 			if datetime >= t.start_date && datetime <= t.start_date.advance(days:6)
