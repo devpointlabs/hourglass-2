@@ -7,7 +7,7 @@ class Api::TasksController < ApplicationController
 	end
 	
 	def show
-		render json: {project: Project.find(@task.project_id).title, task: @task.title, id: @task.id}
+		render json: {project: Project.find(@task.project_id).title, task: @task.title, task_id: @task.id}
 	end
 
 	def create

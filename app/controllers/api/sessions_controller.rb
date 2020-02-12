@@ -9,9 +9,9 @@ class Api::SessionsController < ApplicationController
   end
 
   def create
-    minutes = params[:timerTime] / (1000 * 60) 
-   
-		session = current_user.sessions.new(total_minutes: minutes, task_id: params[:task_id])
+    minutes = params[:time] / (1000 * 60) 
+		start = Time.now - (minutes * 60)
+		session = current_user.sessions.new(start_time: start, total_minutes: minutes, task_id: params[:task_id])
 		if session.save
 			render json: session
 		else
@@ -20,7 +20,7 @@ class Api::SessionsController < ApplicationController
   end
 
 	def update
-		minutes = params[:timerTime] / (1000 * 60)
+		minutes = params[:time] / (1000 * 60)
 		if @session.update(total_minutes: @session.total_minutes + minutes)
 			render json: @session
 		else

@@ -7,6 +7,7 @@ import TimesheetDay from './TimesheetDay';
 import TimesheetsBar from './TimesheetsBar';
 import dateFormat from '../tools/dateFormat';
 import {AuthContext} from '../providers/AuthProvider';
+import Session from './Session';
 const DAY = 24 * 60 * 60 * 1000;
 const DAYS = ['sunday', "monday", "tuesday", "wednesday", "thursday", "friday", 'saturday', 'sunday'];
 /**
@@ -27,11 +28,10 @@ const Timesheet = (props) => {
 	const [timesheet, setTimesheet] = useState(null);
 	const [isWeekView, setWeekView] = useState(false);
 	const [projects, setProjects] = useState([]);
-	const [activeItem, setActiveItem] = useState('');
 	const [disabled, setDisabled] = useState([]);
 	const [daySessions, setDaySessions] = useState([]);
 	const [tasks, setTasks] = useState([]);
-	const [activeDay, setActiveDay] = useState(Date.now());
+	const [activeDay, setActiveDay] = useState(new Date().setHours(0,0,0,0));
 	const context = useContext(AuthContext);
 	const [sameWeek, setSameWeek] = useState(true);
 	const [stopWatchTime, setStopTime] = useState(context.getTime());
@@ -46,9 +46,31 @@ const Timesheet = (props) => {
 		{ key: 'Team 4', text: 'Team 4', value: 'Team 4' },
 		{ key: 'Team 5', text: 'Team 5', value: 'Team 5' },
 	]
+
+	const getDay = () => {
+		if(activeDay)
+			return dateFormat(
+				activeDay,  
+				"dddd, mmmm dS, yyyy"
+			);
+	}
 	
+	const [activeItem, setActiveItem] = useState(getDay());
+
+	const addTask = (task) => {
+		setTasks([...tasks, task]);
+	}
+
+	const getDayTasks = (id, time) => {
+		axios.get(`/api/tasks/${id}`)
+			.then(res => {
+				console.log(res.data);
+				addTask({...res.data, time});
+			})
+			.catch(err => console.log(err));
+	}
+
   useEffect( () => {
-		console.log('checking timesheet...');
 		axios.get(`/api/timesheets`, {params: {active_day: date(activeDay)}})
 			.then( res => {
 				setTimesheet(res.data);
@@ -75,17 +97,18 @@ const Timesheet = (props) => {
 	}, [buttonPressed])
 
 	useEffect( () => {
+		console.log('Rendered again.');
 		if(timesheet) {
 			checkSameWeek();
 			axios.get(`/api/timesheets/${timesheet.id}`)
 				.then(res => {
 					setDaySessions(res.data);
 					daySessions.map(s => {
-						return s.sessions != undefined ?
-							s.sessions.filter(sess => {
-								if(sess.task == undefined)
-									return;
-								setProjectTask(sess.task);
+						return s.sessions != undefined && s.day === DAYS[date(activeDay).getDay()]?
+							s.sessions.map(sess => {
+								if(sess.total)
+									return null;
+								getDayTasks(sess.task, sess.time);
 							})
 						:
 							null
@@ -96,32 +119,18 @@ const Timesheet = (props) => {
 			setDaySessions([]);
 			axios.post(`/api/timesheets/`, {active_day: date(activeDay)})
 				.then(res => {
+					console.log('created new timesheet.');
 					setTimesheet(res.data);
 				})
 				.catch(err => console.log(err))
 		}
+		setActiveItem(getDay());
 	}, [activeDay, timesheet]);
 
 	const checkSameWeek = () => {
 		const bool = (dateParse(timesheet.start_date) - activeDay) / DAY > 0 || 
 			(dateParse(timesheet.start_date) - activeDay) / DAY <= -7 ? false : true;
 		setSameWeek(bool);
-	}
-
-	const setProjectTask = (id) => {
-		axios.get(`/api/tasks/${id}`)
-			.then(res => {
-				setTasks([...tasks, res.data]);
-			})
-			.catch(err => console.log(err));
-	}
-
-	const getDay = () => {
-		if(activeDay)
-			return dateFormat(
-				activeDay,  
-				"dddd, mmmm dS, yyyy"
-			);
 	}
 
 	const date = (datetime) => {
@@ -139,7 +148,6 @@ const Timesheet = (props) => {
 			datesAreOnSameDay(date(activeDay), date(Date.now()))
 		:
 			false;
-		
 		return bool;
 	}
 
@@ -157,21 +165,11 @@ const Timesheet = (props) => {
 	}
 
 	const setDay = (index) => {
-		const day = dateParse(timesheet.start_date) + (DAY * index);
+		const day = dateParse(timesheet.start_date).getTime() + (DAY * index);
 		if(day <= Date.now())
 			setActiveDay(day);
 	}
-
-	// const handleStartClick = () => {
-	// 	const {task_id, session_id} = task;
-	// 	context.startTimer(task_id, session_id);
-	// 	setShowTimer(true);
-	// 	setButtonPressed(!buttonPressed);
-	// }
-	const handleStopClick = () => {
-		context.stopTimer();
-		setButtonPressed(!buttonPressed);
-	}
+	
 
 	const handleViewClick = (e) => {
 		if(e.target.innerText === 'Day') {
@@ -190,7 +188,7 @@ const Timesheet = (props) => {
       <Table.Row>
         <Table.HeaderCell colSpan='9'>
           <Table.HeaderCell>
-						{getDay()}
+						{activeItem}
           </Table.HeaderCell>
           <Table.HeaderCell>
             <Label>Pending Approval</Label>
@@ -252,34 +250,17 @@ const Timesheet = (props) => {
   
   const footer = (
     <Fragment>
-				{/* { task ? 
-					<Table.Row>
-						<Table.Cell width='2'>
-							<Header as ="h3">{task.project_title}</Header>
-							<p>{task.task_title}</p>
-						</Table.Cell>
-						<Table.Cell width='5'>
-						</Table.Cell>
-						<Table.Cell width='1'>
-							<p>{task.time}</p>
-						</Table.Cell>
-						<Table.Cell width='1'>
-							<Button 
-								basic
-								onClick={() => handleStartClick()}
-							>
-								Start
-							</Button>
-							<Icon
-								name='pencil'
-								onClick={() => toggleTimesheetForm(!showForm)}
-							>
-							</Icon>
-						</Table.Cell>
-					</Table.Row>
+			{
+				tasks.length > 0?
+					tasks.map(task => {
+						return task ?
+							<Session  task={task} today={checkToday()}/>
+						: 
+							null
+					})
 				:
 					null
-			}  */}
+			}
     </Fragment>
 	)
 
